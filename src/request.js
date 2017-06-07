@@ -105,7 +105,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
   else {
     if (_.isPlainObject(data)) {
-      let formData = new window.FormData()
+      let formData = new FormData()
       _.forEach(data, (value, key) => formData.append(key, value))
       xhr.send(formData)
     }

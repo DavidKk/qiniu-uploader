@@ -5,6 +5,7 @@ import * as CONFIG from './config'
 
 export class Tunnel {
   static defaultSettings = {
+    useHttps: 'https:' === 'undefined' === typeof window ? false : window.location.protocol,
     cache: false,
     maxFileSize: CONFIG.G,
     minFileSize: 10 * CONFIG.M,
@@ -21,7 +22,7 @@ export class Tunnel {
   /**
    * 上传文件
    * 普通文件上传，适合小文件
-   * @param {File} file 文件
+   * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
@@ -35,6 +36,11 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
+    if (!(file instanceof File || file instanceof Blob)) {
+      callback(new TypeError('File is not provided or not instanceof File'))
+      return
+    }
+
     if (!(_.isString(params.token) && params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
@@ -42,7 +48,8 @@ export class Tunnel {
 
     options = _.defaultsDeep(options, this.settings)
 
-    let url = options.host || CONFIG.QINIU_UPLOAD_URL
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}`
     let datas = _.assign({ file }, params)
     let headers = {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
@@ -72,13 +79,13 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (!_.isString(params.token)) {
-      callback('Params.token is not provided or not be a valid string')
+    if (_.isEmpty(content) || !CONFIG.BASE64_REGEXP.exec(content)) {
+      callback(new TypeError('Content is not provided or not a valid base64 string'))
       return
     }
 
-    if (!CONFIG.BASE64_REGEXP.exec(content)) {
-      callback(new TypeError('Content is not a valid base64 string'))
+    if (!_.isString(params.token)) {
+      callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
@@ -88,23 +95,23 @@ export class Tunnel {
 
     options = _.defaultsDeep(options, this.settings)
 
-    let host = options.host || CONFIG.QINIU_UPLOAD_URL
-    let url = `${host}/putb64/${params.size}`
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/${params.size}`
 
     if (_.isString(params.key) && params.key) {
-      url += `/key/${params.key}`
+      url += `/key/${encodeURIComponent(params.key)}`
     }
 
     if (_.isString(params.mimeType) && params.mimeType) {
-      url += `/mimeType/${params.mimeType}`
+      url += `/mimeType/${encodeURIComponent(params.mimeType)}`
     }
 
     if (_.isString(params.crc32) && params.crc32) {
-      url += `/crc32/${params.crc32}`
+      url += `/crc32/${encodeURIComponent(params.crc32)}`
     }
 
     if (_.isString(params.userVars) && params.userVars) {
-      url += `/x:user-var/${params.userVars}`
+      url += `/x:user-var/${encodeURIComponent(params.userVars)}`
     }
 
     let datas = content.replace(CONFIG.BASE64_REGEXP, '')
@@ -123,31 +130,39 @@ export class Tunnel {
    * 每个块上传的开始必须将第一个分片同时上传
    * 2. 上传完之后会返回第一个分片的哈希值(ctx)，第二个分片必
    * 须同时上传第一个分片的哈希值
+   * @see https://developer.qiniu.com/kodo/api/1286/mkblk
    * @param {Blob} block 块
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
+   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} options.tokenPrefix 令牌前缀
    * @param {number} options.chunkSize 设置每个分片的大小
-   * @param {String} options.host 七牛HOST
    * @param {mkblkCallback} callback 上传之后执行的回调函数
    */
-  mkblk (block, params, options = {}, callback) {
+  mkblk (block, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
+    if (_.isEmpty(block) || !(block instanceof Blob)) {
+      callback(new TypeError('Block is not provided or not instanceof Blob'))
+      return
+    }
+
     if (!_.isString(params.token)) {
-      callback('Params.token is not provided or not be a valid string')
+      callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
     options = _.defaultsDeep(options, this.settings)
 
     let chunk = block.slice(0, options.chunkSize, block.type)
-    let url = `${options.host || CONFIG.QINIU_UPLOAD_URL}/mkblk/${block.size}`
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkblk/${block.size}`
     let headers = {
-      'Content-Type' : 'application/octet-stream',
-      Authorization  : `UpToken ${params.token}`,
+      'Content-Type': 'application/octet-stream',
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
     }
 
     return http.upload(url, chunk, _.assign({ headers }, options), callback)
@@ -163,41 +178,49 @@ export class Tunnel {
    * 块时上传的第一个分片范围的哈希值
    * 3. 最后一个分片值代表该块的结束，必须记录好哈希值(ctx)；
    * 在合并文件的时候可以通过这些最后的哈希值进行合成文件
+   * @see https://developer.qiniu.com/kodo/api/1251/bput
    * @param {Blob} chunk 片
    * @param {Object} params 参数
-   * @param {String} params.ctx 创建块或上一个分片上传成功的哈希值
-   * @param {String} params.offset 偏移位置，分片所在块中的开始位置
+   * @param {String} params.ctx 前一次上传返回的块级上传控制信息
+   * @param {String} params.offset 当前片在整个块中的起始偏移
    * @param {String} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST
+   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调
    */
-  bput (chunk, params, options = {}, callback) {
+  bput (chunk, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
+    if (_.isEmpty(chunk) || !(chunk instanceof Blob)) {
+      callback(new TypeError('Block is not provided or not instanceof Blob'))
+      return
+    }
+
     if (!_.isString(params.token)) {
-      callback('Params.token is not provided or not be a valid string')
+      callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
     if (!_.isString(params.ctx)) {
-      callback('Params.ctx is not provided or not be a valid string')
+      callback(new TypeError('Params.ctx is not provided or not be a valid string'))
       return
     }
 
-    if (_.isNumber(params.offset) && _.isInteger(params.offset) && params.offset > 0) {
-      callback('Params.offset is not provided or not be a valid interger')
+    if (!(_.isNumber(params.offset) && _.isInteger(params.offset) && params.offset > 0)) {
+      callback(new TypeError('Params.offset is not provided or not be a valid interger'))
       return
     }
 
     options = _.defaultsDeep(options, this.settings)
 
-    let url = `${options.host || CONFIG.QINIU_UPLOAD_URL}/bput/${params.ctx}/${params.offset}`
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/bput/${params.ctx}/${params.offset}`
     let headers = {
-      'Content-Type' : 'application/octet-stream',
-      Authorization  : `UpToken ${params.token}`,
+      'Content-Type': 'application/octet-stream',
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
     }
 
     return http.upload(url, chunk, _.assign({ headers }, options), callback)
@@ -206,19 +229,64 @@ export class Tunnel {
   /**
    * 提交组合文件，将所有块与分片组合起来并生成文件
    * 当所有块与分片都上传了，将所有块的返回
-   * @param {File} file 文件
-   * @param {Object} options 配置
+   * @see https://developer.qiniu.com/kodo/api/1287/mkfile
+   * @param {Array|String} ctx 文件
+   * @param {Object} params 参数
+   * @param {Integer} params.size 文件大小
+   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
+   * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
+   * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
+   * @param {Object} [options={}] 上传配置
+   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调
    */
-  mkfile (file, options = {}, callback) {
-    let url = options.url || `${QINIU_UPLOAD_URL}/mkfile/${file.size}${options.key ? `/key/${encodeURIComponent(options.key)}` : ''}${file.mimeTypeq ? `/mimeType/${encodeURIComponent(file.mimeType)}` : ''}${options.userVars ? `/x:user-var/${encodeURIComponent(options.userVars)}` : ''}`
-    let data = options.ctxs.join(',')
-    let headers = {
-      'Content-Type' : 'application/octet-stream',
-      Authorization  : `UpToken ${options.token}`,
+  mkfile (ctxs, params = {}, options = {}, callback) {
+    if (!_.isFunction(callback)) {
+      throw new TypeError('Callback is not provied or not be a function')
     }
 
-    return http.upload(url, chunk, headers, callback)
+    if (_.isEmpty(ctxs) || !(_.isArray(ctxs) || _.isString(ctxs))) {
+      callback(new TypeError('Ctxs is not provided or not be a valid value'))
+      return
+    }
+
+    if (!_.isString(params.token)) {
+      callback(new TypeError('Params.token is not provided or not be a valid string'))
+      return
+    }
+
+    if (!(_.isNumber(params.size) && _.isInteger(params.size) && params.size > 0)) {
+      callback(new TypeError('Param.size is not provided or not be a valid integer'))
+      return
+    }
+
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkfile/${params.size}`
+
+    if (_.isString(params.key) && params.key) {
+      url += `/key/${encodeURIComponent(params.key)}`
+    }
+
+    if (_.isString(params.mimeType) && params.mimeType) {
+      url += `/mimeType/${encodeURIComponent(params.mimeType)}`
+    }
+
+    if (_.isString(params.crc32) && params.crc32) {
+      url += `/crc32/${encodeURIComponent(params.crc32)}`
+    }
+
+    if (_.isString(params.userVars) && params.userVars) {
+      url += `/x:user-var/${encodeURIComponent(params.userVars)}`
+    }
+
+    let data = _.isArray(ctxs) ? ctxs.join(',') : ctxs
+    let headers = {
+      'Content-Type': 'application/octet-stream',
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+    }
+
+    return http.upload(url, data, _.assign({ headers }, options), callback)
   }
 
   /**

@@ -2,7 +2,8 @@
 /* eslint-env mocha */
 /* global expect */
 
-import { File } from '../src/file';
+import URI from 'urijs'
+import { File } from '../src/file'
 import { Tunnel } from '../src/tunnel'
 import * as CONFIG from '../src/config'
 
@@ -31,21 +32,30 @@ describe('Class Tunnel', function () {
       server.restore()
     })
 
-    let host = 'http://x.com'
-    let key = 'xxx'
-    let token = 'xxx'
+    let host = 'x.com'
+    let key = 'key'
+    let mimeType = 'mimeType'
+    let crc32 = 'crc32'
+    let userVars = 'userVars'
+    let token = 'token'
     let tokenPrefix = 'UpToken'
 
     it('can upload file', function (done) {
       let responseData = JSON.stringify({ code: 1 })
-      server.respondWith('POST', host, function (xhr) {
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+        expect(uri.path()).to.equal('/')
+
         let headers = xhr.requestHeaders
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
-        expect(body).to.be.an.instanceof(window.FormData)
+        expect(body).to.be.an.instanceof(FormData)
 
-        if (window.FormData.prototype.has) {
+        if (FormData.prototype.has) {
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
           expect(body.has('file')).to.be.true
@@ -66,7 +76,7 @@ describe('Class Tunnel', function () {
       })
 
       let file = new Blob(['test'], { type: 'plain/text' })
-      let { xhr } = tunnel.upload(file, { token, key }, { host, tokenPrefix }, function (error, response) {
+      let { xhr } = tunnel.upload(file, { token, key }, { useHttps: true, host, tokenPrefix }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -82,10 +92,17 @@ describe('Class Tunnel', function () {
 
     it('can upload base64 source', function (done) {
       let responseData = JSON.stringify({ code: 1, image: base64Image })
-      server.respondWith('POST', host, function (xhr) {
+
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+        expect(uri.path()).to.equal(`/${base64Image.length}/key/${encodeURIComponent(key)}/mimeType/${encodeURIComponent(mimeType)}/crc32/${encodeURIComponent(crc32)}/x:user-var/${encodeURIComponent(userVars)}`)
+
         let headers = xhr.requestHeaders
         expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
-        expect(headers.Authorization).to.equal(`${prefix} ${token}`)
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
         expect(body).to.be.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
@@ -94,7 +111,7 @@ describe('Class Tunnel', function () {
          * PhantomJS not support FormData fully
          * only support method `append`
          */
-        if (window.FormData.prototype.has) {
+        if (FormData.prototype.has) {
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
           expect(body.has('file')).to.be.true
@@ -114,7 +131,7 @@ describe('Class Tunnel', function () {
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 
-      let { xhr } = tunnel.upb64(base64Image, { token, key }, { host, tokenPrefix }, function (error, response) {
+      let { xhr } = tunnel.upb64(base64Image, { size: base64Image.length, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -127,75 +144,123 @@ describe('Class Tunnel', function () {
       server.respond()
     })
 
-    // it('can generate block', function (done) {
-    //   let responseData = JSON.stringify({ code: 1 })
-    //   let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-    //   let chunkSize = 14;
-    //   let blockType = 'plain/text'
-    //   let block = new Blob([base64Image], { type: blockType })
+    it('can generate block', function (done) {
+      let responseData = JSON.stringify({ code: 1 })
+      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      let chunkSize = 14;
+      let blockType = 'plain/text'
+      let block = new Blob([base64Image], { type: blockType })
 
-    //   server.respondWith('POST', url, function (xhr) {
-    //     let headers = xhr.requestHeaders
-    //     expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
-    //     expect(headers.Authorization).to.equal(`${prefix} ${token}`)
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+        expect(uri.path()).to.equal(`/mkblk/${block.size}`)
 
-    //     let body = xhr.requestBody
-    //     expect(body).to.be.an.instanceof(window.Blob)
-    //     expect(body.type).to.equal(blockType)
-    //     expect(body.size).to.equal(chunkSize)
+        let headers = xhr.requestHeaders
+        expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
-    //     xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
-    //   })
+        let body = xhr.requestBody
+        expect(body).to.be.an.instanceof(Blob)
+        expect(body.type).to.equal(blockType)
+        expect(body.size).to.equal(chunkSize)
 
-    //   let { xhr } = tunnel.mkblk(block, { url, token, chunkSize }, function (error, response) {
-    //     expect(error).not.to.be.an('error')
+        xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
+      })
 
-    //     expect(xhr.status).to.equal(200)
-    //     expect(xhr.responseText).to.equal(responseData)
-    //     expect(response).to.deep.equal(JSON.parse(responseData))
+      let { xhr } = tunnel.mkblk(block, { token }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+        expect(error).not.to.be.an('error')
 
-    //     done()
-    //   })
+        expect(xhr.status).to.equal(200)
+        expect(xhr.responseText).to.equal(responseData)
+        expect(response).to.deep.equal(JSON.parse(responseData))
 
-    //   server.respond()
-    // })
+        done()
+      })
 
-    // it('can upload chunk', function () {
-    //   let responseData = JSON.stringify({ code: 1 })
-    //   let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-    //   let chunkSize = 14;
-    //   let blockType = 'plain/text'
-    //   let block = new Blob([base64Image], { type: blockType })
+      server.respond()
+    })
 
-    //   server.respondWith('POST', url, function (xhr) {
-    //     let headers = xhr.requestHeaders
-    //     expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
-    //     expect(headers.Authorization).to.equal(`${prefix} ${token}`)
+    it('can upload chunk', function (done) {
+      let responseData = JSON.stringify({ code: 1 })
+      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      let chunkSize = 14;
+      let blockType = 'plain/text'
+      let block = new Blob([base64Image], { type: blockType })
+      let chunk = block.slice(chunkSize, chunkSize * 2, blockType)
+      let ctx = 'ctx'
 
-    //     let body = xhr.requestBody
-    //     expect(body).to.be.an.instanceof(window.Blob)
-    //     expect(body.type).to.equal(blockType)
-    //     expect(body.size).to.equal(chunkSize)
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+        expect(uri.path()).to.equal(`/bput/${ctx}/${chunkSize}`)
 
-    //     xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
-    //   })
+        let headers = xhr.requestHeaders
+        expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
-    //   let { xhr } = tunnel.mkblk(block, { url, token, chunkSize }, function (error, response) {
-    //     expect(error).not.to.be.an('error')
+        let body = xhr.requestBody
+        expect(body).to.be.an.instanceof(Blob)
+        expect(body.type).to.equal(blockType)
+        expect(body.size).to.equal(chunkSize)
 
-    //     expect(xhr.status).to.equal(200)
-    //     expect(xhr.responseText).to.equal(responseData)
-    //     expect(response).to.deep.equal(JSON.parse(responseData))
+        xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
+      })
 
-    //     done()
-    //   })
+      let { xhr } = tunnel.bput(chunk, { token, ctx, offset: chunkSize }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+        expect(error).not.to.be.an('error')
 
-    //   server.respond()
-    // })
+        expect(xhr.status).to.equal(200)
+        expect(xhr.responseText).to.equal(responseData)
+        expect(response).to.deep.equal(JSON.parse(responseData))
 
-    // it('can concat all block to a file', function () {
+        done()
+      })
 
-    // })
+      server.respond()
+    })
+
+    it('can concat all block to a file', function (done) {
+      let responseData = JSON.stringify({ code: 1 })
+      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      let chunkSize = 14;
+      let blockType = 'plain/text'
+      let block = new Blob([base64Image], { type: blockType })
+      let ctxs = ['ctx1', 'ctx2']
+
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+        expect(uri.path()).to.equal(`/mkfile/${block.size}/key/${encodeURIComponent(key)}/mimeType/${encodeURIComponent(mimeType)}/crc32/${encodeURIComponent(crc32)}/x:user-var/${encodeURIComponent(userVars)}`)
+
+        let headers = xhr.requestHeaders
+        expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
+
+        let body = xhr.requestBody
+        expect(body).to.equal(ctxs.join(','))
+
+        xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
+      })
+
+      let { xhr } = tunnel.mkfile(ctxs, { size: block.size, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+        expect(error).not.to.be.an('error')
+
+        expect(xhr.status).to.equal(200)
+        expect(xhr.responseText).to.equal(responseData)
+        expect(response).to.deep.equal(JSON.parse(responseData))
+
+        done()
+      })
+
+      server.respond()
+    })
 
     // it('can upload by slice', function () {
 
