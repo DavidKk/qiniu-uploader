@@ -3,6 +3,16 @@ import { waterfall, parallel } from 'async'
 import * as http from './request'
 import * as CONFIG from './config'
 
+/**
+ * 七牛通道
+ * 支持普通文件上传，适合图片文本等小文件上传
+ * 支持 Base64 文件上传，Base64 字符串长度并不等于文件大小，可参考：https://en.wikipedia.org/wiki/Base64
+ * 支持断点续传，缓存上传了的块与片保存在本地缓存中，若清除本地缓存则不能保证能继续上次的断点
+ * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB
+ * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
+ * @class
+ * @param {Object} options 默认配置
+ */
 export class Tunnel {
   static defaultSettings = {
     useHttps: 'https:' === 'undefined' === typeof window ? false : window.location.protocol,
@@ -297,10 +307,15 @@ export class Tunnel {
    * @param {Function} callback 回调 
    */
   resuming (file, options, callback) {
+    if (!_.isFunction(callback)) {
+      throw new TypeError('Callback is not provied or not be a function')
+    }
+
+    options = _.defaultsDeep(options, this.settings)
+
     let blockSize    = options.blockSize
     let chunkSize    = options.chunkSize
     let totalBlockNo = Math.ceil(file.size / blockSize)
-    let promises     = []
 
     /**
      * 创建块(Block)上传任务
