@@ -4,27 +4,83 @@ import * as http from './request'
 import * as CONFIG from './config'
 
 /**
- * 七牛通道
+ * 七牛通道类
  * 支持普通文件上传，适合图片文本等小文件上传
  * 支持 Base64 文件上传，Base64 字符串长度并不等于文件大小，可参考：https://en.wikipedia.org/wiki/Base64
  * 支持断点续传，缓存上传了的块与片保存在本地缓存中，若清除本地缓存则不能保证能继续上次的断点
  * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB
  * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
- * @class
- * @param {Object} options 默认配置
+ * 
+ * @export
+ * @class Tunnel
  */
 export class Tunnel {
+  /**
+   * 七牛通道类默认配置
+   * 
+   * @type {Object}
+   * 
+   * @memberof Tunnel
+   * @static
+   */
   static defaultSettings = {
+    /**
+     * 是否使用 Https 进行上传
+     * @type {Boolean}
+     * @inner
+     */
     useHttps: 'https:' === 'undefined' === typeof window ? false : window.location.protocol,
+    /**
+     * 是否缓存
+     * @type {Boolean}
+     * @inner
+     */
     cache: false,
+    /**
+     * 最大文件大小
+     * @type {Integer}
+     * @inner
+     */
     maxFileSize: CONFIG.G,
+    /**
+     * 最小文件大小
+     * @type {Integer}
+     * @inner
+     */
     minFileSize: 10 * CONFIG.M,
+    /**
+     * 分块数量
+     * @type {Integer}
+     * @inner
+     */
     blockNo: 2,
+    /**
+     * 分片数量
+     * @type {Integer}
+     * @inner
+     */
     chunkNo: 5,
+    /**
+     * 分块大小
+     * @type {Integer}
+     * @inner
+     */
     blockSize: 4 * CONFIG.M,
+    /**
+     * 分片大小
+     * @type {Integer}
+     * @inner
+     */
     chunkSize: 1 * CONFIG.M,
   }
 
+  /**
+   * Creates an instance of Tunnel
+   * 
+   * @param {Object} options 默认配置
+   * 
+   * @memberof Tunnel
+   */
   constructor (options) {
     this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
   }
@@ -32,6 +88,7 @@ export class Tunnel {
   /**
    * 上传文件
    * 普通文件上传，适合小文件
+   * 
    * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -40,6 +97,9 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   upload (file, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -72,6 +132,7 @@ export class Tunnel {
    * 上传 base64 资源
    * 普通文件上传，适合一次过base64文件
    * @see https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code
+   * 
    * @param {string} content base64文件数据
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -83,6 +144,9 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   upb64 (content, params = { size: -1 }, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -140,7 +204,9 @@ export class Tunnel {
    * 每个块上传的开始必须将第一个分片同时上传
    * 2. 上传完之后会返回第一个分片的哈希值(ctx)，第二个分片必
    * 须同时上传第一个分片的哈希值
+   * 
    * @see https://developer.qiniu.com/kodo/api/1286/mkblk
+   * 
    * @param {Blob} block 块
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -149,6 +215,9 @@ export class Tunnel {
    * @param {String} options.tokenPrefix 令牌前缀
    * @param {number} options.chunkSize 设置每个分片的大小
    * @param {mkblkCallback} callback 上传之后执行的回调函数
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   mkblk (block, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -188,7 +257,9 @@ export class Tunnel {
    * 块时上传的第一个分片范围的哈希值
    * 3. 最后一个分片值代表该块的结束，必须记录好哈希值(ctx)；
    * 在合并文件的时候可以通过这些最后的哈希值进行合成文件
+   * 
    * @see https://developer.qiniu.com/kodo/api/1251/bput
+   * 
    * @param {Blob} chunk 片
    * @param {Object} params 参数
    * @param {String} params.ctx 前一次上传返回的块级上传控制信息
@@ -239,7 +310,9 @@ export class Tunnel {
   /**
    * 提交组合文件，将所有块与分片组合起来并生成文件
    * 当所有块与分片都上传了，将所有块的返回
+   * 
    * @see https://developer.qiniu.com/kodo/api/1287/mkfile
+   * 
    * @param {Array|String} ctx 文件
    * @param {Object} params 参数
    * @param {Integer} params.size 文件大小
@@ -250,6 +323,9 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   mkfile (ctxs, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -302,6 +378,7 @@ export class Tunnel {
   /**
    * 分割文件并上传
    * 一次过将文件分成多个，并进行并发上传
+   * 
    * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -311,6 +388,9 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调 
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   resuming (file, params, options, callback) {
     if (!_.isFunction(callback)) {
