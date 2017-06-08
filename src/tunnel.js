@@ -302,20 +302,47 @@ export class Tunnel {
   /**
    * 分割文件并上传
    * 一次过将文件分成多个，并进行并发上传
-   * @param {File} file 文件
-   * @param {Object} options 配置
+   * @param {File|Blob} file 文件
+   * @param {Object} params 上传参数
+   * @param {Object} params.token 七牛令牌
+   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
+   * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
+   * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
+   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} options.tokenPrefix 令牌前缀
    * @param {Function} callback 回调 
    */
-  resuming (file, options, callback) {
+  resuming (file, params, options, callback) {
     if (!_.isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
+    if (!(file instanceof File || file instanceof Blob)) {
+      callback(new TypeError('File is not provided or not instanceof File'))
+      return
+    }
+
     options = _.defaultsDeep(options, this.settings)
 
-    let blockSize    = options.blockSize
-    let chunkSize    = options.chunkSize
+    let token = params.token
+    let blockSize = options.blockSize
+    let chunkSize = options.chunkSize
     let totalBlockNo = Math.ceil(file.size / blockSize)
+
+    _.times(totalBlockNo, (number) => {
+      let blockOffset = number * blockSize
+      let block = file.slice(blockOffset, blockOffset + blockSize)
+      
+      tasks.push((callback) => {
+        if (true === options.cache && file.isUploaded(blockOffset)) {
+          callback(file)
+          return
+        }
+
+      })
+    })
+
+
 
     /**
      * 创建块(Block)上传任务
@@ -343,20 +370,22 @@ export class Tunnel {
        * 因此我们可以直接判断当前块的第一个切片(Chunk)是否已经上传
        * 不用额外将块(Block)上传信息另外保存起来
        */
+      let params = { token: params.token }
       blockTask.push((callback) => {
         if (true === options.cache && file.isUploaded(blockOffset)) {
           callback(null)
           return
         }
 
-        options = _.merge({ chunkSize }, options)
-        this.mkblk(block, options, (response) => {
+        options = _.assign({ chunkSize }, options)
+
+        this.mkblk(block, params, options, (response) => {
           let startPos = blockOffset
           let endPos = blockOffset + blockSize
-          let blockState = _.merge({ startPos, endPos }, response)
+          let blockState = _.assign({ startPos, endPos }, response)
           file.ok('block', blockState)
 
-          let chunkState = _.merge({ startPos, endPos }, response)
+          let chunkState = _.assign({ startPos, endPos }, response)
           file.ok('chunk', chunkState)
 
           callback(null, response)
@@ -401,11 +430,11 @@ export class Tunnel {
          */
         let offset = offsetStart
         chunkTask.push((callback) => {
-          options = _.merge({ chunkSize }, options, params)
+          options = _.assign({ chunkSize }, options, params)
 
           let chunk = block.slice(offset, offset + chunkSize)
 
-          this.bput(chunk, options, (response) => {
+          this.bput(chunk, { token: params.token }, options, (response) => {
             let startPos = blockOffset + offset
             let endPos = blockOffset + offset + chunkSize
             let state = _.merge({ startPos, endPos }, response)
@@ -424,14 +453,18 @@ export class Tunnel {
      * 当所有块(Block)都全部上传完成
      * 则执行合并文件操作
      */
-    // waterfall([parallel.bind(null, blockTask), parallel.bind(null, chunkTask)], (error, responses) => {
-    //   if (error) {
-    //     callback(error)
-    //     return
-    //   }
+    waterfall([
+      parallel.bind(null, blockTask),
+      parallel.bind(null, chunkTask),
+    ],
+    (error, responses) => {
+      if (error) {
+        callback(error)
+        return
+      }
 
-    //   let ctxs = _.map(responses, (lastChunk) => lastChunk.ctx)
-    //   this.mkfile(file, { token, ctxs }, callback)
-    // })
+      let ctxs = _.map(responses, (lastChunk) => lastChunk.ctx)
+      this.mkfile(ctxs, { token }, callback)
+    })
   }
 }
