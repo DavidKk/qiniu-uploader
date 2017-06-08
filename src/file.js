@@ -3,6 +3,15 @@ import sha256 from 'crypto-js/sha256'
 import * as CONFIG from './config'
 import { Enum } from './enum'
 
+/**
+ * 文件类
+ * 能够统一文件类型，可以传入多种类型对象
+ * 能够保存文件分块分片信息到本地缓存中
+ * 通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果
+ * 
+ * @export
+ * @class File
+ */
 export class File {
   /**
    * File 默认配置
@@ -79,9 +88,6 @@ export class File {
 
   /**
    * 创建文件对象
-   * 能够统一文件类型，可以传入多种类型对象
-   * 能够保存文件分块分片信息到本地缓存中
-   * 通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果
    * 
    * @param {File|Blob|String} file 需要上传的文件，可以为 Form 获取的 File 对象，可以为 Blob，或者是 Base64 等字符串
    * @param {Object} options 配置
@@ -315,10 +321,22 @@ export class File {
     })
   }
 
+  /**
+   * 删除文件上传信息的本地缓存
+   * 
+   * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值
+   * 
+   * @memberof File
+   */
   clean (hashCode = this.hash) {
     this.storage.del(hashCode)
   }
 
+  /**
+   * 销毁对象
+   * 
+   * @memberof File
+   */
   destory () {
     this.clean()
 
