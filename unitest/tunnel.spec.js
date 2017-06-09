@@ -42,6 +42,7 @@ describe('Class Tunnel', function () {
 
     it('can upload file', function (done) {
       let responseData = JSON.stringify({ code: 1 })
+
       server.respondWith(function (xhr) {
         let uri = new URI(xhr.url)
         expect(xhr.method).to.equal('POST')

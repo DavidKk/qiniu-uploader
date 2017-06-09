@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import URI from 'urijs'
 
 let settings = {}
 
@@ -60,34 +61,13 @@ export function request (method = 'POST', url, data, options = {}, callback) {
       xhr.open(method, url, true)
     }
     else {
-      let uri = parseUrl(url)
-      let requestUrl = `${uri.scheme}://${uri.host}/${uri.path}`
+      let uri = new URI(url)
+      let params = URI.parseParameters(uri.query())
 
-      if (uri.scheme) {
-        requestUrl += uri.scheme + ':'
-      }
-
-      if (uri.host) {
-        requestUrl += '//' + uri.host
-      }
-
-      if (uri.path) {
-        requestUrl += uri.path
-      }
-
-      let params = parseParameters(uri.query)
       params = _.assign(params, data)
+      uri.query(params)
 
-      if (_.isEmpty(params)) {
-        let query = stringifyParameters(params)
-        requestUrl += '?' + query
-      }
-
-      if (uri.fragment) {
-        requestUrl += '#' + uri.fragment
-      }
-
-      xhr.open(method, requestUrl, true)
+      xhr.open(method, uri.href(), true)
     }
   }
   else {
@@ -120,91 +100,4 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
 
   return { cancel, xhr }
-}
-
-/**
- * 解析URL地址
- */
-function parseUrl (url) {
-  let aoMatch = /^(?:([^:/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/.exec(url)
-  let aoKeys = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port', 'relative', 'path', 'directory', 'file', 'query', 'fragment']
-  let oURI = { url }
-
-  for (let i = aoKeys.length; i--;) {
-    if (aoMatch[i]) {
-      oURI[aoKeys[i]] = aoMatch[i]
-    }
-  }
-
-  let oDomain = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
-  if (oDomain) {
-    let aoRootDomain = oDomain[1].split('.')
-    let nLen = aoRootDomain.length
-
-    oURI.domain = oDomain[1]
-    oURI.rootDomain = aoRootDomain.slice(nLen - 2, nLen).join('.')
-  }
-
-  if (oURI.scheme) {
-    oURI.scheme = oURI.scheme.toLowerCase()
-  }
-
-  if (oURI.host) {
-    oURI.host = oURI.host.toLowerCase()
-  }
-
-  return oURI
-}
-
-/**
- * 将 GET 字符串解析成对象
- * a=1&b=2&c=3 -> parseObject(...) -> {a:1, b:2, c:3}
- */
-function parseParameters (params) {
-  if (!(typeof params === 'string' && params.length > 0)) {
-    return {}
-  }
-
-  let aoMatch = params.split('&')
-  let oArgs = {}
-
-  for (let i = 0, len = aoMatch.length; i < len; i++) {
-    let param = aoMatch[i].split('=')
-    let key = param[0]
-    let value = (param[1] || '').toString()
-    oArgs[key] = decodeURIComponent(value)
-  }
-
-  return oArgs
-}
-
-/**
- * 将对象解析成 GET 数据
- * {a:1,b:2,c:3} -> parseString(...) -> a=1&b=2&c=3
- */
-function stringifyParameters (params) {
-  return paramsToString(params, '').slice(0, -1).join('')
-}
-
-function paramsToString (params, pre) {
-  let arr = []
-  if (!_.isObject(params)) {
-    return
-  }
-
-  for (let i in params) {
-    let param = params[i]
-
-    if (_.isObject(param)) {
-      arr = pre !== ''
-      ? arr.concat(paramsToString(param, `${pre}[${i}]`))
-      : arr.concat(paramsToString(param, i))
-    } else if (undefined !== param) {
-      pre !== ''
-      ? arr.push(pre, '[', i, ']', '=', param, '&')
-      : arr.push(i, '=', param, '&')
-    }
-  }
-
-  return arr
 }
