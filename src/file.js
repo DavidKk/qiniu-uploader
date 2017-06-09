@@ -1,3 +1,5 @@
+/** @module file */
+
 import _ from 'lodash'
 import sha256 from 'crypto-js/sha256'
 import * as CONFIG from './config'

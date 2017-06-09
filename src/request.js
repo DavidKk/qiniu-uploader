@@ -1,16 +1,47 @@
+/** @module request */
+
 import _ from 'lodash'
 import URI from 'urijs'
 
 let settings = {}
 
+/**
+ * 设置默认配置
+ * 
+ * @param {Object} options 配置
+ * @export
+ */
 export function configure (options) {
   settings = _.defaultsDeep(options, settings)
 }
 
+/**
+ * 上传，执行 POST 请求 XMLHttpRequest
+ * 
+ * @param {String} url 请求地址
+ * @param {Object} data 提交数据
+ * @param {Object} [options] 配置
+ * @param {Function} callback 回调函数
+ * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
+ * 
+ * @export
+ */
 export function upload (url, data, options, callback) {
   return request('POST', url, data, options, callback)
 }
 
+/**
+ * 请求 XMLHttpRequest
+ * 
+ * @param {string} [method='POST'] 提交方法 
+ * @param {String} url 请求地址
+ * @param {Object} data 提交数据，若请求方法为 GET，则数据将转换成请求地址的 query
+ * @param {Object} [options={}] 请求配置
+ * @param {Function} callback 回调函数
+ * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
+ * 
+ * @export
+ */
 export function request (method = 'POST', url, data, options = {}, callback) {
   if (arguments.length < 3) {
     return request('POST', method, {}, {}, url)
