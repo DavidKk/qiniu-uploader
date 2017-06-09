@@ -17,7 +17,7 @@ describe('Class File', function () {
       expect(file.hash).to.be.a('string')
       expect(file.state).to.be.a('array')
 
-      expect(file.setting).to.deep.equal(File.defaultSettings)
+      expect(file.settings).to.deep.equal(File.defaultSettings)
       expect(file.mimeType).to.equal(File.defaultSettings.mimeType)
       expect(file.file).to.equal(base64Image)
       expect(file.size).to.equal(base64Image.length)
@@ -35,7 +35,7 @@ describe('Class File', function () {
     })
 
     after(function () {
-      file.cleanState()
+      file.cleanCache()
     })
 
     it('can slice custom size', function () {

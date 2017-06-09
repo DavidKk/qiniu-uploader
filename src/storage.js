@@ -19,7 +19,17 @@ export class Storage {
 
   get (name) {
     let source = window.localStorage.getItem(`${this.settings.prefix}.${name}`)
-    return JSON.parse(name)
+
+    if (source) {
+      try {
+        return JSON.parse(source)
+      }
+      catch (error) {
+        // nothing to do...
+      }
+    }
+
+    return null
   }
 
   del (name) {

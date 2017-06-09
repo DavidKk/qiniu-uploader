@@ -2,6 +2,7 @@ import _ from 'lodash'
 import sha256 from 'crypto-js/sha256'
 import * as CONFIG from './config'
 import { Enum } from './enum'
+import { Storage } from './storage'
 
 /**
  * 文件类
@@ -40,6 +41,12 @@ export class File {
      * @inner
      */
     chunkInBlock: 1,
+    /**
+     * 是否缓存
+     * @type {Boolean}
+     * @inner
+     */
+    cache: true,
     /**
      * 过期时间，默认为一天 (1000 * 60 * 60 * 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
      * @type {Integer}
@@ -115,7 +122,7 @@ export class File {
     /**
      * 查找并读取本地缓存的上传数据，若没有则不会做任何操作
      */
-    this.load()
+    this.settings.cache === true && this.loadState()
   }
 
   /**
@@ -142,49 +149,79 @@ export class File {
 
   /**
    * 保存状态信息
-   * @param {Integer} type 类型，具体参考 File.stateType
+   * @param {Integer} beginPos 起始位置
+   * @param {Integer} endPos 结束位置
    * @param {Object} state 状态，保存的状态
+   * @param {Boolean} [cache=this.settings.cache] 是否缓存
    * 
    * @memberof File
    */
-  ok (type, state) {
+  setState (beginPos, endPos, state = {}, cache = this.settings.cache) {
     if (!this.stateType.isValidKey(type)) {
       throw new TypeError('Type is invalid, it must euqal one of enum File.stateType')
     }
 
-    let data = _.assign({ type }, state)
+    if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
+      throw new TypeErrror('One of begin pos and end pos is not a integer')
+    }
+
+    if (!(beginPos < endPos)) {
+      throw new Error('End pos must over begin pos')
+    }
+
+    let data = _.assign({ type, beginPos, endPos }, state)
     this.state.push(data)
-    this.save()
+
+    cache === true && this.saveState()
   }
 
   /**
-   * 检测是否已经上传片段，主要是开始位置，
-   * 因为上传的时候已经确定了所有，
-   * 上传片的起始位置与结束，因此这里只需要判断
-   * 起始位置就可以知道是否已经上传了
+   * 获取文件上传信息
    * 
-   * @param {Integer} offset 分片开始位置所在文件的偏移位置
+   * @param {Object} state 状态，保存的状态
+   * @param {Integer} state.beginPos 起始位置
+   * @param {Integer} state.endPos 结束位置
+   * @returns {Object} 信息数据
+   * 
+   * @memberof File
+   */
+  getState (beginPos, endPos) {
+    if (!this.stateType.isValidKey(type)) {
+      throw new TypeError('Type is invalid, it must euqal one of enum File.stateType')
+    }
+
+    if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
+      throw new TypeErrror('One of begin pos and end pos is not a integer')
+    }
+
+    if (!(beginPos < endPos)) {
+      throw new Error('End pos must over begin pos')
+    }
+
+    return _.find(this.state, { type, beginPos, endPos })
+  }
+
+  /**
+   * 检测分块或者分片是否被上传
+   * 
+   * @param {Integer} type 类型，具体参考 File.stateType
+   * @param {Object} state 状态，保存的状态
+   * @param {Integer} state.beginPos 起始位置
+   * @param {Integer} state.endPos 结束位置
    * @return {Boolean} 返回是否上传成功
    * 
    * @memberof File
    */
-  isUploaded (offset) {
-    let data = _.filter(this.state, { type: this.constructor.stateType.CHUNK })
-
-    for (let i = 0, l = data.length; i < l; i ++) {
-      if (_.inRange(offset, data[i].startPos, data[i].endPos)) {
-        return true
-      }
-    }
-
-    return false
+  isUploaded (type, beginPos, endPos) {
+    let item = this.getState(type, beginPos, endPos) || {}
+    return item.status === 'uploaded'
   }
 
   /**
    * 导入文件上传状态信息
    * 
    * @param {Object|Json} source 上传状态信息数据
-   * @param {Function} callback 回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息
+   * @param {Function} [callback] 回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息
    * 
    * @memberof File
    */
@@ -194,34 +231,34 @@ export class File {
       return this.import(data, callback)
     }
 
-    if (!_.isFunction(callback)) {
-      throw new TypeError('Callback is not provided or not be a function')
+    if (callback && !_.isFunction(callback)) {
+      throw new TypeError('Callback is not a function')
     }
 
     if (!_.isPlainObject(source)) {
-      callback(new TypeError('Source is not a plain object'))
+      callback && callback(new Error('Source is not a plain object'))
       return
     }
 
     if (this.hash !== source.hash) {
-      callback(new TypeError('Source is invalid'))
+      callback && callback(new Error('Source is invalid'))
       return
     }
 
     if (source.expired < Date.now()) {
-      callback(new Error('Source is out of date'))
+      callback && callback(new Error('Source is out of date'))
       return
     }
 
     if (!_.isArray(source.state)) {
-      callback(new TypeError('Source is invalid'))
+      callback && callback(new TypeError('Source is invalid'))
       return
     }
 
     let state = []
     for (let i = 0, datas = source.state, len = datas.length; i < len; i ++) {
       if (-1 === _.indexOf(this.constructor.stateType._keys, datas[i].type)) {
-        callback(new Error('Source is invalid'))
+        callback && callback(new Error('Source is invalid'))
         return
       }
 
@@ -231,7 +268,7 @@ export class File {
     this.state.splice(0)
     this.state = this.state.concat(state)
 
-    callback(null)
+    callback && callback(null)
   }
 
   /**
@@ -278,17 +315,17 @@ export class File {
    * 从本地缓存中读取并导入文件上传状态信息
    * 
    * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值
-   * @param {Function} callback 回调函数，错误会抛出错误异常
+   * @param {Function} [callback] 回调函数，错误会抛出错误异常
    * 
    * @memberof File
    */
-  load (hashCode = this.hash, callback) {
-    if (arguments.length < 2) {
-      return this.load(this.hash, hashCode)
+  loadState (hashCode = this.hash, callback) {
+    if (arguments.length < 2 && _.isFunction(hashCode)) {
+      return this.loadState(this.hash, hashCode)
     }
 
-    if (!_.isFunction(callback)) {
-      throw new TypeError('Callback is not provided or not be a function')
+    if (callback && !_.isFunction(callback)) {
+      throw new TypeError('Callback is not a function')
     }
 
     let source = this.storage.get(hashCode)
@@ -299,25 +336,25 @@ export class File {
    * 导出并保存文件上传状态信息到本地缓存中
    * 
    * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值
-   * @param {Function} callback 回调函数，错误会抛出错误异常
+   * @param {Function} [callback] 回调函数，错误会抛出错误异常
    */
-  save (hashCode = this.hash, callback) {
-    if (arguments.length < 2) {
-      return this.save(this.hash, hashCode)
+  saveState (hashCode = this.hash, callback) {
+    if (arguments.length < 2 && _.isFunction(hashCode)) {
+      return this.saveState(this.hash, hashCode)
     }
 
-    if (!_.isFunction(callback)) {
-      throw new TypeError('Callback is not provided or not be a function')
+    if (callback && !_.isFunction(callback)) {
+      throw new TypeError('Callback is not a function')
     }
 
     this.export(this.constructor.stateFormatter.JSON, (error, source) => {
       if (error) {
-        callback(error)
+        callback && callback(error)
         return
       }
 
       this.storage.set(hashCode, source)
-      callback(null)
+      callback && callback(null)
     })
   }
 
@@ -328,7 +365,7 @@ export class File {
    * 
    * @memberof File
    */
-  clean (hashCode = this.hash) {
+  cleanCache (hashCode = this.hash) {
     this.storage.del(hashCode)
   }
 
@@ -338,7 +375,7 @@ export class File {
    * @memberof File
    */
   destory () {
-    this.clean()
+    this.cleanCache()
 
     _.forEach(this, function (value, key) {
       this[key] = _.isFunction(value) ? Function.prototype : undefined

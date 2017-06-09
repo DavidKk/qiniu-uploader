@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { waterfall, parallel } from 'async'
 import * as http from './request'
 import * as CONFIG from './config'
+import { File } from './file'
 
 /**
  * 七牛通道类
@@ -48,18 +49,18 @@ export class Tunnel {
      * @inner
      */
     minFileSize: 10 * CONFIG.M,
-    /**
-     * 分块数量
-     * @type {Integer}
-     * @inner
-     */
-    blockNo: 2,
-    /**
-     * 分片数量
-     * @type {Integer}
-     * @inner
-     */
-    chunkNo: 5,
+    // /**
+    //  * 分块数量
+    //  * @type {Integer}
+    //  * @inner
+    //  */
+    // blockNo: 2,
+    // /**
+    //  * 分片数量
+    //  * @type {Integer}
+    //  * @inner
+    //  */
+    // chunkNo: 5,
     /**
      * 分块大小
      * @type {Integer}
@@ -95,7 +96,7 @@ export class Tunnel {
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [options={}] 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
    * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
    * 
@@ -142,7 +143,7 @@ export class Tunnel {
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
    * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
    * 
@@ -212,7 +213,7 @@ export class Tunnel {
    * @param {Object} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {number} options.chunkSize 设置每个分片的大小
    * @param {mkblkCallback} callback 上传之后执行的回调函数
    * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
@@ -267,8 +268,11 @@ export class Tunnel {
    * @param {String} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
+   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
+   * 
+   * @memberof Tunnel
    */
   bput (chunk, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -321,7 +325,7 @@ export class Tunnel {
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
    * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
    * 
@@ -378,6 +382,9 @@ export class Tunnel {
   /**
    * 分割文件并上传
    * 一次过将文件分成多个，并进行并发上传
+   * 上传的快慢并不代表分个数的大小, 我们应该尽量
+   * 创建适当多个块(Block), 因为没上传的块只是阻塞
+   * 在任务队列中
    * 
    * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
@@ -385,8 +392,11 @@ export class Tunnel {
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
+   * @param {Object} options 上传配置
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
-   * @param {String} options.tokenPrefix 令牌前缀
+   * @param {String} [options.tokenPrefix] 令牌前缀
+   * @param {Boolean} [options.cache=true] 设置本地缓存
+   * @param {Boolean} [options.override=false] 无论是否已经上传都进行重新上传
    * @param {Function} callback 回调 
    * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
    * 
@@ -397,81 +407,95 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (!(file instanceof File || file instanceof Blob)) {
+    if (!(file instanceof window.File || file instanceof window.Blob)) {
       callback(new TypeError('File is not provided or not instanceof File'))
       return
     }
 
-    options = _.defaultsDeep(options, this.settings)
+    options = _.defaultsDeep(options, { cache: true, override: false }, this.settings)
 
-    let token = params.token
     let blockSize = options.blockSize
     let chunkSize = options.chunkSize
+
+    if (!_.isInteger(blockSize)) {
+      throw new TypeError('Block size is not a integer')
+    }
+    
+    if (!_.isInteger(chunkSize)) {
+      throw new TypeError('Chunk size is not a integer')
+    }
+
+    if (blockSize < chunkSize) {
+      throw new Error('Chunk size must less than block size')
+    }
+
     let totalBlockNo = Math.ceil(file.size / blockSize)
 
-    _.times(totalBlockNo, (number) => {
-      let blockOffset = number * blockSize
-      let block = file.slice(blockOffset, blockOffset + blockSize)
-      
-      tasks.push((callback) => {
-        if (true === options.cache && file.isUploaded(blockOffset)) {
-          callback(file)
+    let mkblk = (file, startPos, endPos, callback) => {
+      /**
+       * 如果该段已经被上传则执行下一个切割任务
+       * 每次切割任务都必须判断分块(Block)是否上传完成
+       */
+      let state = file.getState(beginPos, endPos)
+      if (false === options.override && state) {
+        callback(null, state)
+        return
+      }
+
+      /**
+       * 当到该段上传的时候才进行切割，否则大型文件在切割的情况下会变得好卡
+       * 这样也能减少资源与内存的消耗
+       */
+      let block = file.slice(beginPos, endPos)
+      this.mkblk(block, params, options, (error, response) => {
+        if (error) {
+          callback(error)
           return
         }
 
+        let state = _.assign({ status: 'uploaded' }, response)
+        file.setState(beginPos, endPos, state, options.cache)
+        callback(null, { state, block, file })
       })
-    })
+    }
 
+    let mkchk = (block, file, prevCtx, startPos, endPos, callback) => {
+      /**
+       * 如果该段已经被上传则执行下一个切割任务
+       * 每次切割任务都必须判断分片(Chunk)是否上传完成
+       */
+      let state = file.getState(beginPos, endPos)
+      if (false === options.override && state) {
+        callback(null, state)
+        return
+      }
 
+      let chunk = block.slice(beginPos, endPos)
+      this.bput(chunk, params, options, (error, response) => {
+        if (error) {
+          callback(error)
+          return
+        }
 
-    /**
-     * 创建块(Block)上传任务
-     * 因为块(Block)上传为并发式上传
-     * 因此这里可以直接创建多个并行上传的线程
-     *
-     * 线程的多少并不取决于上传的并发数, 我们应该尽量
-     * 创建适当多个块(Block), 因为没上传的块只是阻塞
-     * 在任务队列中
-     *
-     * 块(Block)的大小与位置必须是已经给定的, 否则无法
-     * 做到切换多个线程, 而使用额定块(Block)则可以很稳定
-     * 地实现各种并发, 串行与断点续传
-     */
-    let blockTask = []
-    let chunkTask = []
+        let state = _.assign({ status: 'uploaded' }, response)
+        file.setState(beginPos, endPos, state, options.cache)
+        callback(null, { state, chunk, file })
+      })
+    }
 
-    _.times(totalBlockNo, (number) => {
+    let tasks = _.times(totalBlockNo, (number) => {
       let blockOffset = number * blockSize
-      let block = file.slice(blockOffset, blockOffset + blockSize)
+      let beginPos = blockOffset
+      let endPos = blockOffset + blockSize
+      let tasks = []
 
       /**
-       * 判断块(Block)是否已经被上传
        * 因为上传块(Block)的时候必须同时上传第一个切割片(Chunk)
        * 因此我们可以直接判断当前块的第一个切片(Chunk)是否已经上传
        * 不用额外将块(Block)上传信息另外保存起来
        */
-      let params = { token: params.token }
-      blockTask.push((callback) => {
-        if (true === options.cache && file.isUploaded(blockOffset)) {
-          callback(null)
-          return
-        }
-
-        options = _.assign({ chunkSize }, options)
-
-        this.mkblk(block, params, options, (response) => {
-          let startPos = blockOffset
-          let endPos = blockOffset + blockSize
-          let blockState = _.assign({ startPos, endPos }, response)
-          file.ok('block', blockState)
-
-          let chunkState = _.assign({ startPos, endPos }, response)
-          file.ok('chunk', chunkState)
-
-          callback(null, response)
-        })
-      })
-
+      tasks.push((callback) => mkblk(file, beginPos, endPos, callback))
+ 
       /**
        * 上传片(Chunk)
        * 每个块都由许多片(Chunk)组成
@@ -479,72 +503,34 @@ export class Tunnel {
        * 这样就预先定义好上传的任务队列
        *
        * 注意:
-       * 因为切割块(Block)是比较浪费资源, 而且保存多个片(Chunk)会导致
-       * 内存大幅增加, 因此我们必须在每个任务上传之前先给定相应的配置(起始位置与片大小等)
-       * 来进行定义任务, 而非切割多个片(Chunk)资源, 而且上传完必须销毁
+       * 因为切割块(Block)是比较浪费资源，而且保存多个片(Chunk)会导致
+       * 内存大幅增加，因此我们必须在每个任务上传之前先给定相应的配置(起始位置与片大小等)
+       * 来进行定义任务，而非切割多个片(Chunk)资源，而且上传完必须销毁
        */
-      let offsetStart = chunkSize
+      let totalChunkNo = Math.ceil(blockSize / chunkSize)
+      _.times(totalChunkNo, (number) => {
+        let chunkOffset = chunkSize * number
+        let beginPos = chunkOffset
+        let endPos = chunkOffset + chunkSize
 
-      /* eslint no-constant-condition:off */
-      while (1) {
-        /**
-         * 切割到末尾退出切割上传任务
-         */
-        if (offsetStart >= block.size) {
-          break
-        }
+        tasks.push(({ block, state }, callback) => mkchk(block, file, state.ctx, beginPos, endPos, callback))
+      })
 
-        /**
-         * 如果该段已经被上传则执行下一个切割任务
-         * 每次切割任务都必须判断片(Chunk)是否上传完成
-         */
-        if (true === options.cache && file.isUploaded(offsetStart)) {
-          continue
-        }
-
-        /**
-         * 因为 offsetStart 在不停地增加
-         * 而切割过程将在每一次上传的时候才进行切割(减少资源与内存消耗)
-         * 因此我们将 offsetStart 复制给内部固定变量
-         * offset 无论何时都让然是当前的 offsetStart 的值
-         */
-        let offset = offsetStart
-        chunkTask.push((callback) => {
-          options = _.assign({ chunkSize }, options, params)
-
-          let chunk = block.slice(offset, offset + chunkSize)
-
-          this.bput(chunk, { token: params.token }, options, (response) => {
-            let startPos = blockOffset + offset
-            let endPos = blockOffset + offset + chunkSize
-            let state = _.merge({ startPos, endPos }, response)
-
-            file.ok('chunk', state)
-
-            callback(null, response)
-          })
-        })
-
-        offsetStart += chunkSize
-      }
+      return (callback) => waterfall(tasks, callback)
     })
 
     /**
      * 当所有块(Block)都全部上传完成
      * 则执行合并文件操作
      */
-    waterfall([
-      parallel.bind(null, blockTask),
-      parallel.bind(null, chunkTask),
-    ],
-    (error, responses) => {
+    parallel(tasks, function (error, responses) {
       if (error) {
         callback(error)
         return
       }
 
       let ctxs = _.map(responses, (lastChunk) => lastChunk.ctx)
-      this.mkfile(ctxs, { token }, callback)
+      this.mkfile(ctxs, params, options, callback)
     })
   }
 }
