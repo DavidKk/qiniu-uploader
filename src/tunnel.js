@@ -1,3 +1,5 @@
+/** @module tunnel */
+
 import _ from 'lodash'
 import { waterfall, parallel } from 'async'
 import * as http from './request'
@@ -12,8 +14,8 @@ import { File } from './file'
  * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB
  * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
  *
- * @export
  * @class Tunnel
+ * @export
  */
 export class Tunnel {
   /**
