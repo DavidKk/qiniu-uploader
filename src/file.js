@@ -56,19 +56,6 @@ export class File {
   }
 
   /**
-   * 上传状态类型
-   * 
-   * @enum {Integer}
-   * 
-   * @memberof File
-   * @static
-   */
-  static stateType = new Enum({
-    BLOCK: 1,
-    CHUNK: 2,
-  })
-
-  /**
    * 上传状态格式
    * 
    * @enum {Integer}
@@ -107,14 +94,14 @@ export class File {
    */
   constructor (file, options) {
     this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
-    this.mimeType = file.mimeType || this.settings.mimeType
+    this.type = file.type || this.settings.mimeType
     this.file = file
 
     /**
      * 转化成 blob 对象
      * 将文件(File), 文件列表(Array[<File, File...>]), base64(String) 文件数据转换成 Blob 基础文件对象
      */
-    this.blob = file instanceof Blob ? file : new Blob(_.isArray(file) ? file : [file], { type: this.mimeType })
+    this.blob = file instanceof Blob ? file : new Blob(_.isArray(file) ? file : [file], { type: this.type })
     this.hash = sha256(file.name + file.size + file.type + file.lastModified).toString()
     this.state = []
     this.storage = new Storage()
@@ -131,20 +118,21 @@ export class File {
    * 
    * @param {Integer} beginPos 开始位置，默认为 0，位置必须大于 0, 且不能大于或等于结束位置
    * @param {Integer} endPos 结束位置，必须大于开始位置
+   * @param {String} [type=this.type] 类型，默认为文件的类型
    * @return {Blob} 分片文件
    * 
    * @memberof File
    */
-  slice (beginPos = 0, endPos) {
+  slice (beginPos = 0, endPos, type = this.type) {
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
-      throw new TypeErrror('One of begin pos and end pos is not a integer')
+      throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
     if (!(beginPos < endPos)) {
       throw new Error('End pos must over begin pos')
     }
 
-    return this.blob.slice(beginPos, endPos)
+    return this.blob.slice(beginPos, endPos, type)
   }
 
   /**
@@ -157,19 +145,15 @@ export class File {
    * @memberof File
    */
   setState (beginPos, endPos, state = {}, cache = this.settings.cache) {
-    if (!this.stateType.isValidKey(type)) {
-      throw new TypeError('Type is invalid, it must euqal one of enum File.stateType')
-    }
-
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
-      throw new TypeErrror('One of begin pos and end pos is not a integer')
+      throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
     if (!(beginPos < endPos)) {
       throw new Error('End pos must over begin pos')
     }
 
-    let data = _.assign({ type, beginPos, endPos }, state)
+    let data = _.assign({ beginPos, endPos }, state)
     this.state.push(data)
 
     cache === true && this.saveState()
@@ -186,25 +170,20 @@ export class File {
    * @memberof File
    */
   getState (beginPos, endPos) {
-    if (!this.stateType.isValidKey(type)) {
-      throw new TypeError('Type is invalid, it must euqal one of enum File.stateType')
-    }
-
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
-      throw new TypeErrror('One of begin pos and end pos is not a integer')
+      throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
     if (!(beginPos < endPos)) {
       throw new Error('End pos must over begin pos')
     }
 
-    return _.find(this.state, { type, beginPos, endPos })
+    return _.find(this.state, { beginPos, endPos })
   }
 
   /**
    * 检测分块或者分片是否被上传
    * 
-   * @param {Integer} type 类型，具体参考 File.stateType
    * @param {Object} state 状态，保存的状态
    * @param {Integer} state.beginPos 起始位置
    * @param {Integer} state.endPos 结束位置
@@ -212,8 +191,8 @@ export class File {
    * 
    * @memberof File
    */
-  isUploaded (type, beginPos, endPos) {
-    let item = this.getState(type, beginPos, endPos) || {}
+  isUploaded (beginPos, endPos) {
+    let item = this.getState(beginPos, endPos) || {}
     return item.status === 'uploaded'
   }
 
@@ -257,11 +236,6 @@ export class File {
 
     let state = []
     for (let i = 0, datas = source.state, len = datas.length; i < len; i ++) {
-      if (-1 === _.indexOf(this.constructor.stateType._keys, datas[i].type)) {
-        callback && callback(new Error('Source is invalid'))
-        return
-      }
-
       state.push(datas[i])
     }
 
@@ -274,7 +248,7 @@ export class File {
   /**
    * 导出文件上传状态信息
    * 
-   * @param {Integer} [type=this.constructor.stateType.OBJECT] 格式类型，具体值参考 File.stateFormatter
+   * @param {Integer} [type=this.constructor.stateFormatter.OBJECT] 格式类型，具体值参考 File.stateFormatter
    * @param {Function} callback 回调函数，导出成功将返回数据
    * 
    * @memberof File
@@ -284,13 +258,13 @@ export class File {
       throw new TypeError('Callback is not provided or not be a function')
     }
 
-    if (!this.constructor.stateType.isValidKey(type)) {
+    if (!this.constructor.stateFormatter.isValidKey(type)) {
       callback(new TypeError('Type is invalid, it must equal one of File.stateFormatter'))
       return
     }
 
-    if (type === this.constructor.stateType.JSON) {
-      return this.export(this.constructor.stateType.OBJECT, function (error, data) {
+    if (type === this.constructor.stateFormatter.JSON) {
+      return this.export(this.constructor.stateFormatter.OBJECT, function (error, data) {
         let source
         try {
           source = JSON.stringify(data)

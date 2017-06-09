@@ -11,14 +11,14 @@ describe('Class File', function () {
     it('can import a base64 source', function () {
       let file = new File(base64Image)
 
-      expect(file.mimeType).to.be.a('string')
+      expect(file.type).to.be.a('string')
       expect(file.file).to.be.a('string')
       expect(file.blob).to.be.a('Blob')
       expect(file.hash).to.be.a('string')
       expect(file.state).to.be.a('array')
 
       expect(file.settings).to.deep.equal(File.defaultSettings)
-      expect(file.mimeType).to.equal(File.defaultSettings.mimeType)
+      expect(file.type).to.equal(File.defaultSettings.mimeType)
       expect(file.file).to.equal(base64Image)
       expect(file.size).to.equal(base64Image.length)
     })

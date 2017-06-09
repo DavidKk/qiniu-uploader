@@ -407,8 +407,8 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (!(file instanceof window.File || file instanceof window.Blob)) {
-      callback(new TypeError('File is not provided or not instanceof File'))
+    if (!(file instanceof File)) {
+      callback(new TypeError('File is not provided or not instanceof File (QiniuUploader.File)'))
       return
     }
 
@@ -418,20 +418,21 @@ export class Tunnel {
     let chunkSize = options.chunkSize
 
     if (!_.isInteger(blockSize)) {
-      throw new TypeError('Block size is not a integer')
+      callback(new TypeError('Block size is not a integer'))
+      return
     }
-    
+
     if (!_.isInteger(chunkSize)) {
-      throw new TypeError('Chunk size is not a integer')
+      callback(new TypeError('Chunk size is not a integer'))
+      return
     }
 
     if (blockSize < chunkSize) {
-      throw new Error('Chunk size must less than block size')
+      callback(new Error('Chunk size must less than block size'))
+      return
     }
 
-    let totalBlockNo = Math.ceil(file.size / blockSize)
-
-    let mkblk = (file, startPos, endPos, callback) => {
+    let mkblk = (file, beginPos, endPos, callback) => {
       /**
        * 如果该段已经被上传则执行下一个切割任务
        * 每次切割任务都必须判断分块(Block)是否上传完成
@@ -459,7 +460,7 @@ export class Tunnel {
       })
     }
 
-    let mkchk = (block, file, prevCtx, startPos, endPos, callback) => {
+    let mkchk = (block, file, ctx, beginPos, endPos, callback) => {
       /**
        * 如果该段已经被上传则执行下一个切割任务
        * 每次切割任务都必须判断分片(Chunk)是否上传完成
@@ -470,8 +471,8 @@ export class Tunnel {
         return
       }
 
-      let chunk = block.slice(beginPos, endPos)
-      this.bput(chunk, params, options, (error, response) => {
+      let chunk = block.slice(beginPos, endPos, block.type)
+      this.bput(chunk, _.assign({ ctx, offset: beginPos }, params), options, (error, response) => {
         if (error) {
           callback(error)
           return
@@ -479,15 +480,20 @@ export class Tunnel {
 
         let state = _.assign({ status: 'uploaded' }, response)
         file.setState(beginPos, endPos, state, options.cache)
-        callback(null, { state, chunk, file })
+        callback(null, { state, chunk, block, file })
       })
     }
 
+    let totalBlockNo = Math.ceil(file.size / blockSize)
     let tasks = _.times(totalBlockNo, (number) => {
-      let blockOffset = number * blockSize
+      let tasks = []
+      let blockOffset = blockSize * number
       let beginPos = blockOffset
       let endPos = blockOffset + blockSize
-      let tasks = []
+
+      if (endPos > file.size) {
+        endPos = file.size
+      }
 
       /**
        * 因为上传块(Block)的时候必须同时上传第一个切割片(Chunk)
@@ -495,7 +501,7 @@ export class Tunnel {
        * 不用额外将块(Block)上传信息另外保存起来
        */
       tasks.push((callback) => mkblk(file, beginPos, endPos, callback))
- 
+
       /**
        * 上传片(Chunk)
        * 每个块都由许多片(Chunk)组成
@@ -507,13 +513,21 @@ export class Tunnel {
        * 内存大幅增加，因此我们必须在每个任务上传之前先给定相应的配置(起始位置与片大小等)
        * 来进行定义任务，而非切割多个片(Chunk)资源，而且上传完必须销毁
        */
-      let totalChunkNo = Math.ceil(blockSize / chunkSize)
-      _.times(totalChunkNo, (number) => {
-        let chunkOffset = chunkSize * number
+      let totalChunkNo = Math.ceil((endPos - beginPos) / chunkSize)
+
+      /**
+       * 因为上传分块(Block)已经上传了第一个分片(Chunk)
+       */
+      _.times(totalChunkNo - 1, (number) => {
+        let chunkOffset = chunkSize * (number + 1)
         let beginPos = chunkOffset
         let endPos = chunkOffset + chunkSize
 
-        tasks.push(({ block, state }, callback) => mkchk(block, file, state.ctx, beginPos, endPos, callback))
+        if (endPos > file.size) {
+          endPos = file.size
+        }
+
+        tasks.push(({ state, chunk, block, file }, callback) => mkchk(block, file, state.ctx, beginPos, endPos, callback))
       })
 
       return (callback) => waterfall(tasks, callback)
@@ -523,14 +537,18 @@ export class Tunnel {
      * 当所有块(Block)都全部上传完成
      * 则执行合并文件操作
      */
-    parallel(tasks, function (error, responses) {
+    parallel(tasks, (error, responses) => {
       if (error) {
         callback(error)
         return
       }
+      
+      let ctxs = _.map(responses, ({ file }) => {
+        return _.map(file.state, 'ctx')
+      })
 
-      let ctxs = _.map(responses, (lastChunk) => lastChunk.ctx)
-      this.mkfile(ctxs, params, options, callback)
+      ctxs = _.flattenDeep(ctxs)
+      this.mkfile(ctxs, _.assign({ size: file.size }, params), options, callback)
     })
   }
 }

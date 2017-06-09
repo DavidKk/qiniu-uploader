@@ -34,7 +34,7 @@ describe('Class Tunnel', function () {
 
     let host = 'x.com'
     let key = 'key'
-    let mimeType = 'mimeType'
+    let mimeType = 'plain/text'
     let crc32 = 'crc32'
     let userVars = 'userVars'
     let token = 'token'
@@ -262,8 +262,73 @@ describe('Class Tunnel', function () {
       server.respond()
     })
 
-    // it('can upload by slice', function () {
+    it('can upload by sliced', function (done) {
+      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      let file = new File(base64Image, { mimeType })
+      let blockSize = 40
+      let chunkSize = 10
 
-    // })
+      /**
+       * 因为上传涉及多个 AJAX 请求，因此必须设置
+       * 自动回复并根据请求地址返回相应的信息
+       */
+      server.autoRespond = true
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+
+        let headers = xhr.requestHeaders
+        expect(headers['Content-Type']).to.equal('application/octet-stream;charset=utf-8')
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
+
+        let body = xhr.requestBody
+        let paths = _.trim(uri.path(), '\/').split('\/')
+
+        switch (paths[0]) {
+          /**
+           * 创建块的同时必须上传第一个分片，又因为文件总
+           * 大小为 74，分块大小为 40，因此最后一个分块的
+           * 大小仍然为分片的大小
+           */
+          case 'mkblk':
+            expect(body).to.be.an.instanceof(Blob)
+            expect(body.type).to.equal(mimeType)
+            expect(body.size).to.equal(chunkSize)
+
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'block' }))
+            break
+
+          /**
+           * 因为文件总大小为 74，因此最后一个分块可能为 34
+           * 而最后一个分块中的最后一个分片必然为 4
+           */
+          case 'bput':
+            expect(body).to.be.an.instanceof(Blob)
+            expect(body.type).to.equal(mimeType)
+            expect(body.size === chunkSize || body.size === 4).to.be.true
+
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'chunk' }))
+            break
+
+          case 'mkfile':
+            expect(body).to.be.a('String')
+            expect(body).to.equal('block,block,chunk,chunk,chunk,chunk,chunk,chunk,block,block,chunk,chunk,chunk,chunk,chunk,chunk')
+
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'file' }))
+            break
+        }
+      })
+
+      tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+        expect(error).not.to.be.an('error')
+        expect(response).to.deep.equal({ ctx: 'file' })
+
+        done()
+      })
+
+      server.respond()
+    })
   })
 })
