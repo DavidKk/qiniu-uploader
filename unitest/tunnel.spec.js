@@ -1,7 +1,8 @@
 /* eslint max-nested-callbacks: off */
-/* eslint-env mocha */
-/* global expect */
+/* eslint-env mocha, browser */
+/* global expect, sinon */
 
+import _ from 'lodash'
 import URI from 'urijs'
 import { File } from '../src/file'
 import { Tunnel } from '../src/tunnel'
@@ -54,12 +55,12 @@ describe('Class Tunnel', function () {
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
-        expect(body).to.be.an.instanceof(FormData)
+        expect(body).to.be.an.instanceof(window.FormData)
 
-        if (FormData.prototype.has) {
-          expect(body.has('key')).to.be.true
-          expect(body.has('token')).to.be.true
-          expect(body.has('file')).to.be.true
+        if (window.FormData.prototype.has) {
+          expect(body.has('key')).to.be.true()
+          expect(body.has('token')).to.be.true()
+          expect(body.has('file')).to.be.true()
 
           expect(body.getAll('key')).to.have.lengthOf(1)
           expect(body.getAll('token')).to.have.lengthOf(1)
@@ -68,8 +69,7 @@ describe('Class Tunnel', function () {
           expect(body.get('key')).to.equal(key)
           expect(body.get('token')).to.equal(token)
           expect(body.get('file')).to.equal(file)
-        }
-        else {
+        } else {
           console.warn('Browser does\'t support method `FormData.prototype.has` and it will ignore validate datas which from form post')
         }
 
@@ -113,9 +113,9 @@ describe('Class Tunnel', function () {
          * only support method `append`
          */
         if (FormData.prototype.has) {
-          expect(body.has('key')).to.be.true
-          expect(body.has('token')).to.be.true
-          expect(body.has('file')).to.be.true
+          expect(body.has('key')).to.be.true()
+          expect(body.has('token')).to.be.true()
+          expect(body.has('file')).to.be.true()
 
           expect(body.getAll('key')).to.have.lengthOf(1)
           expect(body.getAll('token')).to.have.lengthOf(1)
@@ -124,8 +124,7 @@ describe('Class Tunnel', function () {
           expect(body.get('key')).to.equal(key)
           expect(body.get('token')).to.equal(token)
           expect(body.get('file')).to.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
-        }
-        else {
+        } else {
           console.warn('Browser does\'t support method `FormData.prototype.has` and it will ignore validate some form datas')
         }
 
@@ -148,7 +147,7 @@ describe('Class Tunnel', function () {
     it('can generate block', function (done) {
       let responseData = JSON.stringify({ code: 1 })
       let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-      let chunkSize = 14;
+      let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
 
@@ -187,7 +186,7 @@ describe('Class Tunnel', function () {
     it('can upload chunk', function (done) {
       let responseData = JSON.stringify({ code: 1 })
       let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-      let chunkSize = 14;
+      let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
       let chunk = block.slice(chunkSize, chunkSize * 2, blockType)
@@ -228,7 +227,7 @@ describe('Class Tunnel', function () {
     it('can concat all block to a file', function (done) {
       let responseData = JSON.stringify({ code: 1 })
       let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-      let chunkSize = 14;
+      let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
       let ctxs = ['ctx1', 'ctx2']
@@ -285,7 +284,7 @@ describe('Class Tunnel', function () {
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
-        let paths = _.trim(uri.path(), '\/').split('\/')
+        let paths = _.trim(uri.path(), '/').split('/')
 
         switch (paths[0]) {
           /**
@@ -308,7 +307,7 @@ describe('Class Tunnel', function () {
           case 'bput':
             expect(body).to.be.an.instanceof(Blob)
             expect(body.type).to.equal(mimeType)
-            expect(body.size === chunkSize || body.size === 4).to.be.true
+            expect(body.size === chunkSize || body.size === 4).to.be.true()
 
             xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `chunk_${body.size}` }))
             break
@@ -316,7 +315,7 @@ describe('Class Tunnel', function () {
           /**
            * 上传的 ctxs 值个数只有分块的个数，因为只需要
            * 上传分块中的最后一个分片上传完返回的哈希值
-           * 
+           *
            * 合并文件的时候必须要注意的是上传的 ctxs 值必须
            * 是分割的顺序的，这里我们通过最后一个块的大小不同来
            * 模拟位置

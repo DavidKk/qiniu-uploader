@@ -23,7 +23,7 @@ export default function (config) {
       ]
     },
     reporters: [
-      'mocha',
+      'mocha'
     ],
     webpack: webpackConf,
     webpackMiddleware: {
@@ -77,7 +77,7 @@ export default function (config) {
             }
           ]
         }
-      }),
+      })
     })
   }
 

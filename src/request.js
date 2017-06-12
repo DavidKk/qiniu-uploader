@@ -1,4 +1,5 @@
 /** @module request */
+/** eslint-env browser */
 
 import _ from 'lodash'
 import URI from 'urijs'
@@ -7,7 +8,7 @@ let settings = {}
 
 /**
  * 设置默认配置
- * 
+ *
  * @param {Object} options 配置
  * @export
  */
@@ -17,13 +18,13 @@ export function configure (options) {
 
 /**
  * 上传，执行 POST 请求 XMLHttpRequest
- * 
+ *
  * @param {String} url 请求地址
  * @param {Object} data 提交数据
  * @param {Object} [options] 配置
  * @param {Function} callback 回调函数
  * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
- * 
+ *
  * @export
  */
 export function upload (url, data, options, callback) {
@@ -32,14 +33,14 @@ export function upload (url, data, options, callback) {
 
 /**
  * 请求 XMLHttpRequest
- * 
- * @param {string} [method='POST'] 提交方法 
+ *
+ * @param {string} [method='POST'] 提交方法
  * @param {String} url 请求地址
  * @param {Object} data 提交数据，若请求方法为 GET，则数据将转换成请求地址的 query
  * @param {Object} [options={}] 请求配置
  * @param {Function} callback 回调函数
  * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
- * 
+ *
  * @export
  */
 export function request (method = 'POST', url, data, options = {}, callback) {
@@ -90,8 +91,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   if (isGetMethod) {
     if (_.isEmpty(data)) {
       xhr.open(method, url, true)
-    }
-    else {
+    } else {
       let uri = new URI(url)
       let params = URI.parseParameters(uri.query())
 
@@ -100,8 +100,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
 
       xhr.open(method, uri.href(), true)
     }
-  }
-  else {
+  } else {
     xhr.open(method, url, true)
   }
 
@@ -113,14 +112,12 @@ export function request (method = 'POST', url, data, options = {}, callback) {
 
   if (isGetMethod) {
     xhr.send(null)
-  }
-  else {
+  } else {
     if (_.isPlainObject(data)) {
-      let formData = new FormData()
+      let formData = new window.FormData()
       _.forEach(data, (value, key) => formData.append(key, value))
       xhr.send(formData)
-    }
-    else {
+    } else {
       xhr.send(data || null)
     }
   }

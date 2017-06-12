@@ -20,9 +20,9 @@ import { File } from './file'
 export class Tunnel {
   /**
    * 七牛通道类默认配置
-   * 
+   *
    * @type {Object}
-   * 
+   *
    * @memberof Tunnel
    * @static
    */
@@ -32,7 +32,7 @@ export class Tunnel {
      * @type {Boolean}
      * @inner
      */
-    useHttps: 'https:' === 'undefined' === typeof window ? false : window.location.protocol,
+    useHttps: typeof window === 'undefined' ? false : window.location.protocol,
     /**
      * 是否缓存
      * @type {Boolean}
@@ -68,14 +68,14 @@ export class Tunnel {
      * @type {Integer}
      * @inner
      */
-    chunkSize: 1 * CONFIG.M,
+    chunkSize: 1 * CONFIG.M
   }
 
   /**
    * Creates an instance of Tunnel
-   * 
+   *
    * @param {Object} options 默认配置
-   * 
+   *
    * @memberof Tunnel
    */
   constructor (options) {
@@ -85,7 +85,7 @@ export class Tunnel {
   /**
    * 上传文件
    * 普通文件上传，适合小文件
-   * 
+   *
    * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -94,8 +94,8 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   upload (file, params = {}, options = {}, callback) {
@@ -103,7 +103,7 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (!(file instanceof File || file instanceof Blob)) {
+    if (!(file instanceof File || file instanceof window.Blob)) {
       callback(new TypeError('File is not provided or not instanceof File'))
       return
     }
@@ -119,7 +119,7 @@ export class Tunnel {
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}`
     let datas = _.assign({ file }, params)
     let headers = {
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
     return http.upload(url, datas, _.assign({ headers }, options), callback)
@@ -129,7 +129,7 @@ export class Tunnel {
    * 上传 base64 资源
    * 普通文件上传，适合一次过base64文件
    * @see https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code
-   * 
+   *
    * @param {string} content base64文件数据
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -141,8 +141,8 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   upb64 (content, params = { size: -1 }, options = {}, callback) {
@@ -188,7 +188,7 @@ export class Tunnel {
     let datas = content.replace(CONFIG.BASE64_REGEXP, '')
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
     return http.upload(url, datas, _.assign({ headers }, options), callback)
@@ -201,9 +201,9 @@ export class Tunnel {
    * 每个块上传的开始必须将第一个分片同时上传
    * 2. 上传完之后会返回第一个分片的哈希值(ctx)，第二个分片必
    * 须同时上传第一个分片的哈希值
-   * 
+   *
    * @see https://developer.qiniu.com/kodo/api/1286/mkblk
-   * 
+   *
    * @param {Blob} block 块
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -212,8 +212,8 @@ export class Tunnel {
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {number} options.chunkSize 设置每个分片的大小
    * @param {mkblkCallback} callback 上传之后执行的回调函数
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   mkblk (block, params = {}, options = {}, callback) {
@@ -221,7 +221,7 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(block) || !(block instanceof Blob)) {
+    if (_.isEmpty(block) || !(block instanceof window.Blob)) {
       callback(new TypeError('Block is not provided or not instanceof Blob'))
       return
     }
@@ -238,7 +238,7 @@ export class Tunnel {
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkblk/${block.size}`
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
     return http.upload(url, chunk, _.assign({ headers }, options), callback)
@@ -254,9 +254,9 @@ export class Tunnel {
    * 块时上传的第一个分片范围的哈希值
    * 3. 最后一个分片值代表该块的结束，必须记录好哈希值(ctx)；
    * 在合并文件的时候可以通过这些最后的哈希值进行合成文件
-   * 
+   *
    * @see https://developer.qiniu.com/kodo/api/1251/bput
-   * 
+   *
    * @param {Blob} chunk 片
    * @param {Object} params 参数
    * @param {String} params.ctx 前一次上传返回的块级上传控制信息
@@ -266,8 +266,8 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   bput (chunk, params = {}, options = {}, callback) {
@@ -275,7 +275,7 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(chunk) || !(chunk instanceof Blob)) {
+    if (_.isEmpty(chunk) || !(chunk instanceof window.Blob)) {
       callback(new TypeError('Block is not provided or not instanceof Blob'))
       return
     }
@@ -301,7 +301,7 @@ export class Tunnel {
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/bput/${params.ctx}/${params.offset}`
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
     return http.upload(url, chunk, _.assign({ headers }, options), callback)
@@ -310,9 +310,9 @@ export class Tunnel {
   /**
    * 提交组合文件，将所有块与分片组合起来并生成文件
    * 当所有块与分片都上传了，将所有块的返回
-   * 
+   *
    * @see https://developer.qiniu.com/kodo/api/1287/mkfile
-   * 
+   *
    * @param {Array|String} ctx 文件
    * @param {Object} params 参数
    * @param {Integer} params.size 文件大小
@@ -323,8 +323,8 @@ export class Tunnel {
    * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   mkfile (ctxs, params = {}, options = {}, callback) {
@@ -369,7 +369,7 @@ export class Tunnel {
     let data = _.isArray(ctxs) ? ctxs.join(',') : ctxs
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`,
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
     return http.upload(url, data, _.assign({ headers }, options), callback)
@@ -381,7 +381,7 @@ export class Tunnel {
    * 上传的快慢并不代表分个数的大小, 我们应该尽量
    * 创建适当多个块(Block), 因为没上传的块只是阻塞
    * 在任务队列中
-   * 
+   *
    * @param {File|Blob} file 文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -394,9 +394,9 @@ export class Tunnel {
    * @param {Boolean} [options.cache=true] 设置本地缓存
    * @param {Boolean} [options.override=false] 无论是否已经上传都进行重新上传
    * @param {Integer} [options.maxConnect=4] 最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中
-   * @param {Function} callback 回调 
-   * @returns {Object|Undefined} 包括 xhr　与 cancel 方法
-   * 
+   * @param {Function} callback 回调
+   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
+   *
    * @memberof Tunnel
    */
   resuming (file, params, options, callback) {
@@ -447,7 +447,7 @@ export class Tunnel {
        * 每次切割任务都必须判断分块(Block)是否上传完成
        */
       let state = file.getState(beginPos, endPos)
-      if (false === options.override && state) {
+      if (options.override === false && state) {
         callback(null, state)
         return
       }
@@ -484,7 +484,7 @@ export class Tunnel {
        * 每次切割任务都必须判断分片(Chunk)是否上传完成
        */
       let state = file.getState(beginPos, endPos)
-      if (false === options.override && state) {
+      if (options.override === false && state) {
         callback(null, state)
         return
       }

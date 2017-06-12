@@ -1,23 +1,24 @@
 /** @module stroage */
 
+import _ from 'lodash'
 import { STORAGE_PREFIX } from './config'
 
 /**
  * 存储类
  * 存储的值拥有前缀，具体参考配置
- * 
+ *
  * @class Storage
  * @export
  */
 export class Storage {
   static defaultSettings = {
-    prefix: STORAGE_PREFIX,
+    prefix: STORAGE_PREFIX
   }
-  
+
   /**
    * Creates an instance of Storage.
    * @param {Object} options 配置
-   * 
+   *
    * @memberof Storage
    */
   constructor (options) {
@@ -26,10 +27,10 @@ export class Storage {
 
   /**
    * 设置本地缓存
-   * 
+   *
    * @param {String} name 名字
    * @param {any} value 值，该值会进行 JSON.parse，因此请确保传入值没有循环引用
-   * 
+   *
    * @memberof Storage
    */
   set (name, value) {
@@ -42,10 +43,10 @@ export class Storage {
 
   /**
    * 获取本地缓存
-   * 
+   *
    * @param {String} name 名称
    * @returns {any} 值
-   * 
+   *
    * @memberof Storage
    */
   get (name) {
@@ -54,8 +55,7 @@ export class Storage {
     if (source) {
       try {
         return JSON.parse(source)
-      }
-      catch (error) {
+      } catch (error) {
         // nothing to do...
       }
     }
@@ -65,9 +65,9 @@ export class Storage {
 
   /**
    * 删除本地缓存
-   * 
+   *
    * @param {String} name 名称
-   * 
+   *
    * @memberof Storage
    */
   del (name) {
