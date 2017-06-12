@@ -30,7 +30,7 @@ export class Enum {
 	 * 根据 index 获取 key 值
 	 * 
 	 * @param {Integer} index 索引
-	 * @return {String}
+	 * @returns {String}
 	 * 
 	 * @memberof Enum
 	 */
@@ -42,7 +42,7 @@ export class Enum {
 	 * 判断键值是否为合法值
 	 * 
 	 * @param {String} key 
-	 * @return {Boolean}
+	 * @returns {Boolean}
 	 * 
 	 * @memberof Enum
 	 */
@@ -54,7 +54,7 @@ export class Enum {
 	 * 通过索引(index) 获取值
 	 * 
 	 * @param {Integer} index 索引
-	 * @return {any}
+	 * @returns {any}
 	 * 
 	 * @memberof Enum
 	 */

@@ -298,7 +298,7 @@ describe('Class Tunnel', function () {
             expect(body.type).to.equal(mimeType)
             expect(body.size).to.equal(chunkSize)
 
-            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'block' }))
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `block_${body.size}` }))
             break
 
           /**
@@ -310,12 +310,20 @@ describe('Class Tunnel', function () {
             expect(body.type).to.equal(mimeType)
             expect(body.size === chunkSize || body.size === 4).to.be.true
 
-            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'chunk' }))
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `chunk_${body.size}` }))
             break
 
+          /**
+           * 上传的 ctxs 值个数只有分块的个数，因为只需要
+           * 上传分块中的最后一个分片上传完返回的哈希值
+           * 
+           * 合并文件的时候必须要注意的是上传的 ctxs 值必须
+           * 是分割的顺序的，这里我们通过最后一个块的大小不同来
+           * 模拟位置
+           */
           case 'mkfile':
             expect(body).to.be.a('String')
-            expect(body).to.equal('block,block,chunk,chunk,chunk,chunk,chunk,chunk,block,block,chunk,chunk,chunk,chunk,chunk,chunk')
+            expect(body).to.equal('chunk_10,chunk_4')
 
             xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'file' }))
             break

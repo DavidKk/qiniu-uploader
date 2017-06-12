@@ -11,7 +11,7 @@ import { File } from './file'
  */
 export class Uploader {
   /**
-   * Creates an instance of Uploader.
+   * Creates an instance of Uploader
    * 
    * @memberof Uploader
    */

@@ -1,4 +1,5 @@
 /** @module stroage */
+
 import { STORAGE_PREFIX } from './config'
 
 /**

@@ -121,7 +121,7 @@ export class File {
    * @param {Integer} beginPos 开始位置，默认为 0，位置必须大于 0, 且不能大于或等于结束位置
    * @param {Integer} endPos 结束位置，必须大于开始位置
    * @param {String} [type=this.type] 类型，默认为文件的类型
-   * @return {Blob} 分片文件
+   * @returns {Blob} 分片文件
    * 
    * @memberof File
    */
@@ -189,7 +189,7 @@ export class File {
    * @param {Object} state 状态，保存的状态
    * @param {Integer} state.beginPos 起始位置
    * @param {Integer} state.endPos 结束位置
-   * @return {Boolean} 返回是否上传成功
+   * @returns {Boolean} 返回是否上传成功
    * 
    * @memberof File
    */
