@@ -1,5 +1,3 @@
-/** @module file */
-
 import _ from 'lodash'
 import sha256 from 'crypto-js/sha256'
 import * as CONFIG from './config'
@@ -12,7 +10,6 @@ import { Storage } from './storage'
  * 能够保存文件分块分片信息到本地缓存中
  * 通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果
  *
- * @export
  * @class File
  */
 export class File {

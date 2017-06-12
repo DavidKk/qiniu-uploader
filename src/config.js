@@ -1,11 +1,8 @@
-/** @module config */
-
 /**
  * 本地缓存前缀
  *
  * @type {String}
  * @const
- * @export
  */
 export const STORAGE_PREFIX = 'QINIU_UPLOAD'
 
@@ -14,7 +11,6 @@ export const STORAGE_PREFIX = 'QINIU_UPLOAD'
  *
  * @type {RegExp}
  * @const
- * @export
  */
 export const BASE64_REGEXP = /^data:([\w\W]+?);base64,/
 
@@ -24,7 +20,6 @@ export const BASE64_REGEXP = /^data:([\w\W]+?);base64,/
  * @see https://developer.qiniu.com/kodo/manual/1671/region-endpoint
  * @type {String}
  * @const
- * @export
  */
 export const QINIU_UPLOAD_HTTPS_URL = 'upload-z2.qbox.me'
 
@@ -33,7 +28,6 @@ export const QINIU_UPLOAD_HTTPS_URL = 'upload-z2.qbox.me'
  *
  * @type {String}
  * @const
- * @export
  */
 export const QINIU_UPLOAD_HTTP_URL = 'upload-z2.qiniu.com'
 
@@ -42,7 +36,6 @@ export const QINIU_UPLOAD_HTTP_URL = 'upload-z2.qiniu.com'
  *
  * @type {Integer}
  * @const
- * @export
  */
 export const K = 1024
 
@@ -51,7 +44,6 @@ export const K = 1024
  *
  * @type {Integer}
  * @const
- * @export
  */
 export const M = K * K
 
@@ -60,6 +52,5 @@ export const M = K * K
  *
  * @type {Integer}
  * @const
- * @export
  */
 export const G = M * M

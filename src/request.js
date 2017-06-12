@@ -1,6 +1,3 @@
-/** @module request */
-/** eslint-env browser */
-
 import _ from 'lodash'
 import URI from 'urijs'
 
@@ -10,7 +7,6 @@ let settings = {}
  * 设置默认配置
  *
  * @param {Object} options 配置
- * @export
  */
 export function configure (options) {
   settings = _.defaultsDeep(options, settings)
@@ -24,8 +20,6 @@ export function configure (options) {
  * @param {Object} [options] 配置
  * @param {Function} callback 回调函数
  * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
- *
- * @export
  */
 export function upload (url, data, options, callback) {
   return request('POST', url, data, options, callback)
@@ -40,8 +34,6 @@ export function upload (url, data, options, callback) {
  * @param {Object} [options={}] 请求配置
  * @param {Function} callback 回调函数
  * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
- *
- * @export
  */
 export function request (method = 'POST', url, data, options = {}, callback) {
   if (arguments.length < 3) {

@@ -1,4 +1,5 @@
 # Source
+/docs
 /src
 /unitest
 /.babelrc

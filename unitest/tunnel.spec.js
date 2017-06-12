@@ -58,6 +58,7 @@ describe('Class Tunnel', function () {
         expect(body).to.be.an.instanceof(window.FormData)
 
         if (window.FormData.prototype.has) {
+          /* eslint no-unused-expressions: 0 */
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
           expect(body.has('file')).to.be.true
@@ -113,6 +114,7 @@ describe('Class Tunnel', function () {
          * only support method `append`
          */
         if (FormData.prototype.has) {
+          /* eslint no-unused-expressions: 0 */
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
           expect(body.has('file')).to.be.true
@@ -305,6 +307,7 @@ describe('Class Tunnel', function () {
            * 而最后一个分块中的最后一个分片必然为 4
            */
           case 'bput':
+            /* eslint no-unused-expressions: 0 */
             expect(body).to.be.an.instanceof(Blob)
             expect(body.type).to.equal(mimeType)
             expect(body.size === chunkSize || body.size === 4).to.be.true

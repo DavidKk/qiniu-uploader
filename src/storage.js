@@ -1,5 +1,3 @@
-/** @module stroage */
-
 import _ from 'lodash'
 import { STORAGE_PREFIX } from './config'
 
@@ -8,7 +6,6 @@ import { STORAGE_PREFIX } from './config'
  * 存储的值拥有前缀，具体参考配置
  *
  * @class Storage
- * @export
  */
 export class Storage {
   static defaultSettings = {

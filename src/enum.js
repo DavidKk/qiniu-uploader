@@ -1,11 +1,8 @@
-/** @module enum */
-
 import _ from 'lodash'
 
 /**
  * 枚举类
  *
- * @export
  * @class Enum
  */
 export class Enum {

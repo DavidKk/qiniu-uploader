@@ -1,5 +1,3 @@
-/** @module uploader */
-
 import { File } from './file'
 import { Tunnel } from './tunnel'
 import { M, BASE64_REGEXP } from './config'
@@ -8,7 +6,6 @@ import { M, BASE64_REGEXP } from './config'
  * 上传类
  *
  * @class Uploader
- * @export
  */
 export class Uploader {
   /**

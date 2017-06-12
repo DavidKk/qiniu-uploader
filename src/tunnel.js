@@ -1,5 +1,3 @@
-/** @module tunnel */
-
 import _ from 'lodash'
 import waterfall from 'async/waterfall'
 import parallelLimit from 'async/parallelLimit'
@@ -16,7 +14,6 @@ import { File } from './file'
  * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
  *
  * @class Tunnel
- * @export
  */
 export class Tunnel {
   /**
