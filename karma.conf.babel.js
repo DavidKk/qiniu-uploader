@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
-import webpackConf from './webpack.config.babel'
+import webpackConf from './webpack.common.config.babel'
 
 const basePath = path.resolve('./')
 

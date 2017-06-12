@@ -1,0 +1,62 @@
+# Source
+/src
+/unitest
+/.babelrc
+/.travis.yml
+/karma.conf.babel.js
+/karma.conf.js
+/webpack.common.config.babel.js
+/webpack.product.config.babel.js
+
+
+# Source Bucket
+.git
+.hg
+.svn
+.gitignore
+
+
+# Coverage directory used by tools like istanbul
+/coverage
+
+
+# NPM
+.npmrc
+npm-shrinkwrap.json
+node_modules
+npm-debug.log
+
+
+# YARN
+.yarnrc
+yarn.lock
+
+
+# Numerous always-ignore extensions
+*.bak
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+
+
+# OS or Editor folders
+.vscode
+.DS_Store
+._*
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.idea

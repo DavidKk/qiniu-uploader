@@ -1,7 +1,8 @@
 /** @module tunnel */
 
 import _ from 'lodash'
-import { waterfall, parallelLimit } from 'async'
+import waterfall from 'async/waterfall'
+import parallelLimit from 'async/parallelLimit'
 import * as http from './request'
 import * as CONFIG from './config'
 import { File } from './file'

@@ -58,9 +58,9 @@ describe('Class Tunnel', function () {
         expect(body).to.be.an.instanceof(window.FormData)
 
         if (window.FormData.prototype.has) {
-          expect(body.has('key')).to.be.true()
-          expect(body.has('token')).to.be.true()
-          expect(body.has('file')).to.be.true()
+          expect(body.has('key')).to.be.true
+          expect(body.has('token')).to.be.true
+          expect(body.has('file')).to.be.true
 
           expect(body.getAll('key')).to.have.lengthOf(1)
           expect(body.getAll('token')).to.have.lengthOf(1)
@@ -113,9 +113,9 @@ describe('Class Tunnel', function () {
          * only support method `append`
          */
         if (FormData.prototype.has) {
-          expect(body.has('key')).to.be.true()
-          expect(body.has('token')).to.be.true()
-          expect(body.has('file')).to.be.true()
+          expect(body.has('key')).to.be.true
+          expect(body.has('token')).to.be.true
+          expect(body.has('file')).to.be.true
 
           expect(body.getAll('key')).to.have.lengthOf(1)
           expect(body.getAll('token')).to.have.lengthOf(1)
@@ -307,7 +307,7 @@ describe('Class Tunnel', function () {
           case 'bput':
             expect(body).to.be.an.instanceof(Blob)
             expect(body.type).to.equal(mimeType)
-            expect(body.size === chunkSize || body.size === 4).to.be.true()
+            expect(body.size === chunkSize || body.size === 4).to.be.true
 
             xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `chunk_${body.size}` }))
             break

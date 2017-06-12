@@ -6,10 +6,13 @@
   "author": "<David Jones qowera@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "standard": "standard --parser babel-eslint ./src/**/*.js ./unitest/**/*.spec.js ./*.js",
-    "standard:fix": "standard --parser babel-eslint ./src/**/*.js ./unitest/**/*.spec.js ./*.js --fix",
+    "build": "webpack --config ./webpack.product.config.babel.js",
+    "standard": "standard ./src/**/*.js ./unitest/**/*.spec.js ./*.js --parser babel-eslint",
+    "standard:fix": "standard ./src/**/*.js ./unitest/**/*.spec.js ./*.js --parser babel-eslint --fix",
     "unitest": "cross-env UNITEST=1 karma start ./karma.conf.js",
     "unitest:coverage": "rimraf ./coverage && cross-env UNITEST=1 COVERAGE=1 karma start ./karma.conf.js",
+    "release": "npm run standard && npm run unitest",
+    "coveralls": "npm run unitest:coverage && node ./bin/coveralls.js < ./coverage/lcov.info",
     "start": ""
   },
   "devDependencies": {
