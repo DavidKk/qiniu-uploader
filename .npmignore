@@ -4,6 +4,7 @@
 /unitest
 /.babelrc
 /.travis.yml
+/esdoc.json
 /karma.conf.babel.js
 /karma.conf.js
 /webpack.common.config.babel.js
