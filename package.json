@@ -1,5 +1,5 @@
 {
-  "name": "qiniu-uploader",
+  "name": "qiniup",
   "version": "0.1.0",
   "description": "Qiniu Uploader",
   "main": "dist/qiniuUploader.js",
