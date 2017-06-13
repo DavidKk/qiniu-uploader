@@ -19,7 +19,7 @@ script:
   - npm run coveralls
 
 before_deploy:
-  - npm run release
+  - npm run build
   - npm run document
 
 deploy:
