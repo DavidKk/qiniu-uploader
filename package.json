@@ -1,6 +1,6 @@
 {
   "name": "qiniu-uploader",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Qiniu Uploader",
   "main": "dist/qiniuUploader.js",
   "author": "<David Jones qowera@gmail.com>",
@@ -13,6 +13,7 @@
     "unitest:coverage": "rimraf ./coverage && cross-env UNITEST=1 COVERAGE=1 karma start ./karma.conf.js",
     "release": "npm run standard && npm run unitest && npm run build",
     "coveralls": "npm run unitest:coverage && node ./node_modules/.bin/coveralls < ./coverage/lcov.info",
+    "document": "rimraf ./docs && esdoc -c ./esdoc.json",
     "start": ""
   },
   "devDependencies": {
@@ -45,6 +46,7 @@
   "dependencies": {
     "async": "^2.4.1",
     "crypto-js": "^3.1.9-1",
+    "esdoc": "^0.5.2",
     "lodash": "^4.17.4"
   }
 }
