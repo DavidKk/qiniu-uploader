@@ -16,8 +16,8 @@ export class Uploader {
    * @property {Boolean} defaultSettings.minFileSize 最小文件大小
    */
   static defaultSettings = {
-    maxFileSize: CONFIG.G,
-    minFileSize: 0,
+    maxFileSize: G,
+    minFileSize: 0
   }
 
   /**
@@ -33,7 +33,7 @@ export class Uploader {
      * @type {String}
      */
     this.token = ''
-    
+
     /**
      * 令牌过期时间
      * @type {Integer}

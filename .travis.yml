@@ -20,3 +20,12 @@ script:
 
 before_deploy:
   - npm run release
+
+deploy:
+  provider: pages
+  local_dir: docs
+  skip_cleanup: true
+  github_token:
+    secure: hNFpGJSeK5HMdQRfDTVUmJJhmCdiLAzeGOanZBBUVk0R6DVOfxp3SwB38MHqCKnRFBjYlV51yMrNQjPGJiyHkslwLGz5NKezn0WOzw1YDzCBYy+Oy8t/CYEUoK4zn+cjhFowZ3L6S3emflLgnfX24oerP1M7JYzGOG8KBZbOOVg=
+  on:
+    branch: master

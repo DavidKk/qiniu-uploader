@@ -21,7 +21,7 @@ export class File {
    * 分片大小，默认为 4M，表示一片，虽然没有限制，
    * 但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，
    * 因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
-   * 
+   *
    * @property {Integer} defaultSettings.chunkInBlock 分片数量，默认为 1
    * @property {Boolean} defaultSettings.cache 是否缓存
    * @property {Integer} defaultSettings.expired
@@ -55,42 +55,42 @@ export class File {
 
   /**
    * 创建一个文件对象
-   * 
+   *
    * @param {File|Blob|String} file
    * 需要上传的文件，可以为 Form 获取的 File 对象，
    * 可以为 Blob，或者是 Base64 等字符串
-   * 
+   *
    * @param {Object} [options={}] 配置，可以参考{@link File.defaultSettings}
    * @param {String} [options.mimeType='plain/text] 文件类型，默认为 plain/text 文本类型
    * @param {Integer} [options.chunkSize=4 * M]
    * 分片大小，默认为 4M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，
    * 最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，
    * 参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
-   * 
+   *
    * @param {Integer} options.chunkInBlock 分片数量，默认为 1
    * @param {Integer} options.expired
    * 过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
-   * 
+   *
    * @return {File} 文件对象
    */
   constructor (file, options) {
     /**
      * 配置
-     * 
+     *
      * @type {Object}
      */
     this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
 
     /**
      * 文件类型
-     * 
+     *
      * @type {String}
      */
     this.type = file.type || this.settings.mimeType
-    
+
     /**
      * 源文件
-     * 
+     *
      * @type {File|Blob|String}
      */
     this.file = file
@@ -98,7 +98,7 @@ export class File {
     /**
      * 源文件转化成的 Blob 对象
      * 将文件(File), 文件列表(Array[<File, File...>]), base64(String) 文件数据转换成 Blob 基础文件对象
-     * 
+     *
      * @type {Blob}
      */
     this.blob = file instanceof window.Blob ? file : new window.Blob(_.isArray(file) ? file : [file], { type: this.type })
@@ -106,21 +106,21 @@ export class File {
     /**
      * 文件哈希值，根据文件名文件大小文件类型与最后修改时间来确定；
      * 如果源文件为字符串则直接将字符串进行哈希处理
-     * 
+     *
      * @type {String}
      */
-    this.hash = _.isString(file) ? sha256(file) : sha256(file.name + file.size + file.type + file.lastModified).toString()
+    this.hash = sha256(_.isString(file) ? file : file.name + file.size + file.type + file.lastModified).toString()
 
     /**
      * 文件状态，用于存储文件上传信息
-     * 
+     *
      * @type {Array<Object>}
      */
     this.state = []
 
     /**
      * 存储对象，主要用于本地存储
-     * 
+     *
      * @type {Storage}
      */
     this.storage = new Storage()
@@ -155,7 +155,7 @@ export class File {
 
   /**
    * 保存状态信息
-   * 
+   *
    * @param {Integer} beginPos 起始位置
    * @param {Integer} endPos 结束位置
    * @param {Object} state 状态，保存的状态
@@ -178,7 +178,7 @@ export class File {
 
   /**
    * 获取文件上传信息
-   * 
+   *
    * @param {Integer} beginPos 起始位置
    * @param {Integer} endPos 结束位置
    * @return {Object} 信息数据
@@ -197,7 +197,7 @@ export class File {
 
   /**
    * 检测分块或者分片是否被上传
-   * 
+   *
    * @param {Integer} beginPos 起始位置
    * @param {Integer} endPos 结束位置
    * @return {Boolean} 返回是否上传成功
