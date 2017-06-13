@@ -10,57 +10,35 @@ import { Storage } from './storage'
  * 能够保存文件分块分片信息到本地缓存中
  * 通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果
  *
- * @class File
+ * @class
  */
 export class File {
   /**
    * File 默认配置
-   *
    * @type {Object}
-   *
-   * @memberof File
-   * @static
+   * @property {String} defaultSettings.mimeType 文件类型，默认为 plain/text 文本类型
+   * @property {Integer} defaultSettings.chunkSize
+   * 分片大小，默认为 4M，表示一片，虽然没有限制，
+   * 但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，
+   * 因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
+   * 
+   * @property {Integer} defaultSettings.chunkInBlock 分片数量，默认为 1
+   * @property {Boolean} defaultSettings.cache 是否缓存
+   * @property {Integer} defaultSettings.expired
+   * 过期时间，默认为一天 (1000 x 60 x 60 x 24)，
+   * 该事件为保存文件信息到本地缓存中缓存的过期时间
    */
   static defaultSettings = {
-    /**
-     * 文件类型，默认为 plain/text 文本类型
-     * @type {String}
-     * @inner
-     */
     mimeType: 'plain/text',
-    /**
-     * 分片大小，默认为 ４M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
-     * @type {Integer}
-     * @inner
-     */
     chunkSize: 4 * CONFIG.M,
-    /**
-     * 分片数量，默认为 1
-     * @type {Integer}
-     * @inner
-     */
     chunkInBlock: 1,
-    /**
-     * 是否缓存
-     * @type {Boolean}
-     * @inner
-     */
     cache: true,
-    /**
-     * 过期时间，默认为一天 (1000 * 60 * 60 * 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
-     * @type {Integer}
-     * @inner
-     */
     expired: 1000 * 60 * 60 * 24
   }
 
   /**
    * 上传状态格式
-   *
-   * @enum {Integer}
-   *
-   * @memberof File
-   * @static
+   * @type {Enum}
    */
   static stateFormatter = new Enum({
     OBJECT: 1,
@@ -69,45 +47,88 @@ export class File {
 
   /**
    * 文件大小
-   *
    * @type {Integer}
-   *
-   * @memberof File
-   * @readonly
    */
   get size () {
     return this.blob.size
   }
 
   /**
-   * 创建文件对象
-   *
-   * @param {File|Blob|String} file 需要上传的文件，可以为 Form 获取的 File 对象，可以为 Blob，或者是 Base64 等字符串
-   * @param {Object} options 配置
-   * @param {String} options.mimeType 文件类型，默认为 plain/text 文本类型
-   * @param {Integer} options.chunkSize 分片大小，默认为 ４M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
+   * 创建一个文件对象
+   * 
+   * @param {File|Blob|String} file
+   * 需要上传的文件，可以为 Form 获取的 File 对象，
+   * 可以为 Blob，或者是 Base64 等字符串
+   * 
+   * @param {Object} [options={}] 配置，可以参考{@link File.defaultSettings}
+   * @param {String} [options.mimeType='plain/text] 文件类型，默认为 plain/text 文本类型
+   * @param {Integer} [options.chunkSize=4 * M]
+   * 分片大小，默认为 4M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，
+   * 最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，
+   * 参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk
+   * 
    * @param {Integer} options.chunkInBlock 分片数量，默认为 1
-   * @param {Integer} options.expired 过期时间，默认为一天 (1000 * 60 * 60 * 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
-   *
-   * @memberof File
+   * @param {Integer} options.expired
+   * 过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
+   * 
+   * @return {File} 文件对象
    */
   constructor (file, options) {
+    /**
+     * 配置
+     * 
+     * @type {Object}
+     */
     this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
+
+    /**
+     * 文件类型
+     * 
+     * @type {String}
+     */
     this.type = file.type || this.settings.mimeType
+    
+    /**
+     * 源文件
+     * 
+     * @type {File|Blob|String}
+     */
     this.file = file
 
     /**
-     * 转化成 blob 对象
+     * 源文件转化成的 Blob 对象
      * 将文件(File), 文件列表(Array[<File, File...>]), base64(String) 文件数据转换成 Blob 基础文件对象
+     * 
+     * @type {Blob}
      */
     this.blob = file instanceof window.Blob ? file : new window.Blob(_.isArray(file) ? file : [file], { type: this.type })
-    this.hash = sha256(file.name + file.size + file.type + file.lastModified).toString()
+
+    /**
+     * 文件哈希值，根据文件名文件大小文件类型与最后修改时间来确定；
+     * 如果源文件为字符串则直接将字符串进行哈希处理
+     * 
+     * @type {String}
+     */
+    this.hash = _.isString(file) ? sha256(file) : sha256(file.name + file.size + file.type + file.lastModified).toString()
+
+    /**
+     * 文件状态，用于存储文件上传信息
+     * 
+     * @type {Array<Object>}
+     */
     this.state = []
+
+    /**
+     * 存储对象，主要用于本地存储
+     * 
+     * @type {Storage}
+     */
     this.storage = new Storage()
 
     /**
      * 查找并读取本地缓存的上传数据，若没有则不会做任何操作
      */
+
     this.settings.cache === true && this.loadState()
   }
 
@@ -118,9 +139,7 @@ export class File {
    * @param {Integer} beginPos 开始位置，默认为 0，位置必须大于 0, 且不能大于或等于结束位置
    * @param {Integer} endPos 结束位置，必须大于开始位置
    * @param {String} [type=this.type] 类型，默认为文件的类型
-   * @returns {Blob} 分片文件
-   *
-   * @memberof File
+   * @return {Blob} 分片文件
    */
   slice (beginPos = 0, endPos, type = this.type) {
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
@@ -136,12 +155,11 @@ export class File {
 
   /**
    * 保存状态信息
+   * 
    * @param {Integer} beginPos 起始位置
    * @param {Integer} endPos 结束位置
    * @param {Object} state 状态，保存的状态
    * @param {Boolean} [cache=this.settings.cache] 是否缓存
-   *
-   * @memberof File
    */
   setState (beginPos, endPos, state = {}, cache = this.settings.cache) {
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
@@ -160,13 +178,10 @@ export class File {
 
   /**
    * 获取文件上传信息
-   *
-   * @param {Object} state 状态，保存的状态
-   * @param {Integer} state.beginPos 起始位置
-   * @param {Integer} state.endPos 结束位置
-   * @returns {Object} 信息数据
-   *
-   * @memberof File
+   * 
+   * @param {Integer} beginPos 起始位置
+   * @param {Integer} endPos 结束位置
+   * @return {Object} 信息数据
    */
   getState (beginPos, endPos) {
     if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
@@ -182,13 +197,10 @@ export class File {
 
   /**
    * 检测分块或者分片是否被上传
-   *
-   * @param {Object} state 状态，保存的状态
-   * @param {Integer} state.beginPos 起始位置
-   * @param {Integer} state.endPos 结束位置
-   * @returns {Boolean} 返回是否上传成功
-   *
-   * @memberof File
+   * 
+   * @param {Integer} beginPos 起始位置
+   * @param {Integer} endPos 结束位置
+   * @return {Boolean} 返回是否上传成功
    */
   isUploaded (beginPos, endPos) {
     let item = this.getState(beginPos, endPos) || {}
@@ -200,8 +212,6 @@ export class File {
    *
    * @param {Object|Json} source 上传状态信息数据
    * @param {Function} [callback] 回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息
-   *
-   * @memberof File
    */
   import (source, callback) {
     if (_.isString(source)) {
@@ -249,8 +259,6 @@ export class File {
    *
    * @param {Integer} [type=this.constructor.stateFormatter.OBJECT] 格式类型，具体值参考 File.stateFormatter
    * @param {Function} callback 回调函数，导出成功将返回数据
-   *
-   * @memberof File
    */
   export (type = this.constructor.stateFormatter.OBJECT, callback) {
     if (!_.isFunction(callback)) {
@@ -294,8 +302,6 @@ export class File {
    *
    * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值
    * @param {Function} [callback] 回调函数，错误会抛出错误异常
-   *
-   * @memberof File
    */
   loadState (hashCode = this.hash, callback) {
     if (arguments.length < 2 && _.isFunction(hashCode)) {
@@ -340,8 +346,6 @@ export class File {
    * 删除文件上传信息的本地缓存
    *
    * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值
-   *
-   * @memberof File
    */
   cleanCache (hashCode = this.hash) {
     this.storage.del(hashCode)
@@ -349,8 +353,6 @@ export class File {
 
   /**
    * 销毁对象
-   *
-   * @memberof File
    */
   destory () {
     this.cleanCache()

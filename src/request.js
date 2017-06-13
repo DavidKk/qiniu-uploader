@@ -1,14 +1,20 @@
 import _ from 'lodash'
 import URI from 'urijs'
 
+/**
+ * @typedef {Object} Request
+ * @property {XMLHttpRequest} xhr AJAX 对象
+ * @property {Function} cancel 取消函数
+ */
+
 let settings = {}
 
 /**
  * 设置默认配置
  *
- * @param {Object} options 配置
+ * @param {Object} [options={}] 配置
  */
-export function configure (options) {
+export function configure (options = {}) {
   settings = _.defaultsDeep(options, settings)
 }
 
@@ -19,7 +25,7 @@ export function configure (options) {
  * @param {Object} data 提交数据
  * @param {Object} [options] 配置
  * @param {Function} callback 回调函数
- * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
+ * @return {Request} 返回一个请求对象
  */
 export function upload (url, data, options, callback) {
   return request('POST', url, data, options, callback)
@@ -33,7 +39,7 @@ export function upload (url, data, options, callback) {
  * @param {Object} data 提交数据，若请求方法为 GET，则数据将转换成请求地址的 query
  * @param {Object} [options={}] 请求配置
  * @param {Function} callback 回调函数
- * @returns {Object} 返回 xhr:XMLHttpRequest 与 cancel:Function
+ * @return {Request} 返回一个请求对象
  */
 export function request (method = 'POST', url, data, options = {}, callback) {
   if (arguments.length < 3) {

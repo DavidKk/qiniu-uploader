@@ -2,15 +2,13 @@ import _ from 'lodash'
 
 /**
  * 枚举类
- *
- * @class Enum
+ * @class
  */
 export class Enum {
   /**
-   * Creates an instance of Enum.
-   * @param {Object} map
-   *
-   * @memberof Enum
+   * 创建一个枚举类对象
+   * @param {Object} map 键与对应的值
+   * @return {Enum}
    */
   constructor (map) {
     let inverted = _.invert(map)
@@ -28,8 +26,6 @@ export class Enum {
    *
    * @param {Integer} index 索引
    * @returns {String}
-   *
-   * @memberof Enum
    */
   get (index) {
     return this._keys[index]
@@ -38,10 +34,8 @@ export class Enum {
   /**
    * 判断键值是否为合法值
    *
-   * @param {String} key
+   * @param {String} key 键值
    * @returns {Boolean}
-   *
-   * @memberof Enum
    */
   isValidKey (key) {
     return !!this.get(key)
@@ -52,8 +46,6 @@ export class Enum {
    *
    * @param {Integer} index 索引
    * @returns {any}
-   *
-   * @memberof Enum
    */
   value (index) {
     let key = this.get(index)

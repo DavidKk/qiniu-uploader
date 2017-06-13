@@ -13,68 +13,35 @@ import { File } from './file'
  * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB
  * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
  *
- * @class Tunnel
+ * @class
  */
 export class Tunnel {
   /**
    * 七牛通道类默认配置
-   *
    * @type {Object}
-   *
-   * @memberof Tunnel
-   * @static
+   * @property {Boolean} defaultSettings.useHttps 是否使用 Https 进行上传
+   * @property {Boolean} defaultSettings.cache 是否缓存
+   * @property {Integer} defaultSettings.maxConnect 最大连接数
+   * @property {Integer} defaultSettings.blockSize 分块大小
+   * @property {Integer} defaultSettings.blockSize 分片大小
    */
   static defaultSettings = {
-    /**
-     * 是否使用 Https 进行上传
-     * @type {Boolean}
-     * @inner
-     */
     useHttps: typeof window === 'undefined' ? false : window.location.protocol,
-    /**
-     * 是否缓存
-     * @type {Boolean}
-     * @inner
-     */
     cache: false,
-    /**
-     * 最大连接数
-     * @type {Integer}
-     * @inner
-     */
     maxConnect: 4,
-    /**
-     * 最大文件大小
-     * @type {Integer}
-     * @inner
-     */
-    maxFileSize: CONFIG.G,
-    /**
-     * 最小文件大小
-     * @type {Integer}
-     * @inner
-     */
-    minFileSize: 10 * CONFIG.M,
-    /**
-     * 分块大小
-     * @type {Integer}
-     * @inner
-     */
     blockSize: 4 * CONFIG.M,
-    /**
-     * 分片大小
-     * @type {Integer}
-     * @inner
-     */
     chunkSize: 1 * CONFIG.M
   }
 
   /**
-   * Creates an instance of Tunnel
-   *
-   * @param {Object} options 默认配置
-   *
-   * @memberof Tunnel
+   * 创建通道类对象
+   * @param {Object} [options] 配置，可以参考{@link Tunnel.defaultSettings}
+   * @param {Object} [options.useHttps=window.location.protocol] 是否使用 Https 进行上传
+   * @param {Boolean} [options.cache=false] 是否缓存
+   * @param {Integer} [options.maxConnect=4] 最大连接数
+   * @param {Integer} [options.blockSize=4 * M] 分块大小
+   * @param {Integer} [options.blockSize=1 * M] 分片大小
+   * @return {Tunnel}
    */
   constructor (options) {
     this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
@@ -89,12 +56,10 @@ export class Tunnel {
    * @param {Object} params.token 七牛令牌
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @return {Request} 返回一个请求对象
    */
   upload (file, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -136,12 +101,10 @@ export class Tunnel {
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @return {Request} 返回一个请求对象
    */
   upb64 (content, params = { size: -1 }, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -206,13 +169,11 @@ export class Tunnel {
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
-   * @param {number} options.chunkSize 设置每个分片的大小
+   * @param {number} [options.chunkSize] 设置每个分片的大小
    * @param {mkblkCallback} callback 上传之后执行的回调函数
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @return {Request} 返回一个请求对象
    */
   mkblk (block, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -261,12 +222,10 @@ export class Tunnel {
    * @param {String} params.offset 当前片在整个块中的起始偏移
    * @param {String} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @return {Request} 返回一个请求对象
    */
   bput (chunk, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -311,19 +270,19 @@ export class Tunnel {
    *
    * @see https://developer.qiniu.com/kodo/api/1287/mkfile
    *
-   * @param {Array|String} ctx 文件
+   * @param {Array|String} ctxs 文件
    * @param {Object} params 参数
    * @param {Integer} params.size 文件大小
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   mkfile (ctxs, params = {}, options = {}, callback) {
     if (!_.isFunction(callback)) {
@@ -386,16 +345,14 @@ export class Tunnel {
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
-   * @param {Object} options 上传配置
-   * @param {String} options.host 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {Object} [options={}] 上传配置
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Boolean} [options.cache=true] 设置本地缓存
    * @param {Boolean} [options.override=false] 无论是否已经上传都进行重新上传
    * @param {Integer} [options.maxConnect=4] 最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中
    * @param {Function} callback 回调
-   * @returns {Object|Undefined} 包括 xhr 与 cancel 方法
-   *
-   * @memberof Tunnel
+   * @return {Request} 返回一个请求对象
    */
   resuming (file, params, options, callback) {
     if (!_.isFunction(callback)) {
