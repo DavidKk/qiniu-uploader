@@ -1,6 +1,6 @@
 {
   "name": "qiniup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Qiniu Uploader",
   "main": "dist/qiniuUploader.js",
   "author": "<David Jones qowera@gmail.com>",
