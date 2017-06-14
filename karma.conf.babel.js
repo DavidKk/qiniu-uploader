@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import pkg from './package.json'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
 import webpackConf from './webpack.common.config.babel'
@@ -7,20 +8,9 @@ import { launchers as sauceBrowsers } from './saucelabs.browser.conf'
 const basePath = path.resolve('./')
 
 export default function (config) {
-  let customLaunchers = {
-    'SL_CHROME': {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      version: '54',
-    },
-  }
-
   let karmaConf = {
     basePath: basePath,
     browsers: ['PhantomJS'],
-    browserDisconnectTimeout: 5000,
-    browserNoActivityTimeout: 5000,
-    browserDisconnectTolerance: 10,
     frameworks: ['mocha', 'chai', 'sinon'],
     files: ['./unitest/**/*.spec.js'],
     client: {
@@ -98,8 +88,11 @@ export default function (config) {
     _.merge(karmaConf, {
       customLaunchers: sauceBrowsers,
       browsers: Object.keys(sauceBrowsers),
+      browserDisconnectTimeout: 5000,
+      browserNoActivityTimeout: 5000,
+      browserDisconnectTolerance: 10,
       sauceLabs: {
-        testName: 'test',
+        testName: pkg.name,
         retryLimit: 3,
         startConnect: false,
         recordVideo: false,
