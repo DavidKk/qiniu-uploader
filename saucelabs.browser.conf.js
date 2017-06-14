@@ -3,15 +3,15 @@ export const launchers = {
   //   base: 'Dartium',
   //   flags: ['--enable-experimental-web-platform-features']
   // },
-  'ChromeNoSandbox': {
-    base: 'Chrome',
-    flags: ['--no-sandbox']
-  },
-  // 'SL_CHROME': {
-  //   base: 'SauceLabs',
-  //   browserName: 'chrome',
-  //   version: '54'
+  // 'ChromeNoSandbox': {
+  //   base: 'Chrome',
+  //   flags: ['--no-sandbox']
   // },
+  'SL_CHROME': {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    version: '54'
+  },
   // 'SL_CHROMEBETA': {
   //   base: 'SauceLabs',
   //   browserName: 'chrome',
