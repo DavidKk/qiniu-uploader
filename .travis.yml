@@ -3,9 +3,18 @@ sudo: false
 node_js:
   - 7
 
+env:
+  - TRAVIS=1
+
 cache:
   directories:
     - node_modules
+
+addons:
+  sauce_connect:
+    username: 'DavidKk'
+  jwt:
+    secure: 'ehvTvuEYnbHlnVKS8p/Z8oNPDSHptB0QlPT5vMcWjCtGivujQKu6vZs8RjoFRxGv6NhGF07DgbJxVyKLpmrLFmGTwssm75vmV/VMC8ifyBQzdcVQ92/pEFOPHUAWSS2ClCo3EYjyUemU5R6wgVIX5hQs79inzMnkV06ORqoeIPBnrsDXMbFWSko5aFsoIbXptgiFqWIjTlCxds7L74MJbXMSpNpMjhLAX/BZUjhZ8nA8caGwQY0qn99gAfSLtYLEZOoZ+/GxPwryuuPp3mPIPec78qjlpxTCeKX0ESxu20/yNNkArM+gAi7YbcSFeem+368M8s0V8+HOEZHClkzpGIDOzsm8R1hIN/WIPsQo8KvrOnFM1w562xe+OQl85dhQz4PHG/kQnku0fxvdm4JFkLbRG5jHPD4/9WxFPhwvqJpUu9n8npobLS0ZQd+oXn1gx/BJCZb9ofIHk+t3JVPhk9aaJyaEihYLopyRc/TS86jEP2MIKjkw47/rk2WNaitbXpC2HYEZDAM8La8r5alGo7Y006iFkYD24gXHmzIbMNgZ8ztaJJtr628pHEzBOUdNoDiYHKK5WZijZmWAclCPuB0worqv485f04VPOg/J0+0sQKDrX0p28/en48Cl/WiobcHLjr5vmsBc9ZAG9ekEZRPeS72U1wdqoFw3rUzlTSc='
 
 install:
   - npm install

@@ -2,13 +2,25 @@ import _ from 'lodash'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
 import webpackConf from './webpack.common.config.babel'
+import { launchers as sauceBrowsers } from './saucelabs.browser.conf'
 
 const basePath = path.resolve('./')
 
 export default function (config) {
+  let customLaunchers = {
+    'SL_CHROME': {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      version: '54',
+    },
+  }
+
   let karmaConf = {
     basePath: basePath,
     browsers: ['PhantomJS'],
+    browserDisconnectTimeout: 5000,
+    browserNoActivityTimeout: 5000,
+    browserDisconnectTolerance: 10,
     frameworks: ['mocha', 'chai', 'sinon'],
     files: ['./unitest/**/*.spec.js'],
     client: {
@@ -41,6 +53,7 @@ export default function (config) {
     singleRun: true,
     colors: true,
     plugins: [
+      'karma-sauce-launcher',
       'karma-phantomjs-launcher',
       'karma-webpack',
       'karma-chai',
@@ -78,6 +91,26 @@ export default function (config) {
           ]
         }
       })
+    })
+  }
+
+  if (process.env.TRAVIS) {
+    _.merge(karmaConf, {
+      customLaunchers: sauceBrowsers,
+      browsers: Object.keys(sauceBrowsers),
+      sauceLabs: {
+        testName: 'test',
+        retryLimit: 3,
+        startConnect: false,
+        recordVideo: false,
+        recordScreenshots: false,
+        options: {
+          'selenium-version': '2.53.0',
+          'command-timeout': 600,
+          'idle-timeout': 600,
+          'max-duration': 5400,
+        }
+      },
     })
   }
 

@@ -5,3 +5,11 @@
 [![Dependency Status](https://dependencyci.com/github/DavidKk/qiniu-uploader/badge)](https://dependencyci.com/github/DavidKk/qiniu-uploader)
 
 # Qiniu Uploader
+
+Docs: https://davidkk.github.io/qiniu-uploader/
+
+### Install
+
+```
+yarn add qiniup
+```
