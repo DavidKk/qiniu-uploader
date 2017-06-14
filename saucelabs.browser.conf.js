@@ -13,7 +13,7 @@ export const launchers = {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'OS X 10.10',
-    version: '9.0'
+    version: '8'
   },
   /**
    * IE 全家桶
