@@ -106,6 +106,7 @@ export default function (config) {
       }
     }
 
+    karmaConf.reporters.push('saucelabs')
     karmaConf.plugins.push('karma-sauce-launcher')
   }
 
