@@ -84,8 +84,8 @@ export default function (config) {
   }
 
   if (process.env.TRAVIS) {
-    process.env.SAUCE_USERNAME = os.environ.SAUCE_USERNAME
-    process.env.SAUCE_ACCESS_KEY = os.environ.SAUCE_ACCESS_KEY
+    // process.env.SAUCE_USERNAME = os.environ.SAUCE_USERNAME
+    // process.env.SAUCE_ACCESS_KEY = os.environ.SAUCE_ACCESS_KEY
 
     console.log(process.env.TRAVIS, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY)
 
