@@ -13,6 +13,7 @@
     "unitest:coverage": "rimraf ./coverage && cross-env UNITEST=1 COVERAGE=1 karma start ./karma.conf.js",
     "release": "npm run standard && npm run unitest && npm run build",
     "coveralls": "npm run unitest:coverage && node ./node_modules/.bin/coveralls < ./coverage/lcov.info",
+    "sauce": "cross-env SAUCE_LABS=1 npm run unitest",
     "document": "rimraf ./docs && esdoc -c ./esdoc.json",
     "start": ""
   },

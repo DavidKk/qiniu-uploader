@@ -82,7 +82,7 @@ export default function (config) {
     })
   }
 
-  if (process.env.TRAVIS) {
+  if (process.env.SAUCE_LABS && process.env.TRAVIS) {
     karmaConf.customLaunchers = sauceBrowsers
     karmaConf.browsers = Object.keys(sauceBrowsers)
     karmaConf.browserDisconnectTimeout = 5000
