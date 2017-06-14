@@ -46,35 +46,47 @@ export const launchers = {
    */
   sl_android_4: {
     base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Android 4.4',
+    browserName: 'chrome',
+    platform: 'Android',
+    version: '4.4',
+    device: 'Android GoogleAPI Emulator',
   },
   sl_android_5: {
     base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Android 5.0',
+    browserName: 'chrome',
+    platform: 'Android',
+    version: '5.0',
+    device: 'Android GoogleAPI Emulator',
   },
   sl_android_6: {
     base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Android 6.0',
+    browserName: 'chrome',
+    platform: 'Android',
+    version: '6.0',
+    device: 'Android GoogleAPI Emulator',
   },
   /**
    * IOS 全家桶
    */
   sl_ios_8: {
     base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'iOS 8.1',
+    browserName: 'safari',
+    platform: 'iOS',
+    version: '8.1',
+    device: 'iPhone 5s Simulator',
   },
   sl_ios_9: {
     base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'iOS 9.0',
+    browserName: 'safari',
+    platform: 'iOS',
+    version: '9.0',
+    device: 'iPhone 5s Simulator',
   },
   sl_ios_10: {
     base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'iOS 10',
+    browserName: 'safari',
+    platform: 'iOS',
+    version: '10.0',
+    device: 'iPhone 5s Simulator',
   },
 }
