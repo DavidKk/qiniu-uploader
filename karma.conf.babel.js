@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import pkg from './package.json'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
@@ -102,7 +101,7 @@ export default function (config) {
         'selenium-version': '2.53.0',
         'command-timeout': 600,
         'idle-timeout': 600,
-        'max-duration': 5400,
+        'max-duration': 5400
       }
     }
 
