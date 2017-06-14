@@ -9,7 +9,7 @@
 /karma.conf.js
 /webpack.common.config.babel.js
 /webpack.product.config.babel.js
-
+/saucelabs.browser.conf.js
 
 # Source Bucket
 .git

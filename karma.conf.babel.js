@@ -1,8 +1,10 @@
-import pkg from './package.json'
+import os from 'os'
+import fs from 'fs-extra'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
 import webpackConf from './webpack.common.config.babel'
 import { launchers as sauceBrowsers } from './saucelabs.browser.conf'
+import pkg from './package.json'
 
 const basePath = path.resolve('./')
 
@@ -82,17 +84,16 @@ export default function (config) {
     })
   }
 
-  if (process.env.SAUCE_LABS && process.env.TRAVIS) {
+  if (process.env.SAUCE_LABS) {
     karmaConf.customLaunchers = sauceBrowsers
     karmaConf.browsers = Object.keys(sauceBrowsers)
     karmaConf.browserDisconnectTimeout = 5000
     karmaConf.browserNoActivityTimeout = 5000
     karmaConf.browserDisconnectTolerance = 10
-    karmaConf.sauceLabs = {
+
+    let sauceLabsOptions = {
       testName: pkg.name,
-      build: `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`,
       public: 'public',
-      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
       retryLimit: 3,
       startConnect: false,
       recordVideo: false,
@@ -105,6 +106,23 @@ export default function (config) {
       }
     }
 
+    if (process.env.TRAVIS) {
+      sauceLabsOptions.startConnect = false
+      sauceLabsOptions.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`
+      sauceLabsOptions.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER
+    }
+    else {
+      let secureFile = path.join(__dirname, './saucelabs.secure.json')
+      let secureData = fs.readJSONSync(secureFile)
+
+      process.env.SAUCE_USERNAME = secureData.username
+      process.env.SAUCE_ACCESS_KEY = secureData.access_key
+
+      sauceLabsOptions.startConnect = true
+      sauceLabsOptions.build = `LOCAL #${os.platform()} (${os.userInfo().username})`
+    }
+
+    karmaConf.sauceLabs = sauceLabsOptions
     karmaConf.reporters.push('saucelabs')
     karmaConf.plugins.push('karma-sauce-launcher')
   }
