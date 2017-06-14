@@ -91,6 +91,7 @@ export default function (config) {
     karmaConf.browserDisconnectTolerance = 10
     karmaConf.sauceLabs = {
       testName: pkg.name,
+      build: `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`,
       public: 'public',
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
       retryLimit: 3,

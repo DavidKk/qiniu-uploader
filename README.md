@@ -4,6 +4,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/DavidKk/qiniu-uploader/badge.svg?branch=master)](https://coveralls.io/github/DavidKk/qiniu-uploader?branch=master)
 [![Dependency Status](https://dependencyci.com/github/DavidKk/qiniu-uploader/badge)](https://dependencyci.com/github/DavidKk/qiniu-uploader)
 
+[![Build Status](https://saucelabs.com/browser-matrix/DavidKk.svg)](https://saucelabs.com/beta/builds/72e6def51c8c4388af6212cbc2171461)
+
+
 # Qiniu Uploader
 
 Docs: https://davidkk.github.io/qiniu-uploader/
