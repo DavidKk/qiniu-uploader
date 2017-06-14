@@ -44,55 +44,37 @@ export const launchers = {
   /**
    * Android 全家桶
    */
-  'sl_android_4.4': {
+  sl_android_4: {
     base: 'SauceLabs',
     browserName: 'android',
-    platform: 'Linux',
-    version: '4.4'
+    platform: 'Android 4.4',
   },
-  'sl_android_5.0': {
+  sl_android_5: {
     base: 'SauceLabs',
     browserName: 'android',
-    platform: 'Linux',
-    version: '5.0'
+    platform: 'Android 5.0',
   },
-  'sl_android_5.1': {
+  sl_android_6: {
     base: 'SauceLabs',
     browserName: 'android',
-    platform: 'Linux',
-    version: '5.1'
-  },
-  'sl_android_6.0': {
-    base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Linux',
-    version: '6.0'
+    platform: 'Android 6.0',
   },
   /**
    * IOS 全家桶
    */
-  'sl_ios_7.1': {
+  sl_ios_8: {
     base: 'SauceLabs',
     browserName: 'iphone',
-    platform: 'OS X 10.10',
-    version: '7.1'
+    platform: 'iOS 8.1',
   },
-  'sl_ios_8.4': {
+  sl_ios_9: {
     base: 'SauceLabs',
     browserName: 'iphone',
-    platform: 'OS X 10.10',
-    version: '8.4'
+    platform: 'iOS 9.0',
   },
-  'sl_ios_9.3': {
+  sl_ios_10: {
     base: 'SauceLabs',
     browserName: 'iphone',
-    platform: 'OS X 10.10',
-    version: '9.3'
+    platform: 'iOS 10',
   },
-  'sl_ios_10.0': {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.10',
-    version: '10.3'
-  }
 }
