@@ -84,6 +84,9 @@ export default function (config) {
   }
 
   if (process.env.TRAVIS) {
+    process.env.SAUCE_USERNAME = 'DavidKk';
+    process.env.SAUCE_ACCESS_KEY = 'df6414d8-7bbc-46ef-bcd9-75b9b6fdddf3';
+
     karmaConf.customLaunchers = sauceBrowsers
     karmaConf.browsers = Object.keys(sauceBrowsers)
     karmaConf.browserDisconnectTimeout = 5000
@@ -105,7 +108,8 @@ export default function (config) {
       }
     }
 
-    karmaConf.plugins.push('karma-sauce-launcher')
+    karmaConf.plugins.push('karma-saucelabs-launcher')
+    // karmaConf.plugins.push('karma-sauce-launcher')
   }
 
   config.set(karmaConf)
