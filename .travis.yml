@@ -35,12 +35,12 @@ deploy:
     github_token:
       secure: dbL+LVT3jz6z0+x7mhNpj8f9WLYdEqc/jCULX+GhUGEUVVX5TrI1JLoxBlwGnzXmYb5cRqo8IC/eoHNHjSeV5g6Ay1nhsRHposeKfK5svAs7KzKHQCFxIZitCgvTiTVWSBtkdB8kVK5gSwTIq9FDeNnsTptBbEcnVVWEcFAbh/ndaZsfmMhfFHKgShKmy8ppxEr7VsvrQQXSX98zItZrxHGnrIBnHKpnFdff0FH8kTwyeJ3Ebq8zgtbCNhrzcNBsHk9F/qiyZrtCHsNOqDLFbT6dh29vRVLgeqxIbHnhpPv+x4WyHbKYs52pQCrR3+AUh87xjRvKtMIaBL9XrXSrU2coP6WvEroZf/3TBwouFGXIaKIoX0Wp76tI6wD3W0rkXtjw8ix8KKszWAbR7xbMHAhj5plr48lU1Vp9iwIEnTLXoZb9ujBQ4aN3T7noPtI4QDbJfj9sj4xBcXaC/UOmy5VkH2Fxn9Htp1B8fP75Ra4FxZCCdOhZ8oZRD4ZEznQbTPOw3NjY6V0y2RIxAfpK3otQwFmepDTam6FdaOGeMFXrw5TT4vHJCf0JyZ6TlIEySdwJqagTZHj7sKN6VQdBS9fCTewzwi12bfH5lJm4EsabKnNRgYTaw9dXIaL/5dKxiqQ+KH94DHat/cLguAWDLWMxYwHyX8GfzXmVOHzBy7k=
     on:
-      branch: master
+      tags: true
 
   - provider: npm
     skip_cleanup: true
-    on:
-      tags: true
     email: qowera@qq.com
     api_key:
       secure: jZtSdAzjZTpnxRcSxhnnZB4VM49QYuEejKJnD0EiyH4EwvdKtFh4VDCBZ0Umjrt8ximx4GaE+HHApqZ1zwrVFXzc6FXW+5hmShJb0yAmRPQBFItLRuttZbaCfSRb+NyJFu3IiMw4VBkxaLXdLIwc9Ok1pedHdHZ5882PaYS3eh+MDd4pDqiSvCsZ7jrBKku9oxFDDwEdaV+JBHSnsajsThOBmlwHSHl81TF1mqKGkR32wCrRw9xzmKp0iYc9w4Kbz3nUqMVkPeVp3kTK22BpYK+cts2fJADSLDVZwv/l2o1NecMlyBs6+LXBAyqf7B8iLKtg0FR/b9mtinRGFwH8OEGtPGPR/eatrEGTgKcskCPbYIj53aYwoDifbWyaRF4Sv2SztE0hJ1+cGptkd7za1NGZbR1ymPrl0qQoTHS0Psn42oV+nErO2CeN4v+19iSZnHyRLVXm1XZMQw+cx8Iy2TzNedl6a6ZRKm3ZqrtO8jJS2jpj/GhMVQA/jrf/gKmPBITvSrEwf98qxZaJIS4kNZ025xm49aL8VQXTiEBF2pfw+8ct2Hw8ofeSeQ+i7iKgdXoS/+xUsFY4/taOg1pW18B5hDsUqjYn9irxuJGaPd5/oJnWaPOQnC0HMwGEt15K7g1vOdXgiaMsGx3ekHeShD3+P7XYh34xeml+c6/Rbj8=
+    on:
+      tags: true
