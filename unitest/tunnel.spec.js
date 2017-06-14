@@ -57,7 +57,7 @@ describe('Class Tunnel', function () {
         let body = xhr.requestBody
         expect(body).to.be.an.instanceof(window.FormData)
 
-        if (window.FormData.prototype.has) {
+        if (0 && window.FormData.prototype.has) {
           /* eslint no-unused-expressions: 0 */
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
@@ -113,7 +113,7 @@ describe('Class Tunnel', function () {
          * PhantomJS not support FormData fully
          * only support method `append`
          */
-        if (FormData.prototype.has) {
+        if (0 && FormData.prototype.has) {
           /* eslint no-unused-expressions: 0 */
           expect(body.has('key')).to.be.true
           expect(body.has('token')).to.be.true
