@@ -36,7 +36,7 @@ deploy:
     github_token:
       secure: dbL+LVT3jz6z0+x7mhNpj8f9WLYdEqc/jCULX+GhUGEUVVX5TrI1JLoxBlwGnzXmYb5cRqo8IC/eoHNHjSeV5g6Ay1nhsRHposeKfK5svAs7KzKHQCFxIZitCgvTiTVWSBtkdB8kVK5gSwTIq9FDeNnsTptBbEcnVVWEcFAbh/ndaZsfmMhfFHKgShKmy8ppxEr7VsvrQQXSX98zItZrxHGnrIBnHKpnFdff0FH8kTwyeJ3Ebq8zgtbCNhrzcNBsHk9F/qiyZrtCHsNOqDLFbT6dh29vRVLgeqxIbHnhpPv+x4WyHbKYs52pQCrR3+AUh87xjRvKtMIaBL9XrXSrU2coP6WvEroZf/3TBwouFGXIaKIoX0Wp76tI6wD3W0rkXtjw8ix8KKszWAbR7xbMHAhj5plr48lU1Vp9iwIEnTLXoZb9ujBQ4aN3T7noPtI4QDbJfj9sj4xBcXaC/UOmy5VkH2Fxn9Htp1B8fP75Ra4FxZCCdOhZ8oZRD4ZEznQbTPOw3NjY6V0y2RIxAfpK3otQwFmepDTam6FdaOGeMFXrw5TT4vHJCf0JyZ6TlIEySdwJqagTZHj7sKN6VQdBS9fCTewzwi12bfH5lJm4EsabKnNRgYTaw9dXIaL/5dKxiqQ+KH94DHat/cLguAWDLWMxYwHyX8GfzXmVOHzBy7k=
     on:
-      tags: true
+      branch: master
 
   - provider: npm
     skip_cleanup: true
