@@ -43,6 +43,7 @@ export default function (config) {
     colors: true,
     plugins: [
       'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-webpack',
       'karma-chai',
       'karma-sinon',

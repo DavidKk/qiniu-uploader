@@ -69,7 +69,7 @@ describe('Class Tunnel', function () {
 
           expect(body.get('key')).to.equal(key)
           expect(body.get('token')).to.equal(token)
-          expect(body.get('file')).to.equal(file)
+          expect(body.get('file')).to.be.instanceOf(Blob)
         } else {
           console.warn('Browser does\'t support method `FormData.prototype.has` and it will ignore validate datas which from form post')
         }
@@ -108,28 +108,6 @@ describe('Class Tunnel', function () {
 
         let body = xhr.requestBody
         expect(body).to.be.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
-
-        /**
-         * PhantomJS not support FormData fully
-         * only support method `append`
-         */
-        if (FormData.prototype.has) {
-          /* eslint no-unused-expressions: 0 */
-          expect(body.has('key')).to.be.true
-          expect(body.has('token')).to.be.true
-          expect(body.has('file')).to.be.true
-
-          expect(body.getAll('key')).to.have.lengthOf(1)
-          expect(body.getAll('token')).to.have.lengthOf(1)
-          expect(body.getAll('file')).to.have.lengthOf(1)
-
-          expect(body.get('key')).to.equal(key)
-          expect(body.get('token')).to.equal(token)
-          expect(body.get('file')).to.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
-        } else {
-          console.warn('Browser does\'t support method `FormData.prototype.has` and it will ignore validate some form datas')
-        }
-
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 

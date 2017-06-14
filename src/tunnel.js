@@ -180,7 +180,7 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(block) || !(block instanceof window.Blob)) {
+    if (!block || !(block instanceof window.Blob)) {
       callback(new TypeError('Block is not provided or not instanceof Blob'))
       return
     }
@@ -232,7 +232,7 @@ export class Tunnel {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(chunk) || !(chunk instanceof window.Blob)) {
+    if (!chunk || !(chunk instanceof window.Blob)) {
       callback(new TypeError('Block is not provided or not instanceof Blob'))
       return
     }
