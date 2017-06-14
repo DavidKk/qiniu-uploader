@@ -33,7 +33,7 @@ export const launchers = {
   sl_win_10_ie_11: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
-    platform: 'Windows 8',
+    platform: 'Windows 10',
     version: '11'
   },
 	sl_win_10_edge: {
