@@ -29,29 +29,15 @@ export const launchers = {
   slIE9: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
+    platform: 'Windows 7',
     version: '9'
   },
   /**
-   * Safari Mac
+   * Safari from Mac
    */
   slMacSafari: {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'OS X 10.10'
-  },
-  /**
-   * Mobile
-   */
-  slIosSafari: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '9.1'
-  },
-  slAndroid: {
-    base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Linux',
-    version: '4.3'
   }
 }
