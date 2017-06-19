@@ -403,12 +403,14 @@ export class Tunnel {
     let listenProgress = _.isFunction(_resumingProgressHandle)
 
     let registerRequest = function (request, index, progressRelativeData) {
-      if (!(request && _.isInteger(index) && request.xhr && request.xhr instanceof XMLHttpRequest)) {
+      if (!(request && _.isInteger(index) && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {
         return
       }
 
       let { xhr } = request
-      let process = { request, xhr, index, /** size, beginPos, endPos */ }
+
+      /* eslint standard/object-curly-even-spacing:0 */
+      let process = { request, xhr, index /** , size, beginPos, endPos */ }
 
       if (!_.isEmpty(progressRelativeData)) {
         _.assign(process, progressRelativeData)
@@ -520,7 +522,7 @@ export class Tunnel {
         file.setState(beginPos, endPos, state, options.cache)
         callback(null, { state, chunk, block, file })
       })
-      
+
       registerRequest(request, block.size + beginPos, { size: chunk.size, beginPos, endPos })
     }
 

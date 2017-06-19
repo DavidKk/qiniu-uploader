@@ -70,7 +70,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
 
   xhr.onerror = (error) => {
-    if (true === xhr.aborted) {
+    if (xhr.aborted === true) {
       return
     }
 
@@ -80,7 +80,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
 
   xhr.onreadystatechange = () => {
-    if (true === xhr.errorFlag || true === xhr.aborted) {
+    if (xhr.errorFlag === true || xhr.aborted === true) {
       return
     }
 

@@ -110,8 +110,7 @@ export default function (config) {
       sauceLabsOptions.startConnect = false
       sauceLabsOptions.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`
       sauceLabsOptions.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER
-    }
-    else {
+    } else {
       let secureFile = path.join(__dirname, './saucelabs.secure.json')
       let secureData = fs.readJSONSync(secureFile)
 
