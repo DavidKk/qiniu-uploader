@@ -404,6 +404,9 @@ describe('Class Tunnel', function () {
       }
 
       tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { progress: _resumingProgressHandle, useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+        expect(error).not.to.be.an('error')
+        expect(response).to.deep.equal({ ctx: 'file' })
+
         done()
       })
 

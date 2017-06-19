@@ -4,6 +4,7 @@ import parallelLimit from 'async/parallelLimit'
 import * as http from './request'
 import * as CONFIG from './config'
 import { File } from './file'
+import { QiniupEvent } from './event'
 
 /**
  * 七牛通道类
@@ -434,7 +435,7 @@ export class Tunnel {
         }
       })
 
-      let event = new Event('qiniup')
+      let event = new QiniupEvent('qiniup')
       event.processes = processes
       event.process = process
       event.loaded = uploadSize
