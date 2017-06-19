@@ -37,5 +37,9 @@ describe('Class Http', function () {
     it('can post form data', function () {
 
     })
+
+    it('can cancel http request', function () {
+
+    })
   })
 })

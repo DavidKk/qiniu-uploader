@@ -10,6 +10,15 @@ import * as CONFIG from '../src/config'
 
 describe('Class Tunnel', function () {
   let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+  let host = 'x.com'
+  let key = 'key'
+  let mimeType = 'plain/text'
+  let crc32 = 'crc32'
+  let userVars = 'userVars'
+  let token = 'token'
+  let tokenPrefix = 'UpToken'
+  let blockSize = 40
+  let chunkSize = 10
 
   describe('Tunnel Initialization', function () {
     it('can be created', function () {
@@ -32,14 +41,6 @@ describe('Class Tunnel', function () {
     afterEach(function () {
       server.restore()
     })
-
-    let host = 'x.com'
-    let key = 'key'
-    let mimeType = 'plain/text'
-    let crc32 = 'crc32'
-    let userVars = 'userVars'
-    let token = 'token'
-    let tokenPrefix = 'UpToken'
 
     it('can upload file', function (done) {
       let responseData = JSON.stringify({ code: 1 })
@@ -78,7 +79,7 @@ describe('Class Tunnel', function () {
       })
 
       let file = new Blob(['test'], { type: 'plain/text' })
-      let { xhr } = tunnel.upload(file, { token, key }, { useHttps: true, host, tokenPrefix }, function (error, response) {
+      let { xhr, cancel } = tunnel.upload(file, { token, key }, { useHttps: true, host, tokenPrefix }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -88,6 +89,9 @@ describe('Class Tunnel', function () {
 
         done()
       })
+
+      expect(xhr).to.be.an.instanceof(XMLHttpRequest)
+      expect(cancel).to.be.a.function
 
       server.respond()
     })
@@ -107,11 +111,11 @@ describe('Class Tunnel', function () {
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
-        expect(body).to.be.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
+        expect(body).to.equal(base64Image.replace(CONFIG.BASE64_REGEXP, ''))
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 
-      let { xhr } = tunnel.upb64(base64Image, { size: base64Image.length, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix }, function (error, response) {
+      let { xhr, cancel } = tunnel.upb64(base64Image, { size: base64Image.length, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -121,12 +125,14 @@ describe('Class Tunnel', function () {
         done()
       })
 
+      expect(xhr).to.be.an.instanceof(XMLHttpRequest)
+      expect(cancel).to.be.a.function
+
       server.respond()
     })
 
     it('can generate block', function (done) {
       let responseData = JSON.stringify({ code: 1 })
-      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
       let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
@@ -150,7 +156,7 @@ describe('Class Tunnel', function () {
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 
-      let { xhr } = tunnel.mkblk(block, { token }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+      let { xhr, cancel } = tunnel.mkblk(block, { token }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -160,12 +166,14 @@ describe('Class Tunnel', function () {
         done()
       })
 
+      expect(xhr).to.be.an.instanceof(XMLHttpRequest)
+      expect(cancel).to.be.a.function
+
       server.respond()
     })
 
     it('can upload chunk', function (done) {
       let responseData = JSON.stringify({ code: 1 })
-      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
       let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
@@ -191,7 +199,7 @@ describe('Class Tunnel', function () {
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 
-      let { xhr } = tunnel.bput(chunk, { token, ctx, offset: chunkSize }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+      let { xhr, cancel } = tunnel.bput(chunk, { token, ctx, offset: chunkSize }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -201,12 +209,14 @@ describe('Class Tunnel', function () {
         done()
       })
 
+      expect(xhr).to.be.an.instanceof(XMLHttpRequest)
+      expect(cancel).to.be.a.function
+
       server.respond()
     })
 
     it('can concat all block to a file', function (done) {
       let responseData = JSON.stringify({ code: 1 })
-      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
       let chunkSize = 14
       let blockType = 'plain/text'
       let block = new Blob([base64Image], { type: blockType })
@@ -229,7 +239,7 @@ describe('Class Tunnel', function () {
         xhr.respond(200, { 'Content-Type': 'application/json' }, responseData)
       })
 
-      let { xhr } = tunnel.mkfile(ctxs, { size: block.size, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
+      let { xhr, cancel } = tunnel.mkfile(ctxs, { size: block.size, token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize }, function (error, response) {
         expect(error).not.to.be.an('error')
 
         expect(xhr.status).to.equal(200)
@@ -239,14 +249,17 @@ describe('Class Tunnel', function () {
         done()
       })
 
+      expect(xhr).to.be.an.instanceof(XMLHttpRequest)
+      expect(cancel).to.be.a.function
+
       server.respond()
     })
 
     it('can upload by sliced', function (done) {
-      let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      /**
+       * 大小为 74 字节
+       */
       let file = new File(base64Image, { mimeType })
-      let blockSize = 40
-      let chunkSize = 10
 
       /**
        * 因为上传涉及多个 AJAX 请求，因此必须设置
@@ -310,14 +323,95 @@ describe('Class Tunnel', function () {
         }
       })
 
-      tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+      let { cancel, xhr } = tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
         expect(error).not.to.be.an('error')
         expect(response).to.deep.equal({ ctx: 'file' })
 
         done()
       })
 
+      expect(cancel).to.be.a.function
+      expect(xhr).to.be.null
+
       server.respond()
+    })
+  })
+
+  describe('Tunnel Resume Breakpoint', function () {
+    let server
+    let tunnel
+
+    beforeEach(function () {
+      server = sinon.fakeServer.create()
+      tunnel = new Tunnel()
+    })
+
+    afterEach(function () {
+      server.restore()
+    })
+
+    let file = new File(base64Image, { mimeType })
+
+    it('can cancel the tasks', function (done) {
+      server.autoRespond = true
+      server.autoRespondAfter = 10
+
+      let { cancel } = tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+        expect(error).to.be.an('Error')
+        expect(error.message).to.equal('Request is canceled')
+      })
+
+      setTimeout(done.bind(null), 11)
+      setTimeout(cancel.bind(null), 1)
+    })
+
+    it('support progress event', function (done) {
+      server.autoRespond = true
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        let body = xhr.requestBody
+        let paths = _.trim(uri.path(), '/').split('/')
+
+        switch (paths[0]) {
+          case 'mkblk':
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `block_${body.size}` }))
+            break
+          case 'bput':
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: `chunk_${body.size}` }))
+            break
+          case 'mkfile':
+            xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({ ctx: 'file' }))
+            break
+        }
+      })
+
+      let _resumingProgressHandle = (event) => {
+        expect(event.processes).to.be.an('array')
+        expect(event.process).to.be.an('object')
+        expect(event.loaded).to.be.a('number')
+        expect(event.total).to.be.a('number')
+
+        let index = _.findIndex(event.processes, { index: event.process.index })
+        expect(index).to.not.equal(-1)
+        expect(event.processes[index]).to.equal(event.process)
+
+        expect(event.process).to.have.property('request')
+        expect(event.process).to.have.property('xhr')
+        expect(event.process).to.have.property('index')
+
+        expect(event.total).to.equal(file.size)
+        expect(event.loaded).to.be.most(event.total)
+      }
+
+      tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { progress: _resumingProgressHandle, useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+        done()
+      })
+
+      server.respond()
+    })
+
+    it('can load state from local storage and continue to upload', function () {
+      // sinon.spy(window.localStorage, 'setItem')
     })
   })
 })

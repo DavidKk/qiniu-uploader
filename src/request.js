@@ -62,13 +62,34 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   options = _.defaultsDeep(options, settings)
 
   let xhr = new window.XMLHttpRequest()
-  xhr.onerror = callback.bind(null)
+
+  let xhrComplete = function () {
+    xhr.onerror = null
+    xhr.onreadystatechange = null
+    xhr = undefined
+  }
+
+  xhr.onerror = (error) => {
+    if (true === xhr.aborted) {
+      return
+    }
+
+    xhr.errorFlag = true
+    callback(error)
+    xhrComplete()
+  }
+
   xhr.onreadystatechange = () => {
+    if (true === xhr.errorFlag || true === xhr.aborted) {
+      return
+    }
+
     if (xhr.readyState === 4) {
       let parsedData
 
       if (!xhr.responseText) {
         callback(new Error('Response text is empty'))
+        xhrComplete()
         return
       }
 
@@ -76,13 +97,20 @@ export function request (method = 'POST', url, data, options = {}, callback) {
         parsedData = JSON.parse(xhr.responseText)
       } catch (error) {
         callback(new Error(`Reponse data is invalid JSON\n${xhr.responseText}`))
+        xhrComplete()
         return
       }
 
       xhr.status === 200
       ? callback(null, parsedData)
       : callback(new Error(parsedData))
+
+      xhrComplete()
     }
+  }
+
+  if (_.isFunction(options.progress)) {
+    xhr.onprogress = options.progress.bind(xhr)
   }
 
   let isGetMethod = method === 'GET' && _.isPlainObject(data)
@@ -121,8 +149,12 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
 
   let cancel = function () {
-    xhr.abort()
-    callback(new Error('Request is canceled'))
+    if (xhr) {
+      xhr.readyState !== 4 && xhr.abort()
+      xhr.aborted = true
+
+      callback(new Error('Request is canceled'))
+    }
   }
 
   return { cancel, xhr }

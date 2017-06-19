@@ -20,6 +20,7 @@ let rules = [
 ]
 
 export default WebpackMerger({
+  devtool: 'inline-source-map',
   entry: {
     qiniuUploader: path.join(__dirname, './src/index.js')
   },

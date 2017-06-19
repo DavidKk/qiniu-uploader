@@ -58,6 +58,7 @@ export class Tunnel {
    * @param {Object} [options={}] 上传配置
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
+   * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
    * @return {Request} 返回一个请求对象
    */
@@ -103,6 +104,7 @@ export class Tunnel {
    * @param {Object} [options={}] 上传配置
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
+   * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
    * @return {Request} 返回一个请求对象
    */
@@ -172,6 +174,7 @@ export class Tunnel {
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {number} [options.chunkSize] 设置每个分片的大小
+   * @param {Function} [options.progress] 上传进度
    * @param {mkblkCallback} callback 上传之后执行的回调函数
    * @return {Request} 返回一个请求对象
    */
@@ -224,6 +227,7 @@ export class Tunnel {
    * @param {Object} [options={}] 上传配置
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
+   * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
    * @return {Request} 返回一个请求对象
    */
@@ -279,6 +283,7 @@ export class Tunnel {
    * @param {Object} [options={}] 上传配置
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
+   * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
    * @returns {Object} state
    * @returns {XMLHttpsRequest} state.xhr AJAX 对象
@@ -351,6 +356,7 @@ export class Tunnel {
    * @param {Boolean} [options.cache=true] 设置本地缓存
    * @param {Boolean} [options.override=false] 无论是否已经上传都进行重新上传
    * @param {Integer} [options.maxConnect=4] 最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中
+   * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
    * @return {Request} 返回一个请求对象
    */
@@ -389,6 +395,60 @@ export class Tunnel {
       return
     }
 
+    let _resumingProgressHandle = options.progress
+    options.progress = undefined
+
+    let processes = []
+    let listenProgress = _.isFunction(_resumingProgressHandle)
+
+    let registerRequest = function (request, index, progressRelativeData) {
+      if (!(request && _.isInteger(index) && request.xhr && request.xhr instanceof XMLHttpRequest)) {
+        return
+      }
+
+      let { xhr } = request
+      let process = { request, xhr, index, /** size, beginPos, endPos */ }
+
+      if (!_.isEmpty(progressRelativeData)) {
+        _.assign(process, progressRelativeData)
+
+        if (listenProgress) {
+          xhr.addEventListener('progress', (event) => {
+            process.loaded = event.loaded
+            process.total = event.total
+
+            triggerRequestProgress(xhr, process)
+          })
+        }
+      }
+
+      processes.push(process)
+    }
+
+    let triggerRequestProgress = function (xhr, process) {
+      let uploadSize = 0
+
+      _.forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {
+        if (_.isInteger(size) && _.isInteger(loaded) && _.isInteger(total)) {
+          uploadSize += size * loaded / total
+        }
+      })
+
+      let event = new Event('qiniup')
+      event.processes = processes
+      event.process = process
+      event.loaded = uploadSize
+      event.total = file.size
+
+      _resumingProgressHandle.call(xhr, event)
+    }
+
+    let abortRequest = function () {
+      _.forEach(processes, ({ request }) => {
+        request.cancel()
+      })
+    }
+
     /**
      * 创建分块任务
      * @param {File} file 文件对象
@@ -412,7 +472,7 @@ export class Tunnel {
        * 这样也能减少资源与内存的消耗
        */
       let block = file.slice(beginPos, endPos)
-      this.mkblk(block, params, options, (error, response) => {
+      let request = this.mkblk(block, params, options, (error, response) => {
         if (error) {
           callback(error)
           return
@@ -422,6 +482,10 @@ export class Tunnel {
         file.setState(beginPos, endPos, state, options.cache)
         callback(null, { state, block, file })
       })
+
+      let size = block.size > perChunkSize ? perChunkSize : block.size
+
+      registerRequest(request, beginPos, { size, beginPos, endPos: beginPos + size })
     }
 
     /**
@@ -445,7 +509,7 @@ export class Tunnel {
       }
 
       let chunk = block.slice(beginPos, endPos, block.type)
-      this.bput(chunk, _.assign({ ctx, offset: beginPos }, params), options, (error, response) => {
+      let request = this.bput(chunk, _.assign({ ctx, offset: beginPos }, params), options, (error, response) => {
         if (error) {
           callback(error)
           return
@@ -455,6 +519,8 @@ export class Tunnel {
         file.setState(beginPos, endPos, state, options.cache)
         callback(null, { state, chunk, block, file })
       })
+      
+      registerRequest(request, block.size + beginPos, { size: chunk.size, beginPos, endPos })
     }
 
     let totalBlockNo = Math.ceil(file.size / perBlockSize)
@@ -508,7 +574,7 @@ export class Tunnel {
     })
 
     /**
-     * 当所有块(Block)都全部上传完成
+     * 当所有块(Block)都全部上传完
      * 则执行合并文件操作
      */
     parallelLimit(tasks, options.maxConnect, (error, responses) => {
@@ -529,7 +595,12 @@ export class Tunnel {
        * 并组成数组提交创建文件接口
        */
       let ctxs = _.map(responses, 'state.ctx')
-      this.mkfile(ctxs, _.assign({ size: file.size }, params), options, callback)
+      let size = file.size
+      let request = this.mkfile(ctxs, _.assign({ size }, params), options, callback)
+
+      registerRequest(request, size)
     })
+
+    return { cancel: abortRequest, xhr: null }
   }
 }

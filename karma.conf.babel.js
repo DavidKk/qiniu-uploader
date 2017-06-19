@@ -30,7 +30,7 @@ export default function (config) {
     ],
     webpack: webpackConf,
     webpackMiddleware: {
-      noInfo: false,
+      noInfo: true,
       stats: true
     },
     /**
