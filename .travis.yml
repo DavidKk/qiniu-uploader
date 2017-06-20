@@ -21,9 +21,16 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-script:
-  - yarn run sauce
-  - yarn run coveralls
+matrix:
+  include:
+    - node_js: '7'
+    - script:
+      - yarn run coveralls
+
+  allow_failures:
+    - node_js: '7'
+    - script:
+      - yarn run sauce
 
 before_deploy:
   - yarn run build
