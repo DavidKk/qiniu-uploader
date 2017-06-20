@@ -1,54 +1,46 @@
+---
 language: node_js
 sudo: false
 node_js:
-  - '7'
-
+- '7'
 cache:
   directories:
-    - ./node_modules
-
+  - "./node_modules"
 addons:
   sauce_connect:
-    username: 'DavidKk'
+    username: DavidKk
   jwt:
-    secure: 'o3kqfupTPNeuKDWRcLKoGvOyKhB7A7bhE2o15IOIhYddqFRrb9ngHAhR7I9LWQIKZGjIGQPwchTVSBRNvdRkQGK5QMOjunW7fp4DjrU/rt95Z7teZTc6O67Ic+lkznaxfZOXaAZ+0cCDrY6Hypcqwy9fVYyYvob1hJXv1fKui9aflFPwj4aY2gglzTL5KVnQeOiA68WDP2V0S7FBCAH56Kn/qwV6KzG0tjv6uJvfmeBTdw7Yt7ouf27BIuFc44oRKRZtRwqyLkTuK1AeWcYzXsCY44VZHQwFhk2AcgbVR1/wFJDme+7U+71xSOz1vtfEM/8iv7hfGUUnTN+wn3DIYkI2VC8iju86aYdyhttqiJuHsskZZehyiP2b+bmKCTQzR0zmpgR+TnowDPV0zRmhjR3kpuyvqLFiKU8MfcD0AUlO63voMZvE0/rl+ZNzlBPknbpqa3Wn+mPN3LRnISHmx8r/fv3cfSH0qtp11I+4CQm+5pZvQFyhFR7XCCS8rHrhtoJBxQ87tL3lLaI5Ow+VRRpbFs+jeLWPwuAMo5tUmiy5qFBIzqKF4OLG+SxSQvcDq3YodO2Q1gLRemUaOuScdcZlKlCgU5HtKjR+rabjqZnCM4SNFkKCpD+32U7RUsc60kB66KTCZm9EVSGFIZZ+yXbrO8YRKeez7qw8/CVHkgU='
-
+    secure: o3kqfupTPNeuKDWRcLKoGvOyKhB7A7bhE2o15IOIhYddqFRrb9ngHAhR7I9LWQIKZGjIGQPwchTVSBRNvdRkQGK5QMOjunW7fp4DjrU/rt95Z7teZTc6O67Ic+lkznaxfZOXaAZ+0cCDrY6Hypcqwy9fVYyYvob1hJXv1fKui9aflFPwj4aY2gglzTL5KVnQeOiA68WDP2V0S7FBCAH56Kn/qwV6KzG0tjv6uJvfmeBTdw7Yt7ouf27BIuFc44oRKRZtRwqyLkTuK1AeWcYzXsCY44VZHQwFhk2AcgbVR1/wFJDme+7U+71xSOz1vtfEM/8iv7hfGUUnTN+wn3DIYkI2VC8iju86aYdyhttqiJuHsskZZehyiP2b+bmKCTQzR0zmpgR+TnowDPV0zRmhjR3kpuyvqLFiKU8MfcD0AUlO63voMZvE0/rl+ZNzlBPknbpqa3Wn+mPN3LRnISHmx8r/fv3cfSH0qtp11I+4CQm+5pZvQFyhFR7XCCS8rHrhtoJBxQ87tL3lLaI5Ow+VRRpbFs+jeLWPwuAMo5tUmiy5qFBIzqKF4OLG+SxSQvcDq3YodO2Q1gLRemUaOuScdcZlKlCgU5HtKjR+rabjqZnCM4SNFkKCpD+32U7RUsc60kB66KTCZm9EVSGFIZZ+yXbrO8YRKeez7qw8/CVHkgU=
 install:
-  - yarn
-  - yarn add coveralls
-
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
+- yarn
+- yarn add coveralls
 matrix:
   include:
-    - node_js: '7'
-    - script:
-      - yarn run coveralls
-
+    env:
+    - UNITEST=1
+    - COVERAGE=1
   allow_failures:
-    - node_js: '7'
-    - script:
-      - yarn run sauce
-
+    env: SAUCE_LABS=1
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+script:
+- npm run unitest
 before_deploy:
-  - yarn run build
-  - yarn run document
-
+- yarn run build
+- yarn run document
 deploy:
-  - provider: pages
-    local_dir: docs
-    skip_cleanup: true
-    github_token:
-      secure: dbL+LVT3jz6z0+x7mhNpj8f9WLYdEqc/jCULX+GhUGEUVVX5TrI1JLoxBlwGnzXmYb5cRqo8IC/eoHNHjSeV5g6Ay1nhsRHposeKfK5svAs7KzKHQCFxIZitCgvTiTVWSBtkdB8kVK5gSwTIq9FDeNnsTptBbEcnVVWEcFAbh/ndaZsfmMhfFHKgShKmy8ppxEr7VsvrQQXSX98zItZrxHGnrIBnHKpnFdff0FH8kTwyeJ3Ebq8zgtbCNhrzcNBsHk9F/qiyZrtCHsNOqDLFbT6dh29vRVLgeqxIbHnhpPv+x4WyHbKYs52pQCrR3+AUh87xjRvKtMIaBL9XrXSrU2coP6WvEroZf/3TBwouFGXIaKIoX0Wp76tI6wD3W0rkXtjw8ix8KKszWAbR7xbMHAhj5plr48lU1Vp9iwIEnTLXoZb9ujBQ4aN3T7noPtI4QDbJfj9sj4xBcXaC/UOmy5VkH2Fxn9Htp1B8fP75Ra4FxZCCdOhZ8oZRD4ZEznQbTPOw3NjY6V0y2RIxAfpK3otQwFmepDTam6FdaOGeMFXrw5TT4vHJCf0JyZ6TlIEySdwJqagTZHj7sKN6VQdBS9fCTewzwi12bfH5lJm4EsabKnNRgYTaw9dXIaL/5dKxiqQ+KH94DHat/cLguAWDLWMxYwHyX8GfzXmVOHzBy7k=
-    on:
-      branch: master
-
-  - provider: npm
-    skip_cleanup: true
-    email: qowera@qq.com
-    api_key:
-      secure: jZtSdAzjZTpnxRcSxhnnZB4VM49QYuEejKJnD0EiyH4EwvdKtFh4VDCBZ0Umjrt8ximx4GaE+HHApqZ1zwrVFXzc6FXW+5hmShJb0yAmRPQBFItLRuttZbaCfSRb+NyJFu3IiMw4VBkxaLXdLIwc9Ok1pedHdHZ5882PaYS3eh+MDd4pDqiSvCsZ7jrBKku9oxFDDwEdaV+JBHSnsajsThOBmlwHSHl81TF1mqKGkR32wCrRw9xzmKp0iYc9w4Kbz3nUqMVkPeVp3kTK22BpYK+cts2fJADSLDVZwv/l2o1NecMlyBs6+LXBAyqf7B8iLKtg0FR/b9mtinRGFwH8OEGtPGPR/eatrEGTgKcskCPbYIj53aYwoDifbWyaRF4Sv2SztE0hJ1+cGptkd7za1NGZbR1ymPrl0qQoTHS0Psn42oV+nErO2CeN4v+19iSZnHyRLVXm1XZMQw+cx8Iy2TzNedl6a6ZRKm3ZqrtO8jJS2jpj/GhMVQA/jrf/gKmPBITvSrEwf98qxZaJIS4kNZ025xm49aL8VQXTiEBF2pfw+8ct2Hw8ofeSeQ+i7iKgdXoS/+xUsFY4/taOg1pW18B5hDsUqjYn9irxuJGaPd5/oJnWaPOQnC0HMwGEt15K7g1vOdXgiaMsGx3ekHeShD3+P7XYh34xeml+c6/Rbj8=
-    on:
-      tags: true
+- provider: pages
+  local_dir: docs
+  skip_cleanup: true
+  github_token:
+    secure: dbL+LVT3jz6z0+x7mhNpj8f9WLYdEqc/jCULX+GhUGEUVVX5TrI1JLoxBlwGnzXmYb5cRqo8IC/eoHNHjSeV5g6Ay1nhsRHposeKfK5svAs7KzKHQCFxIZitCgvTiTVWSBtkdB8kVK5gSwTIq9FDeNnsTptBbEcnVVWEcFAbh/ndaZsfmMhfFHKgShKmy8ppxEr7VsvrQQXSX98zItZrxHGnrIBnHKpnFdff0FH8kTwyeJ3Ebq8zgtbCNhrzcNBsHk9F/qiyZrtCHsNOqDLFbT6dh29vRVLgeqxIbHnhpPv+x4WyHbKYs52pQCrR3+AUh87xjRvKtMIaBL9XrXSrU2coP6WvEroZf/3TBwouFGXIaKIoX0Wp76tI6wD3W0rkXtjw8ix8KKszWAbR7xbMHAhj5plr48lU1Vp9iwIEnTLXoZb9ujBQ4aN3T7noPtI4QDbJfj9sj4xBcXaC/UOmy5VkH2Fxn9Htp1B8fP75Ra4FxZCCdOhZ8oZRD4ZEznQbTPOw3NjY6V0y2RIxAfpK3otQwFmepDTam6FdaOGeMFXrw5TT4vHJCf0JyZ6TlIEySdwJqagTZHj7sKN6VQdBS9fCTewzwi12bfH5lJm4EsabKnNRgYTaw9dXIaL/5dKxiqQ+KH94DHat/cLguAWDLWMxYwHyX8GfzXmVOHzBy7k=
+  'on':
+    branch: master
+- provider: npm
+  skip_cleanup: true
+  email: qowera@qq.com
+  api_key:
+    secure: jZtSdAzjZTpnxRcSxhnnZB4VM49QYuEejKJnD0EiyH4EwvdKtFh4VDCBZ0Umjrt8ximx4GaE+HHApqZ1zwrVFXzc6FXW+5hmShJb0yAmRPQBFItLRuttZbaCfSRb+NyJFu3IiMw4VBkxaLXdLIwc9Ok1pedHdHZ5882PaYS3eh+MDd4pDqiSvCsZ7jrBKku9oxFDDwEdaV+JBHSnsajsThOBmlwHSHl81TF1mqKGkR32wCrRw9xzmKp0iYc9w4Kbz3nUqMVkPeVp3kTK22BpYK+cts2fJADSLDVZwv/l2o1NecMlyBs6+LXBAyqf7B8iLKtg0FR/b9mtinRGFwH8OEGtPGPR/eatrEGTgKcskCPbYIj53aYwoDifbWyaRF4Sv2SztE0hJ1+cGptkd7za1NGZbR1ymPrl0qQoTHS0Psn42oV+nErO2CeN4v+19iSZnHyRLVXm1XZMQw+cx8Iy2TzNedl6a6ZRKm3ZqrtO8jJS2jpj/GhMVQA/jrf/gKmPBITvSrEwf98qxZaJIS4kNZ025xm49aL8VQXTiEBF2pfw+8ct2Hw8ofeSeQ+i7iKgdXoS/+xUsFY4/taOg1pW18B5hDsUqjYn9irxuJGaPd5/oJnWaPOQnC0HMwGEt15K7g1vOdXgiaMsGx3ekHeShD3+P7XYh34xeml+c6/Rbj8=
+  'on':
+    tags: true
