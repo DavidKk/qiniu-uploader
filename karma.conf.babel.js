@@ -2,8 +2,8 @@ import os from 'os'
 import fs from 'fs-extra'
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
-import webpackConf from './webpack.common.config.babel'
-import { launchers as sauceBrowsers } from './saucelabs.browser.conf'
+import WebpackConf from './webpack.common.config.babel'
+import SauceBrowsers from './saucelabs.json'
 import pkg from './package.json'
 
 const basePath = path.resolve('./')
@@ -28,7 +28,7 @@ export default function (config) {
     reporters: [
       'mocha'
     ],
-    webpack: webpackConf,
+    webpack: WebpackConf,
     webpackMiddleware: {
       noInfo: true,
       stats: true
@@ -66,14 +66,14 @@ export default function (config) {
       fixWebpackSourcePaths: true
     }
 
-    karmaConf.webpack = WebpackMerger(webpackConf, {
+    karmaConf.webpack = WebpackMerger(WebpackConf, {
       module: {
         rules: [
           {
             test: /\.js$/,
             enforce: 'post',
             loader: 'istanbul-instrumenter-loader',
-            include: webpackConf.resolve.modules,
+            include: WebpackConf.resolve.modules,
             exclude: [/node_modules/, /unitest/],
             query: {
               esModules: true
@@ -85,8 +85,8 @@ export default function (config) {
   }
 
   if (process.env.SAUCE_LABS) {
-    karmaConf.customLaunchers = sauceBrowsers
-    karmaConf.browsers = Object.keys(sauceBrowsers)
+    karmaConf.customLaunchers = SauceBrowsers
+    karmaConf.browsers = Object.keys(SauceBrowsers)
     karmaConf.browserDisconnectTimeout = 5000
     karmaConf.browserNoActivityTimeout = 5000
     karmaConf.browserDisconnectTolerance = 10
