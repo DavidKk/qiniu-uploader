@@ -23,24 +23,7 @@
     "platform": "Windows 7",
     "version": "10.0"
   },
-  "sl_win_8.1_ie_11": {
-    "base": "SauceLabs",
-    "browserName": "internet explorer",
-    "platform": "Windows 8.1",
-    "version": "11.0"
-  },
-  "sl_win_10_ie_11.103": {
-    "base": "SauceLabs",
-    "browserName": "internet explorer",
-    "platform": "Windows 10",
-    "version": "11.103"
-  },
-  "sl_linux_opera_12.15": {
-    "base": "SauceLabs",
-    "browserName": "opera",
-    "platform": "Linux",
-    "version": "12.15"
-  },
+
   "sl_android_4": {
     "base": "SauceLabs",
     "browserName": "Browser",
@@ -50,33 +33,7 @@
     "platformVersion": "4.4",
     "platformName": "Android"
   },
-  "sl_android_5": {
-    "base": "SauceLabs",
-    "browserName": "Browser",
-    "appiumVersion": "1.6.4",
-    "deviceName": "Android GoogleAPI Emulator",
-    "deviceOrientation": "portrait",
-    "platformVersion": "5.0",
-    "platformName": "Android"
-  },
-  "sl_android_6": {
-    "base": "SauceLabs",
-    "browserName": "Browser",
-    "appiumVersion": "1.6.4",
-    "deviceName": "Android GoogleAPI Emulator",
-    "deviceOrientation": "portrait",
-    "platformVersion": "6.0",
-    "platformName": "Android"
-  },
-  "sl_android_7": {
-    "base": "SauceLabs",
-    "browserName": "Browser",
-    "appiumVersion": "1.6.4",
-    "deviceName": "Android GoogleAPI Emulator",
-    "deviceOrientation": "portrait",
-    "platformVersion": "7.0",
-    "platformName": "Android"
-  },
+
   "sl_ios_8": {
     "base": "SauceLabs",
     "browserName": "Safari",
@@ -85,23 +42,6 @@
     "deviceOrientation": "portrait",
     "platformVersion": "8.1",
     "platformName": "iOS"
-  },
-  "sl_ios_9": {
-    "base": "SauceLabs",
-    "browserName": "Safari",
-    "appiumVersion": "1.6.4",
-    "deviceName": "iPhone 6 Simulator",
-    "deviceOrientation": "portrait",
-    "platformVersion": "9.0",
-    "platformName": "iOS"
-  },
-  "sl_ios_10": {
-    "base": "SauceLabs",
-    "browserName": "Safari",
-    "appiumVersion": "1.6.4",
-    "deviceName": "iPhone 6s Simulator",
-    "deviceOrientation": "portrait",
-    "platformVersion": "10.0",
-    "platformName": "iOS"
   }
+
 }
