@@ -13,8 +13,6 @@
 
 # Dependency folders
 node_modules
-.yarnrc
-.npmrc
 yarn.lock
 
 # Numerous always-ignore extensions
