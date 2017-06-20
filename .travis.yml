@@ -11,6 +11,7 @@ env:
 matrix:
   include:
   - env: COVERAGE=1
+  - env: SAUCE_LABS=1
   allow_failures:
   - env: SAUCE_LABS=1
     addons:
