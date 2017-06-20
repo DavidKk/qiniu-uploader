@@ -19,7 +19,7 @@ matrix:
     jwt:
       secure: o3kqfupTPNeuKDWRcLKoGvOyKhB7A7bhE2o15IOIhYddqFRrb9ngHAhR7I9LWQIKZGjIGQPwchTVSBRNvdRkQGK5QMOjunW7fp4DjrU/rt95Z7teZTc6O67Ic+lkznaxfZOXaAZ+0cCDrY6Hypcqwy9fVYyYvob1hJXv1fKui9aflFPwj4aY2gglzTL5KVnQeOiA68WDP2V0S7FBCAH56Kn/qwV6KzG0tjv6uJvfmeBTdw7Yt7ouf27BIuFc44oRKRZtRwqyLkTuK1AeWcYzXsCY44VZHQwFhk2AcgbVR1/wFJDme+7U+71xSOz1vtfEM/8iv7hfGUUnTN+wn3DIYkI2VC8iju86aYdyhttqiJuHsskZZehyiP2b+bmKCTQzR0zmpgR+TnowDPV0zRmhjR3kpuyvqLFiKU8MfcD0AUlO63voMZvE0/rl+ZNzlBPknbpqa3Wn+mPN3LRnISHmx8r/fv3cfSH0qtp11I+4CQm+5pZvQFyhFR7XCCS8rHrhtoJBxQ87tL3lLaI5Ow+VRRpbFs+jeLWPwuAMo5tUmiy5qFBIzqKF4OLG+SxSQvcDq3YodO2Q1gLRemUaOuScdcZlKlCgU5HtKjR+rabjqZnCM4SNFkKCpD+32U7RUsc60kB66KTCZm9EVSGFIZZ+yXbrO8YRKeez7qw8/CVHkgU=
 install:
-- npm
+- npm install
 - npm add coveralls
 before_script:
 - export DISPLAY=:99.0
