@@ -4,6 +4,7 @@
 /unitest
 /.babelrc
 /.travis.yml
+/yarn.lock
 /esdoc.json
 /karma.conf.babel.js
 /karma.conf.js
