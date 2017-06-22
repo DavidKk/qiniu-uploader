@@ -27,7 +27,10 @@ export default WebpackMerger({
   output: {
     path: path.join(__dirname, './dist'),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].js',
+    library: pkg.name,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: rules
