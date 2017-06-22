@@ -2,7 +2,7 @@
   "name": "qiniup",
   "version": "0.1.1",
   "description": "Qiniu Uploader",
-  "main": "dist/qiniuUploader.js",
+  "main": "dist/qiniup.js",
   "author": "<David Jones qowera@gmail.com>",
   "license": "MIT",
   "scripts": {

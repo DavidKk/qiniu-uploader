@@ -1,5 +1,6 @@
 import path from 'path'
 import WebpackMerger from 'webpack-merge'
+import pkg from './package.json'
 
 let resolveModules = [
   path.join(__dirname, './node_modules'),
@@ -22,7 +23,7 @@ let rules = [
 export default WebpackMerger({
   devtool: 'inline-source-map',
   entry: {
-    qiniuUploader: path.join(__dirname, './src/index.js')
+    [pkg.name]: path.join(__dirname, './src/index.js')
   },
   output: {
     path: path.join(__dirname, './dist'),
