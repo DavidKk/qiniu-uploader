@@ -1,8 +1,8 @@
-import _ from 'lodash'
+import isFunction from 'lodash/isFunction'
 
 export class QiniupEvent {
   constructor (event, params = { bubbles: false, cancelable: false, detail: undefined }) {
-    if (_.isFunction(window.CustomEvent)) {
+    if (isFunction(window.CustomEvent)) {
       return new window.CustomEvent(event, params)
     }
 

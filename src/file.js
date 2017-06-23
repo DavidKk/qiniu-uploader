@@ -1,4 +1,12 @@
-import _ from 'lodash'
+import isArray from 'lodash/isArray'
+import isString from 'lodash/isString'
+import isInteger from 'lodash/isInteger'
+import isFunction from 'lodash/isFunction'
+import isPlainObject from 'lodash/isPlainObject'
+import find from 'lodash/find'
+import assign from 'lodash/assign'
+import forEach from 'lodash/forEach'
+import defaultsDeep from 'lodash/defaultsDeep'
 import sha256 from 'crypto-js/sha256'
 import * as CONFIG from './config'
 import { Enum } from './enum'
@@ -79,7 +87,7 @@ export class File {
      *
      * @type {Object}
      */
-    this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
+    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
 
     /**
      * 文件类型
@@ -101,7 +109,7 @@ export class File {
      *
      * @type {Blob}
      */
-    this.blob = file instanceof window.Blob ? file : new window.Blob(_.isArray(file) ? file : [file], { type: this.type })
+    this.blob = file instanceof window.Blob ? file : new window.Blob(isArray(file) ? file : [file], { type: this.type })
 
     /**
      * 文件哈希值，根据文件名文件大小文件类型与最后修改时间来确定；
@@ -109,7 +117,7 @@ export class File {
      *
      * @type {String}
      */
-    this.hash = sha256(_.isString(file) ? file : file.name + file.size + file.type + file.lastModified).toString()
+    this.hash = sha256(isString(file) ? file : file.name + file.size + file.type + file.lastModified).toString()
 
     /**
      * 文件状态，用于存储文件上传信息
@@ -142,7 +150,7 @@ export class File {
    * @return {Blob} 分片文件
    */
   slice (beginPos = 0, endPos, type = this.type) {
-    if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
+    if (!(isInteger(beginPos) && isInteger(endPos))) {
       throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
@@ -162,7 +170,7 @@ export class File {
    * @param {Boolean} [cache=this.settings.cache] 是否缓存
    */
   setState (beginPos, endPos, state = {}, cache = this.settings.cache) {
-    if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
+    if (!(isInteger(beginPos) && isInteger(endPos))) {
       throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
@@ -170,7 +178,7 @@ export class File {
       throw new Error('End pos must over begin pos')
     }
 
-    let data = _.assign({ beginPos, endPos }, state)
+    let data = assign({ beginPos, endPos }, state)
     this.state.push(data)
 
     cache === true && this.saveState()
@@ -184,7 +192,7 @@ export class File {
    * @return {Object} 信息数据
    */
   getState (beginPos, endPos) {
-    if (!(_.isInteger(beginPos) && _.isInteger(endPos))) {
+    if (!(isInteger(beginPos) && isInteger(endPos))) {
       throw new TypeError('One of begin pos and end pos is not a integer')
     }
 
@@ -192,7 +200,7 @@ export class File {
       throw new Error('End pos must over begin pos')
     }
 
-    return _.find(this.state, { beginPos, endPos })
+    return find(this.state, { beginPos, endPos })
   }
 
   /**
@@ -214,16 +222,16 @@ export class File {
    * @param {Function} [callback] 回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息
    */
   import (source, callback) {
-    if (_.isString(source)) {
+    if (isString(source)) {
       let data = JSON.parse(source)
       return this.import(data, callback)
     }
 
-    if (callback && !_.isFunction(callback)) {
+    if (callback && !isFunction(callback)) {
       throw new TypeError('Callback is not a function')
     }
 
-    if (!_.isPlainObject(source)) {
+    if (!isPlainObject(source)) {
       callback && callback(new Error('Source is not a plain object'))
       return
     }
@@ -238,7 +246,7 @@ export class File {
       return
     }
 
-    if (!_.isArray(source.state)) {
+    if (!isArray(source.state)) {
       callback && callback(new TypeError('Source is invalid'))
       return
     }
@@ -261,7 +269,7 @@ export class File {
    * @param {Function} callback 回调函数，导出成功将返回数据
    */
   export (type = this.constructor.stateFormatter.OBJECT, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provided or not be a function')
     }
 
@@ -304,11 +312,11 @@ export class File {
    * @param {Function} [callback] 回调函数，错误会抛出错误异常
    */
   loadState (hashCode = this.hash, callback) {
-    if (arguments.length < 2 && _.isFunction(hashCode)) {
+    if (arguments.length < 2 && isFunction(hashCode)) {
       return this.loadState(this.hash, hashCode)
     }
 
-    if (callback && !_.isFunction(callback)) {
+    if (callback && !isFunction(callback)) {
       throw new TypeError('Callback is not a function')
     }
 
@@ -323,11 +331,11 @@ export class File {
    * @param {Function} [callback] 回调函数，错误会抛出错误异常
    */
   saveState (hashCode = this.hash, callback) {
-    if (arguments.length < 2 && _.isFunction(hashCode)) {
+    if (arguments.length < 2 && isFunction(hashCode)) {
       return this.saveState(this.hash, hashCode)
     }
 
-    if (callback && !_.isFunction(callback)) {
+    if (callback && !isFunction(callback)) {
       throw new TypeError('Callback is not a function')
     }
 
@@ -357,8 +365,8 @@ export class File {
   destory () {
     this.cleanCache()
 
-    _.forEach(this, function (value, key) {
-      this[key] = _.isFunction(value) ? Function.prototype : undefined
+    forEach(this, function (value, key) {
+      this[key] = isFunction(value) ? Function.prototype : undefined
     })
   }
 }

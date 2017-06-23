@@ -1,4 +1,15 @@
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import isArray from 'lodash/isArray'
+import isString from 'lodash/isString'
+import isNumber from 'lodash/isNumber'
+import isInteger from 'lodash/isInteger'
+import isFunction from 'lodash/isFunction'
+import map from 'lodash/map'
+import times from 'lodash/times'
+import forEach from 'lodash/forEach'
+import assign from 'lodash/assign'
+import sortBy from 'lodash/sortBy'
+import defaultsDeep from 'lodash/defaultsDeep'
 import waterfall from 'async/waterfall'
 import parallelLimit from 'async/parallelLimit'
 import * as http from './request'
@@ -45,7 +56,7 @@ export class Tunnel {
    * @return {Tunnel}
    */
   constructor (options) {
-    this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
+    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
   }
 
   /**
@@ -64,7 +75,7 @@ export class Tunnel {
    * @return {Request} 返回一个请求对象
    */
   upload (file, params = {}, options = {}, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
@@ -73,21 +84,21 @@ export class Tunnel {
       return
     }
 
-    if (!(_.isString(params.token) && params.token)) {
+    if (!(isString(params.token) && params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
-    options = _.defaultsDeep(options, this.settings)
+    options = defaultsDeep(options, this.settings)
 
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}`
-    let datas = _.assign({ file }, params)
+    let datas = assign({ file }, params)
     let headers = {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, datas, _.assign({ headers }, options), callback)
+    return http.upload(url, datas, assign({ headers }, options), callback)
   }
 
   /**
@@ -110,42 +121,42 @@ export class Tunnel {
    * @return {Request} 返回一个请求对象
    */
   upb64 (content, params = { size: -1 }, options = {}, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(content) || !CONFIG.BASE64_REGEXP.exec(content)) {
+    if (isEmpty(content) || !CONFIG.BASE64_REGEXP.exec(content)) {
       callback(new TypeError('Content is not provided or not a valid base64 string'))
       return
     }
 
-    if (!_.isString(params.token)) {
+    if (!isString(params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
-    if (!(_.isNumber(params.size) && _.isInteger(params.size) && params.size > 0)) {
+    if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {
       params.size = -1
     }
 
-    options = _.defaultsDeep(options, this.settings)
+    options = defaultsDeep(options, this.settings)
 
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/${params.size}`
 
-    if (_.isString(params.key) && params.key) {
+    if (isString(params.key) && params.key) {
       url += `/key/${encodeURIComponent(params.key)}`
     }
 
-    if (_.isString(params.mimeType) && params.mimeType) {
+    if (isString(params.mimeType) && params.mimeType) {
       url += `/mimeType/${encodeURIComponent(params.mimeType)}`
     }
 
-    if (_.isString(params.crc32) && params.crc32) {
+    if (isString(params.crc32) && params.crc32) {
       url += `/crc32/${encodeURIComponent(params.crc32)}`
     }
 
-    if (_.isString(params.userVars) && params.userVars) {
+    if (isString(params.userVars) && params.userVars) {
       url += `/x:user-var/${encodeURIComponent(params.userVars)}`
     }
 
@@ -155,7 +166,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, datas, _.assign({ headers }, options), callback)
+    return http.upload(url, datas, assign({ headers }, options), callback)
   }
 
   /**
@@ -180,7 +191,7 @@ export class Tunnel {
    * @return {Request} 返回一个请求对象
    */
   mkblk (block, params = {}, options = {}, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
@@ -189,12 +200,12 @@ export class Tunnel {
       return
     }
 
-    if (!_.isString(params.token)) {
+    if (!isString(params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
-    options = _.defaultsDeep(options, this.settings)
+    options = defaultsDeep(options, this.settings)
 
     let chunk = block.slice(0, options.chunkSize, block.type)
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
@@ -204,7 +215,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, chunk, _.assign({ headers }, options), callback)
+    return http.upload(url, chunk, assign({ headers }, options), callback)
   }
 
   /**
@@ -233,7 +244,7 @@ export class Tunnel {
    * @return {Request} 返回一个请求对象
    */
   bput (chunk, params = {}, options = {}, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
@@ -242,22 +253,22 @@ export class Tunnel {
       return
     }
 
-    if (!_.isString(params.token)) {
+    if (!isString(params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
-    if (!_.isString(params.ctx)) {
+    if (!isString(params.ctx)) {
       callback(new TypeError('Params.ctx is not provided or not be a valid string'))
       return
     }
 
-    if (!(_.isNumber(params.offset) && _.isInteger(params.offset) && params.offset > 0)) {
+    if (!(isNumber(params.offset) && isInteger(params.offset) && params.offset > 0)) {
       callback(new TypeError('Params.offset is not provided or not be a valid interger'))
       return
     }
 
-    options = _.defaultsDeep(options, this.settings)
+    options = defaultsDeep(options, this.settings)
 
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/bput/${params.ctx}/${params.offset}`
@@ -266,7 +277,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, chunk, _.assign({ headers }, options), callback)
+    return http.upload(url, chunk, assign({ headers }, options), callback)
   }
 
   /**
@@ -291,21 +302,21 @@ export class Tunnel {
    * @returns {Function} state.cancel 取消函数
    */
   mkfile (ctxs, params = {}, options = {}, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
-    if (_.isEmpty(ctxs) || !(_.isArray(ctxs) || _.isString(ctxs))) {
+    if (isEmpty(ctxs) || !(isArray(ctxs) || isString(ctxs))) {
       callback(new TypeError('Ctxs is not provided or not be a valid value'))
       return
     }
 
-    if (!_.isString(params.token)) {
+    if (!isString(params.token)) {
       callback(new TypeError('Params.token is not provided or not be a valid string'))
       return
     }
 
-    if (!(_.isNumber(params.size) && _.isInteger(params.size) && params.size > 0)) {
+    if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {
       callback(new TypeError('Param.size is not provided or not be a valid integer'))
       return
     }
@@ -313,29 +324,29 @@ export class Tunnel {
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkfile/${params.size}`
 
-    if (_.isString(params.key) && params.key) {
+    if (isString(params.key) && params.key) {
       url += `/key/${encodeURIComponent(params.key)}`
     }
 
-    if (_.isString(params.mimeType) && params.mimeType) {
+    if (isString(params.mimeType) && params.mimeType) {
       url += `/mimeType/${encodeURIComponent(params.mimeType)}`
     }
 
-    if (_.isString(params.crc32) && params.crc32) {
+    if (isString(params.crc32) && params.crc32) {
       url += `/crc32/${encodeURIComponent(params.crc32)}`
     }
 
-    if (_.isString(params.userVars) && params.userVars) {
+    if (isString(params.userVars) && params.userVars) {
       url += `/x:user-var/${encodeURIComponent(params.userVars)}`
     }
 
-    let data = _.isArray(ctxs) ? ctxs.join(',') : ctxs
+    let data = isArray(ctxs) ? ctxs.join(',') : ctxs
     let headers = {
       'Content-Type': 'application/octet-stream',
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, data, _.assign({ headers }, options), callback)
+    return http.upload(url, data, assign({ headers }, options), callback)
   }
 
   /**
@@ -362,7 +373,7 @@ export class Tunnel {
    * @return {Request} 返回一个请求对象
    */
   resuming (file, params, options, callback) {
-    if (!_.isFunction(callback)) {
+    if (!isFunction(callback)) {
       throw new TypeError('Callback is not provied or not be a function')
     }
 
@@ -371,9 +382,9 @@ export class Tunnel {
       return
     }
 
-    options = _.defaultsDeep(options, { cache: true, override: false }, this.settings)
+    options = defaultsDeep(options, { cache: true, override: false }, this.settings)
 
-    if (!(_.isInteger(options.maxConnect) && options.maxConnect > 0)) {
+    if (!(isInteger(options.maxConnect) && options.maxConnect > 0)) {
       callback(new TypeError('Options.maxConnect is invalid or not a integer'))
       return
     }
@@ -381,12 +392,12 @@ export class Tunnel {
     let perBlockSize = options.blockSize
     let perChunkSize = options.chunkSize
 
-    if (!_.isInteger(perBlockSize)) {
+    if (!isInteger(perBlockSize)) {
       callback(new TypeError('Block size is not a integer'))
       return
     }
 
-    if (!_.isInteger(perChunkSize)) {
+    if (!isInteger(perChunkSize)) {
       callback(new TypeError('Chunk size is not a integer'))
       return
     }
@@ -400,10 +411,10 @@ export class Tunnel {
     options.progress = undefined
 
     let processes = []
-    let listenProgress = _.isFunction(_resumingProgressHandle)
+    let listenProgress = isFunction(_resumingProgressHandle)
 
     let registerRequest = function (request, index, progressRelativeData) {
-      if (!(request && _.isInteger(index) && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {
+      if (!(request && isInteger(index) && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {
         return
       }
 
@@ -412,8 +423,8 @@ export class Tunnel {
       /* eslint standard/object-curly-even-spacing:0 */
       let process = { request, xhr, index /** , size, beginPos, endPos */ }
 
-      if (!_.isEmpty(progressRelativeData)) {
-        _.assign(process, progressRelativeData)
+      if (!isEmpty(progressRelativeData)) {
+        assign(process, progressRelativeData)
 
         if (listenProgress) {
           xhr.addEventListener('progress', (event) => {
@@ -431,8 +442,8 @@ export class Tunnel {
     let triggerRequestProgress = function (xhr, process) {
       let uploadSize = 0
 
-      _.forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {
-        if (_.isInteger(size) && _.isInteger(loaded) && _.isInteger(total)) {
+      forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {
+        if (isInteger(size) && isInteger(loaded) && isInteger(total)) {
           uploadSize += size * loaded / total
         }
       })
@@ -447,7 +458,7 @@ export class Tunnel {
     }
 
     let abortRequest = function () {
-      _.forEach(processes, ({ request }) => {
+      forEach(processes, ({ request }) => {
         request.cancel()
       })
     }
@@ -481,7 +492,7 @@ export class Tunnel {
           return
         }
 
-        let state = _.assign({ status: 'uploaded', beginPos, endPos }, response)
+        let state = assign({ status: 'uploaded', beginPos, endPos }, response)
         file.setState(beginPos, endPos, state, options.cache)
         callback(null, { state, block, file })
       })
@@ -512,13 +523,13 @@ export class Tunnel {
       }
 
       let chunk = block.slice(beginPos, endPos, block.type)
-      let request = this.bput(chunk, _.assign({ ctx, offset: beginPos }, params), options, (error, response) => {
+      let request = this.bput(chunk, assign({ ctx, offset: beginPos }, params), options, (error, response) => {
         if (error) {
           callback(error)
           return
         }
 
-        let state = _.assign({ status: 'uploaded', beginPos, endPos }, response)
+        let state = assign({ status: 'uploaded', beginPos, endPos }, response)
         file.setState(beginPos, endPos, state, options.cache)
         callback(null, { state, chunk, block, file })
       })
@@ -527,7 +538,7 @@ export class Tunnel {
     }
 
     let totalBlockNo = Math.ceil(file.size / perBlockSize)
-    let tasks = _.times(totalBlockNo, (blockNo) => {
+    let tasks = times(totalBlockNo, (blockNo) => {
       let tasks = []
       let blockOffset = perBlockSize * blockNo
       let blockBeginPos = blockOffset
@@ -561,7 +572,7 @@ export class Tunnel {
       /**
        * 因为上传分块(Block)已经上传了第一个分片(Chunk)
        */
-      _.times(totalChunkNo - 1, (chunkNo) => {
+      times(totalChunkNo - 1, (chunkNo) => {
         let chunkOffset = perChunkSize * (chunkNo + 1)
         let chunkBeginPos = chunkOffset
         let chunkEndPos = chunkOffset + perChunkSize
@@ -591,15 +602,15 @@ export class Tunnel {
        * 是分割的顺序的，所以可以根据起始位置(beginPos)或者
        * 结束位置(endPos)进行排序
        */
-      responses = _.sortBy(responses, 'state.beginPos')
+      responses = sortBy(responses, 'state.beginPos')
 
       /**
        * 获取所有分块中最后分片上传完成返回的哈希值(ctx)，
        * 并组成数组提交创建文件接口
        */
-      let ctxs = _.map(responses, 'state.ctx')
+      let ctxs = map(responses, 'state.ctx')
       let size = file.size
-      let request = this.mkfile(ctxs, _.assign({ size }, params), options, callback)
+      let request = this.mkfile(ctxs, assign({ size }, params), options, callback)
 
       registerRequest(request, size)
     })

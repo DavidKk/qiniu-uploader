@@ -1,4 +1,9 @@
-import _ from 'lodash'
+import defaultsDeep from 'lodash/defaultsDeep'
+import isFunction from 'lodash/isFunction'
+import isPlainObject from 'lodash/isPlainObject'
+import isEmpty from 'lodash/isEmpty'
+import forEach from 'lodash/forEach'
+import assign from 'lodash/assign'
 import URI from 'urijs'
 
 /**
@@ -15,7 +20,7 @@ let settings = {}
  * @param {Object} [options={}] 配置
  */
 export function configure (options = {}) {
-  settings = _.defaultsDeep(options, settings)
+  settings = defaultsDeep(options, settings)
 }
 
 /**
@@ -54,12 +59,12 @@ export function request (method = 'POST', url, data, options = {}, callback) {
     return request(method, url, data, {}, options)
   }
 
-  if (!_.isFunction(callback)) {
+  if (!isFunction(callback)) {
     throw new TypeError('Callback is not provided or not be a function')
   }
 
   method = method.toUpperCase()
-  options = _.defaultsDeep(options, settings)
+  options = defaultsDeep(options, settings)
 
   let xhr = new window.XMLHttpRequest()
 
@@ -109,19 +114,19 @@ export function request (method = 'POST', url, data, options = {}, callback) {
     }
   }
 
-  if (_.isFunction(options.progress)) {
+  if (isFunction(options.progress)) {
     xhr.onprogress = options.progress.bind(xhr)
   }
 
-  let isGetMethod = method === 'GET' && _.isPlainObject(data)
+  let isGetMethod = method === 'GET' && isPlainObject(data)
   if (isGetMethod) {
-    if (_.isEmpty(data)) {
+    if (isEmpty(data)) {
       xhr.open(method, url, true)
     } else {
       let uri = new URI(url)
       let params = URI.parseParameters(uri.query())
 
-      params = _.assign(params, data)
+      params = assign(params, data)
       uri.query(params)
 
       xhr.open(method, uri.href(), true)
@@ -134,14 +139,14 @@ export function request (method = 'POST', url, data, options = {}, callback) {
    * 必须在 xhr.open 后才能配置
    */
   xhr.withCredentials = !!options.withCredentials
-  _.forEach(options.headers, (header, name) => xhr.setRequestHeader(name, header))
+  forEach(options.headers, (header, name) => xhr.setRequestHeader(name, header))
 
   if (isGetMethod) {
     xhr.send(null)
   } else {
-    if (_.isPlainObject(data)) {
+    if (isPlainObject(data)) {
       let formData = new window.FormData()
-      _.forEach(data, (value, key) => formData.append(key, value))
+      forEach(data, (value, key) => formData.append(key, value))
       xhr.send(formData)
     } else {
       xhr.send(data || null)

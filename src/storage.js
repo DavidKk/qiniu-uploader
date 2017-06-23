@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import defaultsDeep from 'lodash/defaultsDeep'
+import isString from 'lodash/isString'
 import { STORAGE_PREFIX } from './config'
 
 /**
@@ -21,7 +22,7 @@ export class Storage {
    * @return {Storage} 存储类的对象
    */
   constructor (options = {}) {
-    this.settings = _.defaultsDeep(options, this.constructor.defaultSettings)
+    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
   }
 
   /**
@@ -31,7 +32,7 @@ export class Storage {
    * @param {any} value 值，该值会进行 JSON.parse，因此请确保传入值没有循环引用
    */
   set (name, value) {
-    if (!_.isString(value)) {
+    if (!isString(value)) {
       value = JSON.stringify(value)
     }
 

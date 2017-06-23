@@ -18,9 +18,13 @@
     "coveralls": "npm run unitest:coverage && node ./node_modules/.bin/coveralls < ./coverage/lcov.info",
     "sauce": "cross-env SAUCE_LABS=1 npm run unitest",
     "document": "rimraf ./docs && esdoc -c ./esdoc.json",
-    "start": ""
+    "start": "webpack-dev-server --config ./webpack.develop.config.babel.js --content-base ./dist"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "async": "^2.4.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
@@ -29,7 +33,10 @@
     "babel-register": "^6.24.1",
     "chai": "^3.5.0",
     "cross-env": "^5.0.0",
+    "crypto-js": "^3.1.9-1",
+    "esdoc": "^0.5.2",
     "fs-extra": "^3.0.1",
+    "html-webpack-plugin": "^2.28.0",
     "istanbul-instrumenter-loader": "^2.0.0",
     "karma": "^1.7.0",
     "karma-chai": "^0.1.0",
@@ -47,11 +54,8 @@
     "standard": "^10.0.2",
     "urijs": "^1.18.10",
     "webpack": "^2.6.0",
+    "webpack-dev-server": "^2.5.0",
     "webpack-merge": "^4.1.0",
-    "yaml-lint": "^0.0.4",
-    "async": "^2.4.1",
-    "crypto-js": "^3.1.9-1",
-    "esdoc": "^0.5.2",
-    "lodash": "^4.17.4"
+    "yaml-lint": "^0.0.4"
   }
 }

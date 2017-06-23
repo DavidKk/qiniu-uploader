@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import invert from 'lodash/invert'
+import assign from 'lodash/assign'
 
 /**
  * 枚举类
@@ -11,14 +12,14 @@ export class Enum {
    * @return {Enum}
    */
   constructor (map) {
-    let inverted = _.invert(map)
+    let inverted = invert(map)
     let keys = Object.keys(map)
 
     this._inverted = inverted
     this._keys = keys
     this._map = map
 
-    _.assign(this, this._inverted, this._map)
+    assign(this, this._inverted, this._map)
   }
 
   /**
