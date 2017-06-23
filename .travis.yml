@@ -30,7 +30,8 @@ before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-- npm run codecov
+- if [ "$COVERAGE" = 1 ]; then npm run codecov; fi
+- if [ "$SAUCE_LABS" = 1 ]; then npm run unitest; fi
 before_deploy:
 - npm run build
 - npm run document
