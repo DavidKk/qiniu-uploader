@@ -1,7 +1,7 @@
 # Source
 /docs
-/src
 /unitest
+/example
 /.babelrc
 /.travis.yml
 /esdoc.json

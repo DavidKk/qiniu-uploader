@@ -5,9 +5,10 @@ import webpackConf from './webpack.common.config.babel'
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
 export default WebpackMerger(webpackConf, {
+  devtool: 'source-map',
   plugins: [
     new UglifyJsPlugin({
-      sourceMap: false,
+      sourceMap: true,
       mangle: false,
       compress: {
         warnings: false
