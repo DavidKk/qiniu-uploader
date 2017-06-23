@@ -1,8 +1,9 @@
-import { defaultsDeep } from 'lodash'
+import isFunction from 'lodash/isFunction'
+import defaultsDeep from 'lodash/defaultsDeep'
 import { File } from './file'
 import { Tunnel } from './tunnel'
 import { G, M, BASE64_REGEXP, SUPPORTED } from './config'
-import { sizeFormat } from './utils'
+import { sizeStringify } from './utils'
 
 /**
  * 七牛上传类
@@ -24,7 +25,7 @@ export class Uploader {
   static defaultSettings = {
     maxFileSize: G,
     minFileSize: 0,
-    resumingByFileSize: 4 * M,
+    resumingByFileSize: 4 * M
   }
 
   /**
@@ -35,12 +36,12 @@ export class Uploader {
    * @return {Uploader} 上传对象
    */
   constructor (options = {}) {
-
     /**
      * 配置
      * @type {Object}
      */
     this.settings = defaultsDeep(options, this.constructor.defaultSettings)
+
     /**
      * 令牌
      * @type {String}
@@ -89,8 +90,25 @@ export class Uploader {
 
     file = file instanceof File ? file : new File(file)
 
-    file.size > this.settings.resumingByFileSize
-    ? this.tunnel.resuming(file, params, options, callback)
-    : this.tunnel.upload(file, params, options, callback)
+    let upload = () => {
+      file.size > this.settings.resumingByFileSize
+      ? this.tunnel.resuming(file, params, options, callback)
+      : this.tunnel.upload(file, params, options, callback)
+    }
+
+    if (isFunction(this.settings.tokenGetter)) {
+      this.settings.tokenGetter(function (error, token) {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        params.token = token
+
+        upload()
+      })
+    } else {
+      upload()
+    }
   }
 }
