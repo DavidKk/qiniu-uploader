@@ -125,7 +125,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
         let size = event.loaded
         let time = spendTime / 1000
         let speed = size / time || 0
-        let description = `${speed}Byte/s`
+        let description = `${speed.toFixed(2)}Byte/s`
 
         if (speed > G) {
           description = `${(speed / G).toFixed(2)}Gb/s`
@@ -141,7 +141,7 @@ export function request (method = 'POST', url, data, options = {}, callback) {
 
         options.progress.call(xhr, event)
       }
-    })
+    }, false)
   }
 
   let isGetMethod = method === 'GET' && isPlainObject(data)

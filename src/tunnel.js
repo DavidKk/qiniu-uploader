@@ -433,7 +433,7 @@ export class Tunnel {
             }
 
             triggerRequestProgress(xhr, process)
-          })
+          }, false)
         }
       }
 
@@ -460,7 +460,7 @@ export class Tunnel {
       let size = event.loaded
       let time = spendTime / 1000
       let speed = size / time || 0
-      let description = `${speed}Byte/s`
+      let description = `${speed.toFixed(2)}Byte/s`
 
       if (speed > CONFIG.G) {
         description = `${(speed / CONFIG.G).toFixed(2)}Gb/s`

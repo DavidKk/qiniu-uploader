@@ -1,6 +1,8 @@
+import { defaultsDeep } from 'lodash'
 import { File } from './file'
 import { Tunnel } from './tunnel'
 import { G, M, BASE64_REGEXP, SUPPORTED } from './config'
+import { sizeFormat } from './utils'
 
 /**
  * 七牛上传类
@@ -21,7 +23,8 @@ export class Uploader {
    */
   static defaultSettings = {
     maxFileSize: G,
-    minFileSize: 0
+    minFileSize: 0,
+    resumingByFileSize: 4 * M,
   }
 
   /**
@@ -32,6 +35,12 @@ export class Uploader {
    * @return {Uploader} 上传对象
    */
   constructor (options = {}) {
+
+    /**
+     * 配置
+     * @type {Object}
+     */
+    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
     /**
      * 令牌
      * @type {String}
@@ -53,7 +62,6 @@ export class Uploader {
 
   /**
    * 上传
-   *
    * @param {File|Blob|String|Array} file 需要上传的文件
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
@@ -69,9 +77,19 @@ export class Uploader {
       return
     }
 
+    if (file.size > this.settings.maxFileSize) {
+      callback(new Error(`File size must be smaller than ${sizeStringify(this.settings.maxFileSize)}`))
+      return
+    }
+
+    if (file.size < this.settings.minFileSize) {
+      callback(new Error(`File size must be larger than ${sizeStringify(this.settings.minFileSize)}`))
+      return
+    }
+
     file = file instanceof File ? file : new File(file)
 
-    file.size > 4 * M
+    file.size > this.settings.resumingByFileSize
     ? this.tunnel.resuming(file, params, options, callback)
     : this.tunnel.upload(file, params, options, callback)
   }
