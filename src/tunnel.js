@@ -24,7 +24,6 @@ import { QiniupEvent } from './event'
  * 支持断点续传，缓存上传了的块与片保存在本地缓存中，若清除本地缓存则不能保证能继续上次的断点
  * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB
  * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准
- *
  * @class
  */
 export class Tunnel {
@@ -427,9 +426,11 @@ export class Tunnel {
         assign(process, progressRelativeData)
 
         if (listenProgress) {
-          xhr.addEventListener('progress', (event) => {
-            process.loaded = event.loaded
-            process.total = event.total
+          xhr.upload.addEventListener('progress', (event) => {
+            if (event.lengthComputable) {
+              process.loaded = event.loaded
+              process.total = event.total
+            }
 
             triggerRequestProgress(xhr, process)
           })
@@ -453,6 +454,25 @@ export class Tunnel {
       event.process = process
       event.loaded = uploadSize
       event.total = file.size
+
+      let nowDatetime = Date.now()
+      let spendTime = nowDatetime - startDatetime
+      let size = event.loaded
+      let time = spendTime / 1000
+      let speed = size / time || 0
+      let description = `${speed}Byte/s`
+
+      if (speed > CONFIG.G) {
+        description = `${(speed / CONFIG.G).toFixed(2)}Gb/s`
+      } else if (speed > CONFIG.M) {
+        description = `${(speed / CONFIG.M).toFixed(2)}Mb/s`
+      } else if (speed > CONFIG.K) {
+        description = `${(speed / CONFIG.K).toFixed(2)}Kb/s`
+      }
+
+      event.during = time
+      event.speed = speed
+      event.speedDescription = description
 
       _resumingProgressHandle.call(xhr, event)
     }
@@ -586,6 +606,8 @@ export class Tunnel {
 
       return (callback) => waterfall(tasks, callback)
     })
+
+    let startDatetime = Date.now()
 
     /**
      * 当所有块(Block)都全部上传完

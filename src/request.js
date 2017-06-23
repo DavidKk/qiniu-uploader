@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty'
 import forEach from 'lodash/forEach'
 import assign from 'lodash/assign'
 import URI from 'urijs'
+import { G, M, K } from './config'
 
 /**
  * @typedef {Object} Request
@@ -115,7 +116,32 @@ export function request (method = 'POST', url, data, options = {}, callback) {
   }
 
   if (isFunction(options.progress)) {
-    xhr.onprogress = options.progress.bind(xhr)
+    let startDatetime = Date.now()
+
+    xhr.upload.addEventListener('progress', (event) => {
+      if (event.lengthComputable) {
+        let nowDatetime = Date.now()
+        let spendTime = nowDatetime - startDatetime
+        let size = event.loaded
+        let time = spendTime / 1000
+        let speed = size / time || 0
+        let description = `${speed}Byte/s`
+
+        if (speed > G) {
+          description = `${(speed / G).toFixed(2)}Gb/s`
+        } else if (speed > M) {
+          description = `${(speed / M).toFixed(2)}Mb/s`
+        } else if (speed > K) {
+          description = `${(speed / K).toFixed(2)}Kb/s`
+        }
+
+        event.during = time
+        event.speed = speed
+        event.speedDescription = description
+
+        options.progress.call(xhr, event)
+      }
+    })
   }
 
   let isGetMethod = method === 'GET' && isPlainObject(data)

@@ -1,8 +1,18 @@
 import { File } from './file'
 import { Tunnel } from './tunnel'
-import { G, M, BASE64_REGEXP } from './config'
+import { G, M, BASE64_REGEXP, SUPPORTED } from './config'
 
+/**
+ * 七牛上传类
+ * @class
+ */
 export class Uploader {
+  /**
+   * 浏览器是否支持
+   * @type {Boolean}
+   */
+  static supported = SUPPORTED
+
   /**
    * 上传类默认配置
    * @type {Object}

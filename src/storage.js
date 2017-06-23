@@ -5,6 +5,7 @@ import { STORAGE_PREFIX } from './config'
 /**
  * 存储类
  * 存储的值拥有前缀，具体参考配置
+ * @class
  */
 export class Storage {
   /**
