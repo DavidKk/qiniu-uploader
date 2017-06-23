@@ -1,9 +1,3 @@
-/**
- * @module uploader
- * @requires file
- * @requires tunnel
- * @requires config
- */
 import { File } from './file'
 import { Tunnel } from './tunnel'
 import { G, M, BASE64_REGEXP } from './config'
