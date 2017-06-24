@@ -34,7 +34,8 @@ script:
 - if [ "$SAUCE_LABS" = 1 ]; then npm run unitest; fi
 before_deploy:
 - npm run build
-- npm run document
+- npm run example
+- ./esdoc.sh
 deploy:
 - provider: pages
   local_dir: demo
