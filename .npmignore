@@ -9,6 +9,8 @@
 /karma.conf.babel.js
 /karma.conf.js
 /webpack.common.config.babel.js
+/webpack.develop.config.babel.js
+/webpack.example.config.babel.js
 /webpack.product.config.babel.js
 /saucelabs.browser.conf.js
 
