@@ -18,6 +18,7 @@
     "codecov": "npm run unitest:coverage && codecov",
     "sauce": "cross-env SAUCE_LABS=1 npm run unitest",
     "document": "rimraf ./docs && esdoc -c ./esdoc.json",
+    "example": "rimraf ./demo && cross-env PRODUCT=1 webpack --config ./webpack.example.config.babel.js",
     "start": "webpack-dev-server --config ./webpack.develop.config.babel.js --content-base ./dist"
   },
   "dependencies": {

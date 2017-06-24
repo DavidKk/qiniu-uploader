@@ -1,6 +1,7 @@
 # Source
 /docs
 /unitest
+/demo
 /example
 /.babelrc
 /.travis.yml
