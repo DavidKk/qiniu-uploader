@@ -1,5 +1,6 @@
 # Output folders
 /dist
+/demo
 /saucelabs.browser.conf.js
 
 
