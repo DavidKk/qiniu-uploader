@@ -30,10 +30,9 @@ jqlite(function () {
     jqlite('#qiniup-filename').html(files[0].name)
     jqlite('#qiniup-filesize').html(sizeStringify(files[0].size))
     jqlite('#qiniup-progress').html('0')
+    jqlite('#qiniup-water').css('transform', 'translateY(0)')
 
     let progress = (event) => {
-      console.log(event)
-
       let progress = event.loaded / event.total
 
       jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
