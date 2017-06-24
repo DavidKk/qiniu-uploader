@@ -11,7 +11,7 @@ import assign from 'lodash/assign'
 import sortBy from 'lodash/sortBy'
 import defaultsDeep from 'lodash/defaultsDeep'
 import waterfall from 'async/waterfall'
-import parallelLimit from 'async/parallelLimit'
+import parallel from 'async/parallel'
 import * as http from './request'
 import * as CONFIG from './config'
 import { File } from './file'
@@ -613,7 +613,7 @@ export class Tunnel {
      * 当所有块(Block)都全部上传完
      * 则执行合并文件操作
      */
-    parallelLimit(tasks, options.maxConnect, (error, responses) => {
+    parallel(tasks, (error, responses) => {
       if (error) {
         callback(error)
         return

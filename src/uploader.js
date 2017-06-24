@@ -73,31 +73,33 @@ export class Uploader {
    * @return {Request} 请求对象
    */
   upload (file, params, options, callback) {
+    options = defaultsDeep(options, this.settings)
+
     if (BASE64_REGEXP.test(file)) {
       this.tunnel.up64(file, params, options, callback)
       return
     }
 
-    if (file.size > this.settings.maxFileSize) {
-      callback(new Error(`File size must be smaller than ${sizeStringify(this.settings.maxFileSize)}`))
+    if (file.size > options.maxFileSize) {
+      callback(new Error(`File size must be smaller than ${sizeStringify(options.maxFileSize)}`))
       return
     }
 
-    if (file.size < this.settings.minFileSize) {
-      callback(new Error(`File size must be larger than ${sizeStringify(this.settings.minFileSize)}`))
+    if (file.size < options.minFileSize) {
+      callback(new Error(`File size must be larger than ${sizeStringify(options.minFileSize)}`))
       return
     }
 
     file = file instanceof File ? file : new File(file)
 
     let upload = () => {
-      file.size > this.settings.resumingByFileSize
+      file.size > options.resumingByFileSize
       ? this.tunnel.resuming(file, params, options, callback)
       : this.tunnel.upload(file, params, options, callback)
     }
 
-    if (isFunction(this.settings.tokenGetter)) {
-      this.settings.tokenGetter(function (error, token) {
+    if (isFunction(options.tokenGetter)) {
+      options.tokenGetter(function (error, token) {
         if (error) {
           callback(error)
           return
