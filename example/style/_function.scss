@@ -1,0 +1,15 @@
+@function strip-units($value) {
+  @return ($value / ($value * 0 + 1));
+}
+
+@function em($pixels, $context: $root-font-size) {
+  @if not unitless($pixels) {
+    $pixels: strip-units($pixels);
+  }
+
+  @if not unitless($context) {
+    $context: strip-units($context);
+  }
+
+  @return ($pixels / $context) * 1em;
+}

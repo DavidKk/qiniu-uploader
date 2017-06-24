@@ -1,0 +1,239 @@
+body {
+  background-color: #EAF1F9;
+}
+
+.qiniup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  margin: auto;
+  width: em(400px);
+  height: em(445px);
+  box-shadow: 0 em(2px) em(5px) 0 rgba(0,0,0,.16), 0 em(2px) em(10px) 0 rgba(0,0,0,.12);
+  transition: all .28s ease-in;
+}
+
+.qiniup .qiniup-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  height: percentage(146/400);
+  background-color: $secondary-color;
+  transform: translate3d(0, 0, 0);
+  transition: all .28s ease-in;
+
+  .qiniup-water {
+    position: absolute;
+    bottom: 10%;
+    display: block;
+    width: percentage(5/3);
+    opacity: 0;
+    transition: all .28s ease-in;
+
+    &:before {
+      content: '';
+      display: block;
+      padding-top: 100%; 
+    }
+  }
+
+  .qiniup-wave {
+    margin: auto;
+    margin-top: -100%;
+    padding-top: 100%;
+    width: 100%;
+    border-radius: 40%; 
+    background: $primary-color;
+    opacity: .4;
+    animation: drift 3000ms infinite linear;
+
+    &:nth-child(2) {
+      background: $primary-color;
+      opacity: .1;
+      animation: drift 7000ms infinite linear;
+    }
+
+    &:nth-child(3) {
+      animation: drift 5000ms infinite linear;
+    }
+  }
+
+  .qiniup-banner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: block;
+    margin: auto;
+    height: em(50px);
+    text-align: center;
+    transition: all .28s ease-in;
+  }
+
+  .qiniup-progress {
+    display: block;
+    height: 50%;
+    text-align: center;
+    line-height: em(50px, 32px);
+    font-size: em(32px);
+    font-weight: normal;
+    color: rgba(255,255,255,.6);
+    text-shadow: 0 em(1px) em(2px) rgba(0, 0, 0, .1);
+    opacity: 0;
+    transition: all .28s ease-in;
+
+    &:after {
+      content: '%';
+      display: inline-block;
+      margin-right: -.5em;
+    }
+  }
+
+  .qiniup-logo {
+    display: block;
+    margin: auto;
+    width: em(50px);
+    height: 100%;
+    opacity: .4;
+    transition: all .28s ease-in;
+  }
+}
+
+.qiniup .qiniup-body {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: percentage(254/400);
+  background: #fff;
+  box-shadow: 0 em(1px) em(3px) rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all .28s ease-in;
+
+  .qiniup-info-name {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    font-size: em(13px);
+    font-weight: normal;
+  }
+
+  .qiniup-info-size {
+    display: block;
+    font-size: em(12px);
+  }
+
+  .qiniup-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    display: block;
+    padding: em(10px);
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+    opacity: 1;
+    transition: all .28s ease-in;
+
+    .qiniup-form-placeholder {
+      display: block;
+      border: em(2px) dashed rgba(0,0,0,.1);
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transition: border-color .18s ease-in;
+
+      .qiniup-form-input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .qiniup-form-icon {
+        display: block;
+        margin: 12% auto 0 auto;
+        width: 15%;
+      }
+
+      .qiniup-form-placeholder-description {
+        display: block;
+        margin-top: 10%;
+        color: #999;
+
+        > b {
+          display: inline;
+          color: $primary-color;
+        }
+      }
+
+      &:hover {
+        border-color: rgba(0,0,0,.2);
+      }
+    }
+  }
+
+  .qiniup-form-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: block;
+    padding: em(6px);
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all .28s ease-in;
+  }
+}
+
+.qiniup.qiniup-upload {
+  width: em(220px);
+  height: em(300px);
+}
+
+.qiniup.qiniup-upload .qiniup-box {
+  height: percentage(25/30);
+
+  .qiniup-water {
+    opacity: 1;
+  }
+
+  .qiniup-banner {
+    height: em(100px);
+  }
+
+  .qiniup-progress {
+    opacity: 1;
+  }
+
+  .qiniup-logo {
+    height: 50%;
+  }
+}
+
+.qiniup.qiniup-upload .qiniup-body {
+  height: percentage(5/30);
+
+  .qiniup-form {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  .qiniup-form-info {
+    opacity: 1;
+  }
+}

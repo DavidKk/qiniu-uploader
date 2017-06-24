@@ -1,0 +1,38 @@
+
+* {
+  box-sizing: border-box;
+  outline: 0 !important;
+}
+
+html {
+  display: block;
+  margin: auto;
+  font-size: $root-font-size;
+}
+
+body {
+  display: block;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  line-height: em(20px);
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  vertical-align: baseline;
+  font-size: $context-base-size;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  color: $context-normal-color;
+}
+
+a,
+a:link,
+a:visited,
+a:active,
+a:hover {
+  text-decoration: none;
+  color: $context-normal-color;
+}

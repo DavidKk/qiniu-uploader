@@ -2,12 +2,12 @@ import path from 'path'
 import WebpackMerger from 'webpack-merge'
 import pkg from './package.json'
 
-let resolveModules = [
+export let resolveModules = [
   path.join(__dirname, './node_modules'),
   path.join(__dirname, './src')
 ]
 
-let rules = [
+export let rules = [
   {
     loader: 'babel-loader',
     exclude: [/node_modules/],
