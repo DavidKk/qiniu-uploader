@@ -18,14 +18,14 @@ export const BASE64_REGEXP = /^data:([\w\W]+?);base64,/
  * @type {String}
  * @const
  */
-export const QINIU_UPLOAD_HTTPS_URL = 'upload-z2.qbox.me'
+export const QINIU_UPLOAD_HTTPS_URL = 'up.qbox.me'
 
 /**
  * 七牛 HTTP 上传地址，默认为中国华南地区
  * @type {String}
  * @const
  */
-export const QINIU_UPLOAD_HTTP_URL = 'upload-z2.qiniu.com'
+export const QINIU_UPLOAD_HTTP_URL = 'up-z0.qiniu.com'
 
 /**
  * 千字节
