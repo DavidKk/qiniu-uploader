@@ -1,5 +1,7 @@
 import jqlite from 'jqlite'
+import forEach from 'lodash/forEach'
 import isFunction from 'lodash/isFunction'
+import indexOf from 'lodash/indexOf'
 import { Uploader } from '../../src/index'
 import { sizeStringify } from '../../src/utils'
 import { server } from './server_mock'
@@ -11,8 +13,6 @@ let crc32 = 'simulate_crc32'
 let userVars = 'simulate_userVars'
 let token = 'simulate_token'
 let tokenPrefix = 'simulate_UpToken'
-let blockSize = 40
-let chunkSize = 10
 let uploader = new Uploader()
 
 jqlite(function () {
@@ -32,18 +32,6 @@ jqlite(function () {
     jqlite('#qiniup-progress').html('0')
     jqlite('#qiniup-water').css('transform', 'translateY(0)')
 
-    let progress = (event) => {
-      let progress = event.loaded / event.total
-
-      jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
-      grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
-    }
-
-    let intervalId
-    let progressNo = 0
-    let increment = 0.01
-    let growSpendTime = 1000
-
     let grow = (number, callback) => {
       if (!isFunction(callback)) {
         throw new TypeError('Callback is not provided or not be a function')
@@ -60,7 +48,55 @@ jqlite(function () {
       }, increment / number * growSpendTime)
     }
 
-    uploader.upload(files[0], { token, key, mimeType, crc32, userVars }, { resumingByFileSize: 0, useHttps: true, host, tokenPrefix, chunkSize, blockSize, progress }, function (error) {
+    let completedState = []
+    let report = (state) => {
+      if (indexOf(completedState, state) === -1 && state.loaded / state.total === 1) {
+        window.console.info(`File chunk (${state.index}, ${state.index + state.endPos - state.beginPos}) is upload completed`)
+        completedState.push(state)
+      }
+    }
+
+    let progress = (event) => {
+      forEach(event.processes, report)
+
+      let progress = event.loaded / event.total
+      jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
+      grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
+    }
+
+    let intervalId
+    let progressNo = 0
+    let increment = 0.01
+    let growSpendTime = 1000
+    let file = files[0]
+    let totalSize = file.size
+    let blockNo = 4
+    let blockSize = Math.ceil(totalSize / blockNo)
+    let chunkNo = 4
+    let chunkSize = Math.ceil(blockSize /  chunkNo)
+
+    let params = {
+      token,
+      key,
+      mimeType,
+      crc32,
+      userVars
+    }
+
+    let options = {
+      resumingByFileSize: 0,
+      useHttps: true,
+      host,
+      tokenPrefix,
+      chunkSize,
+      blockSize,
+      progress
+    }
+
+    window.console.info(`File size is ${file.size}`)
+    window.console.info(`File will be spliced ${blockNo} blocks and ${blockNo * chunkNo} chunks`)
+
+    uploader.upload(file, params, options, (error) => {
       setTimeout(() => jqlite('#qiniup').removeClass('qiniup-upload qiniup-upload-success qiniup-upload-error'), 3000)
 
       if (error) {

@@ -239,9 +239,19 @@ body {
 }
 
 .qiniup.qiniup-upload.qiniup-upload-success .qiniup-box {
-  background-color: $success-color;  
+  background-color: $success-color;
+
+  .qiniup-wave,
+  .qiniup-wave:nth-child(2) {
+    background: darken($success-color, 10%);
+  }
 }
 
 .qiniup.qiniup-upload.qiniup-upload-error .qiniup-box {
-  background-color: $error-color;  
+  background-color: $error-color;
+
+  .qiniup-wave,
+  .qiniup-wave:nth-child(2) {
+    background: darken($error-color, 10%);
+  }
 }

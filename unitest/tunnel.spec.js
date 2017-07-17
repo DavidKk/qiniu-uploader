@@ -323,7 +323,9 @@ describe('Class Tunnel', function () {
         }
       })
 
-      let { cancel, xhr } = tunnel.resuming(file, { token, key, mimeType, crc32, userVars }, { useHttps: true, host, tokenPrefix, chunkSize, blockSize }, function (error, response) {
+      let params = { token, key, mimeType, crc32, userVars }
+      let options = { useHttps: true, host, tokenPrefix, chunkSize, blockSize }
+      let { cancel, xhr } = tunnel.resuming(file, params, options, function (error, response) {
         expect(error).not.to.be.an('error')
         expect(response).to.deep.equal({ ctx: 'file' })
 

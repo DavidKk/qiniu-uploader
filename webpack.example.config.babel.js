@@ -6,6 +6,6 @@ export default WebpackMerger(webpackConf, {
   output: {
     path: path.join(__dirname, './demo'),
     publicPath: '/qiniu-uploader/',
-    umdNamedDefine: false,
-  },
+    umdNamedDefine: false
+  }
 })

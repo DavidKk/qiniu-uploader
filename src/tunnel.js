@@ -41,7 +41,9 @@ export class Tunnel {
     cache: false,
     maxConnect: 4,
     blockSize: 4 * CONFIG.M,
-    chunkSize: 1 * CONFIG.M
+    chunkSize: 1 * CONFIG.M,
+    maxFileSize: 1 * CONFIG.G,
+    maxBlockTasks: 2000
   }
 
   /**
@@ -406,6 +408,16 @@ export class Tunnel {
       return
     }
 
+    if (file.size > options.maxFileSize) {
+      callback(new Error(`File size must less than ${options.maxFileSize}`))
+      return
+    }
+
+    if (!isInteger(options.maxFileSize)) {
+      callback(new TypeError('MaxFileSize is not a integer'))
+      return
+    }
+
     let _resumingProgressHandle = options.progress
     options.progress = undefined
 
@@ -490,13 +502,13 @@ export class Tunnel {
      * @param {Integer} endPos 结束位置
      * @param {Function} callback 回调函数
      */
-    let mkblk = (file, beginPos, endPos, callback) => {
+    let mkblk = (file, beginPos, endPos, info, callback) => {
       /**
        * 如果该段已经被上传则执行下一个切割任务
-       * 每次切割任务都必须判断分块(Block)是否上传完成
+       * 每次切割任务都必须判断分片(Chunk)是否上传完成
        */
       let state = file.getState(beginPos, endPos)
-      if (options.override === false && state) {
+      if (info.options.override === false && state) {
         callback(null, state)
         return
       }
@@ -506,19 +518,18 @@ export class Tunnel {
        * 这样也能减少资源与内存的消耗
        */
       let block = file.slice(beginPos, endPos)
-      let request = this.mkblk(block, params, options, (error, response) => {
+      let request = this.mkblk(block, info.params, info.options, (error, response) => {
         if (error) {
           callback(error)
           return
         }
 
         let state = assign({ status: 'uploaded', beginPos, endPos }, response)
-        file.setState(beginPos, endPos, state, options.cache)
-        callback(null, { state, block, file })
+        file.setState(beginPos, endPos, state, info.options.cache)
+        callback(null, assign({ file, block, state }, info))
       })
 
       let size = block.size > perChunkSize ? perChunkSize : block.size
-
       registerRequest(request, beginPos, { size, beginPos, endPos: beginPos + size })
     }
 
@@ -531,33 +542,39 @@ export class Tunnel {
      * @param {Integer} endPos 结束位置
      * @param {Function} callback 回调函数
      */
-    let mkchk = (block, file, ctx, beginPos, endPos, callback) => {
+    let mkchk = (block, beginPos, endPos, info, callback) => {
       /**
        * 如果该段已经被上传则执行下一个切割任务
        * 每次切割任务都必须判断分片(Chunk)是否上传完成
        */
-      let state = file.getState(beginPos, endPos)
-      if (options.override === false && state) {
+      let state = info.file.getState(beginPos, endPos)
+      if (info.options.override === false && state) {
         callback(null, state)
         return
       }
 
       let chunk = block.slice(beginPos, endPos, block.type)
-      let request = this.bput(chunk, assign({ ctx, offset: beginPos }, params), options, (error, response) => {
+      let params = assign({ ctx: info.ctx, offset: beginPos }, info.params)
+      let request = this.bput(chunk, params, info.options, (error, response) => {
         if (error) {
           callback(error)
           return
         }
 
         let state = assign({ status: 'uploaded', beginPos, endPos }, response)
-        file.setState(beginPos, endPos, state, options.cache)
-        callback(null, { state, chunk, block, file })
+        file.setState(beginPos, endPos, state, info.options.cache)
+        callback(null, assign({ state, chunk, block }, info))
       })
 
-      registerRequest(request, block.size + beginPos, { size: chunk.size, beginPos, endPos })
+      registerRequest(request, beginPos + block.size, { size: chunk.size, beginPos, endPos })
     }
 
     let totalBlockNo = Math.ceil(file.size / perBlockSize)
+    if (totalBlockNo > options.maxBlockTasks) {
+      callback(new Error(`Block total number (${totalBlockNo}) is too large, it must be less than ${options.maxBlockTasks}, please check uploader options`))
+      return
+    }
+
     let tasks = times(totalBlockNo, (blockNo) => {
       let tasks = []
       let blockOffset = perBlockSize * blockNo
@@ -573,8 +590,8 @@ export class Tunnel {
        * 因此我们可以直接判断当前块的第一个切片(Chunk)是否已经上传
        * 不用额外将块(Block)上传信息另外保存起来
        */
-      tasks.push((callback) => mkblk(file, blockBeginPos, blockEndPos, callback))
-
+      tasks.push((callback) => mkblk(file, blockBeginPos, blockEndPos, { params, options }, callback))
+      
       /**
        * 上传片(Chunk)
        * 每个块都由许多片(Chunk)组成
@@ -591,6 +608,7 @@ export class Tunnel {
 
       /**
        * 因为上传分块(Block)已经上传了第一个分片(Chunk)
+       * 所以可以忽略第一个分片(Chunk)，而分片(Chunk)的总数也减一
        */
       times(totalChunkNo - 1, (chunkNo) => {
         let chunkOffset = perChunkSize * (chunkNo + 1)
@@ -601,7 +619,7 @@ export class Tunnel {
           chunkEndPos = blockSize
         }
 
-        tasks.push(({ state, block, file }, callback) => mkchk(block, file, state.ctx, chunkBeginPos, chunkEndPos, callback))
+        tasks.push(({ state, block, file }, callback) => mkchk(block, chunkBeginPos, chunkEndPos, { file, ctx: state.ctx, params, options }, callback))
       })
 
       return (callback) => waterfall(tasks, callback)
