@@ -49,19 +49,37 @@ jqlite(function () {
     }
 
     let completedState = []
-    let report = (state) => {
-      if (indexOf(completedState, state) === -1 && state.loaded / state.total === 1) {
-        window.console.info(`File chunk (${state.index}, ${state.index + state.endPos - state.beginPos}) is upload completed`)
-        completedState.push(state)
+    let report = (type, state) => {
+      if (!(indexOf(completedState, state) === -1 && state.loaded / state.total === 1)) {
+        return
+      }
+
+      switch (type) {
+        case 'mkblk':
+          window.console.info(`Block (${state.beginOffset}, ${state.endOffset}) is created completed`)
+          completedState.push(state)
+          break
+
+        case 'bput':
+          window.console.info(`Chunk (${state.beginOffset}, ${state.endOffset}) is upload completed`)
+          completedState.push(state)
+          break
+
+        case 'mkfile':
+          window.console.info(`File is combined and upload completed`)
+          completedState.push(state)
+          break
       }
     }
 
     let progress = (event) => {
-      forEach(event.processes, report)
+      forEach(event.processes, report.bind(null, event.type))
 
-      let progress = event.loaded / event.total
-      jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
-      grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
+      if (event.type === 'bput') {
+        let progress = event.loaded / event.total
+        jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
+        grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
+      }
     }
 
     let intervalId

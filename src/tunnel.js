@@ -424,15 +424,15 @@ export class Tunnel {
     let processes = []
     let listenProgress = isFunction(_resumingProgressHandle)
 
-    let registerRequest = function (request, index, progressRelativeData) {
-      if (!(request && isInteger(index) && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {
+    let registerRequest = function (type, request, progressRelativeData) {
+      if (!(request && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {
         return
       }
 
       let { xhr } = request
 
       /* eslint standard/object-curly-even-spacing:0 */
-      let process = { request, xhr, index /** , size, beginPos, endPos */ }
+      let process = { request, xhr /** , size, beginOffset, endOffset */ }
 
       if (!isEmpty(progressRelativeData)) {
         assign(process, progressRelativeData)
@@ -444,15 +444,15 @@ export class Tunnel {
               process.total = event.total
             }
 
-            triggerRequestProgress(xhr, process)
+            triggerRequestProgress(type, xhr, process)
           }, false)
         }
-      }
+      } 
 
-      processes.push(process)
+      type === 'bput' && processes.push(process)
     }
 
-    let triggerRequestProgress = function (xhr, process) {
+    let triggerRequestProgress = function (type, xhr, process) {
       let uploadSize = 0
 
       forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {
@@ -461,7 +461,7 @@ export class Tunnel {
         }
       })
 
-      let event = new QiniupEvent('qiniup')
+      let event = new QiniupEvent(type)
       event.processes = processes
       event.process = process
       event.loaded = uploadSize
@@ -534,11 +534,8 @@ export class Tunnel {
        * 与上面的末位置不同(endPos)
        */
       let size = block.size > perChunkSize ? perChunkSize : block.size
-      registerRequest(request, beginPos, {
-        size,
-        beginOffset: beginPos,
-        endOffset: beginPos + size
-      })
+      registerRequest('mkblk', request, { size: block.size, beginOffset: beginPos, endOffset: endPos })
+      registerRequest('bput', request, { size, beginOffset: beginPos, endOffset: beginPos + size })
     }
 
     /**
@@ -574,11 +571,13 @@ export class Tunnel {
         callback(null, assign({ state, chunk, block }, info))
       })
 
-      registerRequest(request, beginPos + block.size, {
+      let datas = {
         size: chunk.size,
         beginOffset: info.beginOffset,
         endOffset: info.endOffset
-      })
+      }
+
+      registerRequest('bput', request, datas)
     }
 
     let totalBlockNo = Math.ceil(file.size / perBlockSize)
@@ -682,7 +681,7 @@ export class Tunnel {
       let size = file.size
       let request = this.mkfile(ctxs, assign({ size }, params), options, callback)
 
-      registerRequest(request, size)
+      registerRequest('mkfile', request, { size })
     })
 
     return { cancel: abortRequest, xhr: null }
