@@ -1,4 +1,6 @@
 import jqlite from 'jqlite'
+import times from 'lodash/times'
+import flattenDeep from 'lodash/flattenDeep'
 import forEach from 'lodash/forEach'
 import isFunction from 'lodash/isFunction'
 import indexOf from 'lodash/indexOf'
@@ -25,12 +27,25 @@ jqlite(function () {
         files.push(list.item(i));
       }
     }
-    
+
+    let file = files[0]
+
     jqlite('#qiniup').addClass('qiniup-upload')
-    jqlite('#qiniup-filename').html(files[0].name)
-    jqlite('#qiniup-filesize').html(sizeStringify(files[0].size))
+    jqlite('#qiniup-filename').html(file.name)
+    jqlite('#qiniup-filesize').html(sizeStringify(file.size))
     jqlite('#qiniup-progress').html('0')
     jqlite('#qiniup-water').css('transform', 'translateY(0)')
+
+    let print = (type = 'INFO', ...args) => {
+      let message = [`\`[${type.toUpperCase()}]\``].concat(...args).join(' ')
+      let matched = message.match(/\`/g)
+      let styles = times(matched.length / 2, () => ['font-weight:bold;color:#3EABCA;', 'font-weight:normal;color:#000;'])
+
+      message = message.replace(/\`/g, '%c')
+      styles = flattenDeep(styles)
+
+      return window.console.log.call(window.console, message, ...styles)
+    }
 
     let grow = (number, callback) => {
       if (!isFunction(callback)) {
@@ -56,24 +71,26 @@ jqlite(function () {
 
       switch (type) {
         case 'mkblk':
-          window.console.info(`Block (${state.beginOffset}, ${state.endOffset}) is created completed`)
+          print('PROGRESS', `Block [\`${state.beginOffset}, ${state.endOffset}\`] is created completed`)
           completedState.push(state)
           break
 
         case 'bput':
-          window.console.info(`Chunk (${state.beginOffset}, ${state.endOffset}) is upload completed`)
+          print('PROGRESS', `Chunk [\`${state.beginOffset}, ${state.endOffset}\`] is upload completed`)
           completedState.push(state)
           break
 
         case 'mkfile':
-          window.console.info(`File is combined and upload completed`)
+          print('INFO', `File \`${file.name}\` is upload completed`)
           completedState.push(state)
           break
       }
     }
 
     let progress = (event) => {
-      forEach(event.processes, report.bind(null, event.type))
+      // forEach(event.processes, report.bind(null, event.type))
+
+      report(event.type, event.process)
 
       if (event.type === 'bput') {
         let progress = event.loaded / event.total
@@ -86,7 +103,6 @@ jqlite(function () {
     let progressNo = 0
     let increment = 0.01
     let growSpendTime = 1000
-    let file = files[0]
     let totalSize = file.size
     let blockNo = 4
     let blockSize = Math.ceil(totalSize / blockNo)
@@ -111,8 +127,9 @@ jqlite(function () {
       progress
     }
 
-    window.console.info(`File size is ${file.size}`)
-    window.console.info(`File will be spliced ${blockNo} blocks and ${blockNo * chunkNo} chunks`)
+    print('INFO', `File name is \`${file.name}\``)
+    print('INFO', `File size is \`${file.size}\``)
+    print('INFO', `File will be spliced \`${blockNo}\` blocks and \`${blockNo * chunkNo}\` chunks`)
 
     uploader.upload(file, params, options, (error) => {
       setTimeout(() => jqlite('#qiniup').removeClass('qiniup-upload qiniup-upload-success qiniup-upload-error'), 3000)
