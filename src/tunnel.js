@@ -529,8 +529,16 @@ export class Tunnel {
         callback(null, assign({ file, block, state }, info))
       })
 
+      /**
+       * 这里是返回的是分块(block)中的第一个分片(chunk)
+       * 与上面的末位置不同(endPos)
+       */
       let size = block.size > perChunkSize ? perChunkSize : block.size
-      registerRequest(request, beginPos, { size, beginPos, endPos: beginPos + size })
+      registerRequest(request, beginPos, {
+        size,
+        beginOffset: beginPos,
+        endOffset: beginPos + size
+      })
     }
 
     /**
@@ -547,7 +555,7 @@ export class Tunnel {
        * 如果该段已经被上传则执行下一个切割任务
        * 每次切割任务都必须判断分片(Chunk)是否上传完成
        */
-      let state = info.file.getState(beginPos, endPos)
+      let state = info.file.getState(info.beginOffset, info.endOffset)
       if (info.options.override === false && state) {
         callback(null, state)
         return
@@ -566,7 +574,11 @@ export class Tunnel {
         callback(null, assign({ state, chunk, block }, info))
       })
 
-      registerRequest(request, beginPos + block.size, { size: chunk.size, beginPos, endPos })
+      registerRequest(request, beginPos + block.size, {
+        size: chunk.size,
+        beginOffset: info.beginOffset,
+        endOffset: info.endOffset
+      })
     }
 
     let totalBlockNo = Math.ceil(file.size / perBlockSize)
@@ -590,8 +602,13 @@ export class Tunnel {
        * 因此我们可以直接判断当前块的第一个切片(Chunk)是否已经上传
        * 不用额外将块(Block)上传信息另外保存起来
        */
-      tasks.push((callback) => mkblk(file, blockBeginPos, blockEndPos, { params, options }, callback))
-      
+      let task = (callback) => {
+        let info = { params, options }
+        return mkblk(file, blockBeginPos, blockEndPos, info, callback)
+      }
+
+      tasks.push(task)
+
       /**
        * 上传片(Chunk)
        * 每个块都由许多片(Chunk)组成
@@ -619,7 +636,20 @@ export class Tunnel {
           chunkEndPos = blockSize
         }
 
-        tasks.push(({ state, block, file }, callback) => mkchk(block, chunkBeginPos, chunkEndPos, { file, ctx: state.ctx, params, options }, callback))
+        let task = ({ state, block, file }, callback) => {
+          let info = {
+            file,
+            ctx: state.ctx,
+            params,
+            options,
+            beginOffset: blockBeginPos + chunkBeginPos,
+            endOffset: blockBeginPos + chunkEndPos
+          }
+
+          return mkchk(block, chunkBeginPos, chunkEndPos, info, callback)
+        }
+
+        tasks.push(task)
       })
 
       return (callback) => waterfall(tasks, callback)
