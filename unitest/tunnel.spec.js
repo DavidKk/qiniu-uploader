@@ -2,8 +2,8 @@
 /* eslint-env mocha, browser */
 /* global expect, sinon */
 
-import _ from 'lodash'
 import URI from 'urijs'
+import trim from 'lodash/trim'
 import { File } from '../src/file'
 import { Tunnel } from '../src/tunnel'
 import * as CONFIG from '../src/config'
@@ -25,6 +25,9 @@ describe('Class Tunnel', function () {
       let tunnel = new Tunnel()
 
       expect(tunnel.settings).to.be.a('Object')
+      expect(tunnel.token).to.be.a('String')
+      expect(tunnel.tokenExpire).to.be.a('Number')
+
       expect(tunnel.settings).to.deep.equal(Tunnel.defaultSettings)
     })
   })
@@ -277,7 +280,7 @@ describe('Class Tunnel', function () {
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
-        let paths = _.trim(uri.path(), '/').split('/')
+        let paths = trim(uri.path(), '/').split('/')
 
         switch (paths[0]) {
           /**
@@ -372,7 +375,7 @@ describe('Class Tunnel', function () {
       server.respondWith(function (xhr) {
         let uri = new URI(xhr.url)
         let body = xhr.requestBody
-        let paths = _.trim(uri.path(), '/').split('/')
+        let paths = trim(uri.path(), '/').split('/')
 
         switch (paths[0]) {
           case 'mkblk':

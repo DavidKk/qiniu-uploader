@@ -23,7 +23,7 @@ export class Storage {
    * @return {Storage} 存储类的对象
    */
   constructor (options = {}) {
-    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
+    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)
   }
 
   /**

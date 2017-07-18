@@ -57,7 +57,7 @@ jqlite(function () {
       intervalId = setInterval(function () {
         progressNo += increment
 
-        callback(progressNo)
+        callback(progressNo > 1 ? 1 : progressNo)
 
         progressNo >= number && clearInterval(intervalId)
       }, increment / number * growSpendTime)
@@ -88,15 +88,11 @@ jqlite(function () {
     }
 
     let progress = (event) => {
-      // forEach(event.processes, report.bind(null, event.type))
-
       report(event.type, event.process)
 
-      if (event.type === 'bput') {
-        let progress = event.loaded / event.total
-        jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
-        grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
-      }
+      let progress = event.loaded / event.total
+      jqlite('#qiniup-water').css('transform', `translateY(-${(progress * 65)}%)`)
+      grow(progress, (progress) => jqlite('#qiniup-progress').html((progress * 100).toFixed(2)))
     }
 
     let intervalId

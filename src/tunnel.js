@@ -4,6 +4,7 @@ import isString from 'lodash/isString'
 import isNumber from 'lodash/isNumber'
 import isInteger from 'lodash/isInteger'
 import isFunction from 'lodash/isFunction'
+import isPlainObject from 'lodash/isPlainObject'
 import map from 'lodash/map'
 import times from 'lodash/times'
 import forEach from 'lodash/forEach'
@@ -16,6 +17,7 @@ import * as http from './request'
 import * as CONFIG from './config'
 import { File } from './file'
 import { QiniupEvent } from './event'
+import { isNumeric } from './utils'
 
 /**
  * 七牛通道类
@@ -57,7 +59,49 @@ export class Tunnel {
    * @return {Tunnel}
    */
   constructor (options) {
-    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
+    /**
+     * 配置
+     * @type {Object}
+     */
+    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)
+
+    /**
+     * 令牌
+     * @type {String}
+     */
+    this.token = ''
+
+    /**
+     * 令牌过期时间
+     * @type {Integer}
+     */
+    this.tokenExpire = 0
+  }
+
+  _execTokenGetter (getter, callback) {
+    if (!isFunction(getter)) {
+      throw new TypeError('Getter is not a fucntion')
+    }
+
+    if (this.tokenExpire > Date.now() && this.token) {
+      return callback(null, this.token)
+    }
+
+    getter((error, token) => {
+      if (error) {
+        return callback(error)
+      }
+
+      if (isPlainObject(token)) {
+        this.token = token.token
+        this.tokenExpire = isNumeric(token.expire) ? token.expire * 1 : 0
+      } else {
+        this.token = token
+        this.tokenExpire = 0
+      }
+
+      return callback(null, this.token)
+    })
   }
 
   /**
@@ -86,8 +130,19 @@ export class Tunnel {
     }
 
     if (!(isString(params.token) && params.token)) {
-      callback(new TypeError('Params.token is not provided or not be a valid string'))
-      return
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.upload(file, assign({ token }, params), options, callback)
+      })
     }
 
     options = defaultsDeep(options, this.settings)
@@ -131,9 +186,20 @@ export class Tunnel {
       return
     }
 
-    if (!isString(params.token)) {
-      callback(new TypeError('Params.token is not provided or not be a valid string'))
-      return
+    if (!(isString(params.token) && params.token)) {
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.upb64(content, assign({ token }, params), options, callback)
+      })
     }
 
     if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {
@@ -201,9 +267,20 @@ export class Tunnel {
       return
     }
 
-    if (!isString(params.token)) {
-      callback(new TypeError('Params.token is not provided or not be a valid string'))
-      return
+    if (!(isString(params.token) && params.token)) {
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.mkblk(block, assign({ token }, params), options, callback)
+      })
     }
 
     options = defaultsDeep(options, this.settings)
@@ -254,9 +331,20 @@ export class Tunnel {
       return
     }
 
-    if (!isString(params.token)) {
-      callback(new TypeError('Params.token is not provided or not be a valid string'))
-      return
+    if (!(isString(params.token) && params.token)) {
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.bput(chunk, assign({ token }, params), options, callback)
+      })
     }
 
     if (!isString(params.ctx)) {
@@ -312,9 +400,20 @@ export class Tunnel {
       return
     }
 
-    if (!isString(params.token)) {
-      callback(new TypeError('Params.token is not provided or not be a valid string'))
-      return
+    if (!(isString(params.token) && params.token)) {
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.mkfile(ctxs, assign({ token }, params), options, callback)
+      })
     }
 
     if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {

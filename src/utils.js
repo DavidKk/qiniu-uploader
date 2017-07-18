@@ -20,3 +20,12 @@ export function sizeStringify (size) {
 
   return `${size.toFixed(2)}Byte`
 }
+
+/**
+ * 判断是否为数字
+ * @param {Number|String} number 需要判断的数字
+ * @return {Boolean} 结果
+ */
+export function isNumeric (number) {
+  return !isNaN(parseFloat(number)) && isFinite(number) && number.constructor !== Array
+}

@@ -21,7 +21,7 @@ let settings = {}
  * @param {Object} [options={}] 配置
  */
 export function configure (options = {}) {
-  settings = defaultsDeep(options, settings)
+  settings = defaultsDeep({}, options, settings)
 }
 
 /**

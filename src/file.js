@@ -87,7 +87,7 @@ export class File {
      *
      * @type {Object}
      */
-    this.settings = defaultsDeep(options, this.constructor.defaultSettings)
+    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)
 
     /**
      * 文件类型
