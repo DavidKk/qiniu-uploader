@@ -447,7 +447,7 @@ export class Tunnel {
             triggerRequestProgress(type, xhr, process)
           }, false)
         }
-      } 
+      }
 
       type === 'bput' && processes.push(process)
     }
