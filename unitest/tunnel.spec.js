@@ -393,13 +393,8 @@ describe('Class Tunnel', function () {
         expect(event.loaded).to.be.a('number')
         expect(event.total).to.be.a('number')
 
-        let index = _.findIndex(event.processes, { index: event.process.index })
-        expect(index).to.not.equal(-1)
-        expect(event.processes[index]).to.equal(event.process)
-
         expect(event.process).to.have.property('request')
         expect(event.process).to.have.property('xhr')
-        expect(event.process).to.have.property('index')
 
         expect(event.total).to.equal(file.size)
         expect(event.loaded).to.be.most(event.total)
