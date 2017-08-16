@@ -24,7 +24,7 @@ jqlite(function () {
 
     if (null !== list) {
       for (let i = 0, len = list.length; i < len; i ++) {
-        files.push(list.item(i));
+        files.push(list.item(i))
       }
     }
 

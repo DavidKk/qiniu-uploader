@@ -149,7 +149,7 @@ export class Tunnel {
 
     let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
     let url = `${options.useHttps ? 'https:' : 'http:'}//${host}`
-    let datas = assign({ file }, params)
+    let datas = assign({ file: file.file }, params)
     let headers = {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
