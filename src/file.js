@@ -32,9 +32,7 @@ export class File {
    *
    * @property {Integer} defaultSettings.chunkInBlock 分片数量，默认为 1
    * @property {Boolean} defaultSettings.cache 是否缓存
-   * @property {Integer} defaultSettings.expired
-   * 过期时间，默认为一天 (1000 x 60 x 60 x 24)，
-   * 该事件为保存文件信息到本地缓存中缓存的过期时间
+   * @property {Integer} defaultSettings.expired 过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间
    */
   static defaultSettings = {
     mimeType: 'plain/text',

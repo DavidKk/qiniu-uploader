@@ -10,7 +10,6 @@ import { STORAGE_PREFIX } from './config'
 export class Storage {
   /**
    * 默认配置
-   * @type {Object}
    * @property {String} prefix 前缀
    */
   static defaultSettings = {
