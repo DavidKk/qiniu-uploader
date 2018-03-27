@@ -28,6 +28,13 @@ export const QINIU_UPLOAD_HTTPS_URL = 'up.qbox.me'
 export const QINIU_UPLOAD_HTTP_URL = 'up-z0.qiniu.com'
 
 /**
+ * 远程文件路径正则
+ * @type {RegExp}
+ * @const
+ */
+export const REMOTE_FILE_URL_REGEXP = /^([\w\d]+?):\/\//
+
+/**
  * 千字节
  * @type {Integer}
  * @const

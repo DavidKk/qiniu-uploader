@@ -58,7 +58,7 @@ export class Tunnel {
    * @param {Integer} [options.blockSize=1 * M] 分片大小
    * @return {Tunnel}
    */
-  constructor (options) {
+  constructor (options, request = http) {
     /**
      * 配置
      * @type {Object}
@@ -76,6 +76,12 @@ export class Tunnel {
      * @type {Integer}
      */
     this.tokenExpire = 0
+
+    /**
+     * 设置 request
+     * @type {Object}
+     */
+    this.request = request
   }
 
   _execTokenGetter (getter, callback) {
@@ -105,11 +111,61 @@ export class Tunnel {
   }
 
   /**
+   * 第三方资源抓取
+   *
+   * @param {String} file 远程文件
+   * @param {Object} [params={}] 上传参数
+   * @param {Object} params.token 七牛令牌
+   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
+   * @param {any} [options={}]
+   * @param {any} callback
+   * @memberof Tunnel
+   */
+  fetch (file, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError('Callback is not provied or not be a function')
+    }
+
+    if (!CONFIG.REMOTE_FILE_URL_REGEXP.test(file)) {
+      callback(new TypeError('File is not provided or invalid remote source url'))
+      return
+    }
+
+    let { token } = params
+    if (!(isString(token) && token)) {
+      if (!isFunction(options.tokenGetter)) {
+        callback(new TypeError('Token is not provided'))
+        return
+      }
+
+      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.fetch(file, assign({ token }, params), options, callback)
+      })
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`
+    let headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+    }
+
+    return this.request.post(url, null, assign({ headers }, options), callback)
+  }
+
+  /**
    * 上传文件
    * 普通文件上传，适合小文件
    *
    * @param {File|Blob} file 文件
-   * @param {Object} params 上传参数
+   * @param {Object} [params={}] 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [options={}] 上传配置
@@ -154,7 +210,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, datas, assign({ headers }, options), callback)
+    return this.request.upload(url, datas, assign({ headers }, options), callback)
   }
 
   /**
@@ -233,7 +289,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, datas, assign({ headers }, options), callback)
+    return this.request.upload(url, datas, assign({ headers }, options), callback)
   }
 
   /**
@@ -293,7 +349,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, chunk, assign({ headers }, options), callback)
+    return this.request.upload(url, chunk, assign({ headers }, options), callback)
   }
 
   /**
@@ -366,7 +422,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, chunk, assign({ headers }, options), callback)
+    return this.request.upload(url, chunk, assign({ headers }, options), callback)
   }
 
   /**
@@ -446,7 +502,7 @@ export class Tunnel {
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
     }
 
-    return http.upload(url, data, assign({ headers }, options), callback)
+    return this.request.upload(url, data, assign({ headers }, options), callback)
   }
 
   /**

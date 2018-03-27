@@ -38,6 +38,19 @@ export function upload (url, data, options, callback) {
 }
 
 /**
+ * 执行 GET 请求 XMLHttpRequest
+ *
+ * @param {String} url 请求地址
+ * @param {Object} data 提交数据
+ * @param {Object} [options] 配置
+ * @param {Function} callback 回调函数
+ * @return {Request} 返回一个请求对象
+ */
+export function post (url, data, options, callback) {
+  return request('POST', url, data, options, callback)
+}
+
+/**
  * 请求 XMLHttpRequest
  *
  * @param {string} [method='POST'] 提交方法
@@ -108,8 +121,8 @@ export function request (method = 'POST', url, data, options = {}, callback) {
       }
 
       xhr.status === 200
-      ? callback(null, parsedData)
-      : callback(new Error(parsedData))
+        ? callback(null, parsedData)
+        : callback(new Error(parsedData))
 
       xhrComplete()
     }

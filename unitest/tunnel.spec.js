@@ -342,6 +342,59 @@ describe('Class Tunnel', function () {
     })
   })
 
+  describe('Tunnel Fetch', function () {
+    let server
+    let tunnel
+
+    beforeEach(function () {
+      server = sinon.fakeServer.create()
+      tunnel = new Tunnel()
+    })
+
+    afterEach(function () {
+      server.restore()
+    })
+
+    it('can upload remote file', function (done) {
+      let file = 'https://github.com'
+
+      /**
+       * 因为上传涉及多个 AJAX 请求，因此必须设置
+       * 自动回复并根据请求地址返回相应的信息
+       */
+      server.autoRespond = true
+      server.respondWith(function (xhr) {
+        let uri = new URI(xhr.url)
+        expect(xhr.method).to.equal('POST')
+        expect(uri.host()).to.equal(host)
+        expect(uri.protocol()).to.equal('https')
+
+        let headers = xhr.requestHeaders
+        expect(headers['Content-Type']).to.equal('application/x-www-form-urlencoded')
+        expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
+
+        let body = xhr.requestBody
+        let paths = trim(uri.path(), '/').split('/')
+
+        console.log(body, paths)
+      })
+
+      let params = { token, key, mimeType, crc32, userVars }
+      let options = { useHttps: true, host }
+      let { cancel, xhr } = tunnel.fetch(file, params, options, function (error, response) {
+        expect(error).not.to.be.an('error')
+        expect(response).to.deep.equal({ ctx: 'file' })
+
+        done()
+      })
+
+      expect(cancel).to.be.a.function
+      expect(xhr).to.be.null
+
+      server.respond()
+    })
+  })
+
   describe('Tunnel Resume Breakpoint', function () {
     let server
     let tunnel

@@ -134,7 +134,6 @@ export class File {
     /**
      * 查找并读取本地缓存的上传数据，若没有则不会做任何操作
      */
-
     this.settings.cache === true && this.loadState()
   }
 
