@@ -1,7 +1,7 @@
 language: node_js
 sudo: false
 node_js:
-- '7'
+- '9'
 cache:
   directories:
   - "./node_modules"
@@ -9,12 +9,12 @@ env:
 - UNITEST=1
 matrix:
   include:
-  - node_js: '7'
+  - node_js: '9'
     env: COVERAGE=1
-  - node_js: '7'
+  - node_js: '9'
     env: SAUCE_LABS=1
   allow_failures:
-  - node_js: '7'
+  - node_js: '9'
     env: SAUCE_LABS=1
   global:
     secure: gEIla1ohzC3FMcpFrBURQrnFzr9oo3Bl5+JdbS/aAwu7ppP/l6+vEawNahChgTzRMzpgm7Akj5847gWVMTsKMVzYgAndK9ZSO8stDOu3rgEfuSJcVWDxI97NRAuGk1bPxXiOrjZLkhizMfvc9C5dbyEXEohePAiiMW4AgZ78XVESR4F8DZ0gCXn37XlD6bSK9/0PfdErvPhnRkOLPNIlgasUWfQkrZEnrmwRyQBqe1ttTzFJSVnt1zlPaYNcmFA5yRSqjYc5jEGCh2QWWq7QkEtGLSMNvvMrNCy6GDKBfvGEY0KmOu3GvFDgjYia18Pda8hlNdt8v9IoBV4UnAJxKV6rZ/yHksvQ2K8XygS5KAV3dj/TvuZS2a0i22V3SBR5dEcIQ+LKoS4/AucpX0NspgNBR/OAfk6GXPcl9BY/s2X7eC4aGsjWYnoNotKggJOVOEbN/q9TCW6Enq4uDhWVBf5z2YuHUr8u7qyW4sA8S9j0nVm1Opnt+9WNpnbtG73Gl9yYDC/arifiMuj8TteZO4gZvzlqscfwzz9F3AOtnAKwSe3erMnX9QeYU1bn0rf7iTxrzRkdoIwBgXEcRCpAphDzl9j0fJxXFPyehhOUEM2nN2l/Xa3Ib032nCcvk2ELUyCgxot/NqqIkaFYHF/FFk5iNGh1cS+AMCXGWJwQaSI=
