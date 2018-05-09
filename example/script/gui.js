@@ -7,7 +7,6 @@ import indexOf from 'lodash/indexOf'
 import { Uploader } from '../../src/index'
 import { sizeStringify } from '../../src/utils'
 import { server } from './server_mock'
-import VConsole from 'vconsole'
 import eruda from 'eruda'
 
 let host = 'simulate.qiniu.com'
