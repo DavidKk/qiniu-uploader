@@ -116,9 +116,10 @@ export class Tunnel {
    * @param {String} file 远程文件
    * @param {Object} [params={}] 上传参数
    * @param {Object} params.token 七牛令牌
-   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
-   * @param {any} [options={}]
-   * @param {any} callback
+   * @param {Object} [params.key] 如果没有指定则: 如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
+   * @param {Object} [params.bucket] 指定的存储区域 https://developer.qiniu.com/kodo/api/3966/bucket-image-source
+   * @param {Object} [options={}] 配置
+   * @param {Function} callback
    * @memberof Tunnel
    */
   fetch (file, params = {}, options = {}, callback) {
@@ -131,7 +132,7 @@ export class Tunnel {
       return
     }
 
-    let { token } = params
+    let { token, bucket, key } = params
     if (!(isString(token) && token)) {
       if (!isFunction(options.tokenGetter)) {
         callback(new TypeError('Token is not provided'))
@@ -150,8 +151,10 @@ export class Tunnel {
 
     options = defaultsDeep(options, this.settings)
 
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`
+    let { host, useHttps } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`
     let headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`

@@ -11,6 +11,7 @@ import * as CONFIG from '../src/config'
 describe('Class Tunnel', function () {
   let base64Image = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
   let host = 'x.com'
+  let bucket = 'bucket'
   let key = 'key'
   let mimeType = 'plain/text'
   let crc32 = 'crc32'
@@ -357,6 +358,12 @@ describe('Class Tunnel', function () {
 
     it('can upload remote file', function (done) {
       let file = 'https://github.com'
+      let response = {
+        fsize: 99532,
+        hash: "FpYFPe-lvCrKXBeNDpoHUsWoyNd5",
+        key: "FpYFPe-lvCrKXBeNDpoHUsWoyNd5",
+        mimeType: "text/html; charset=utf-8"
+      }
 
       /**
        * 因为上传涉及多个 AJAX 请求，因此必须设置
@@ -370,26 +377,29 @@ describe('Class Tunnel', function () {
         expect(uri.protocol()).to.equal('https')
 
         let headers = xhr.requestHeaders
-        expect(headers['Content-Type']).to.equal('application/x-www-form-urlencoded')
+        expect(headers['Content-Type']).to.equal('application/x-www-form-urlencoded;charset=utf-8')
         expect(headers.Authorization).to.equal(`${tokenPrefix} ${token}`)
 
         let body = xhr.requestBody
         let paths = trim(uri.path(), '/').split('/')
 
-        console.log(body, paths)
+        expect(body).to.be.null
+        expect(paths).to.deep.equal(['fetch', window.btoa(file), 'to', 'bucket:key'])
+
+        xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify(response))
       })
 
-      let params = { token, key, mimeType, crc32, userVars }
+      let params = { token, bucket, key, mimeType, crc32, userVars }
       let options = { useHttps: true, host }
       let { cancel, xhr } = tunnel.fetch(file, params, options, function (error, response) {
         expect(error).not.to.be.an('error')
-        expect(response).to.deep.equal({ ctx: 'file' })
+        expect(response).to.deep.equal(response)
 
         done()
       })
 
       expect(cancel).to.be.a.function
-      expect(xhr).to.be.null
+      expect(xhr).not.to.be.null
 
       server.respond()
     })

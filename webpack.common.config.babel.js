@@ -21,6 +21,7 @@ export let rules = [
 ]
 
 export default WebpackMerger({
+  mode: 'production',
   devtool: 'inline-source-map',
   entry: {
     [pkg.name]: path.join(__dirname, './src/index.js')

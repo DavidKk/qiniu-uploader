@@ -2,25 +2,94 @@ body {
   background-color: #EAF1F9;
 }
 
-.qiniup {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.qiniup-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.qiniup-header {
+  position: sticky;
+  display: block;
+  width: 100%;
+  height: em(52px);
+  background-color: $primary-color;
+  box-shadow: 0 em(2px) em(5px) 0 rgba(0,0,0,.16), 0 em(2px) em(10px) 0 rgba(0,0,0,.12);
+  transition: .25s ease-out;
+
+  .qiniup-hero {
+    display: block;
+    margin: 0;
+    padding: em(10px) 0;
+    text-align: center;
+    font-size: em(21px);
+    font-weight: normal;
+    font-style: normal;
+    color: #fff;
+    cursor: default;
+    user-select: none;
+  }
+}
+
+.qiniup-section {
+  flex: 1;
+}
+
+.qiniup-footer {
+  align-self: flex-end;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.qiniup-footer-body {
+  display: block;
+  margin: 0 auto;
+  border-top: em(1px) solid #d3d3d3;
+  padding: em(20px, 13px) 0;
+  max-width: em(1000px);
+
+  > p {
+    margin: 0;
+    text-align: center;
+    font-size: em(13px);
+    color: #999;
+  }
+
+  > a {
+    display: inline;
+    color: $link-color;
+    font-size: em(13px);
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+.qiniup-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.qiniup-uploader {
   display: block;
   margin: auto;
-  width: em(400px);
-  height: em(445px);
+  max-width: em(400px);
+  max-height: em(445px);
+  width: 100%;
+  height: 100%;
   box-shadow: 0 em(2px) em(5px) 0 rgba(0,0,0,.16), 0 em(2px) em(10px) 0 rgba(0,0,0,.12);
   transition: all .28s ease-in;
 }
 
-.qiniup .qiniup-box {
+.qiniup-monitor {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   overflow: hidden;
   width: 100%;
   height: percentage(146/400);
@@ -39,7 +108,7 @@ body {
     &:before {
       content: '';
       display: block;
-      padding-top: 100%; 
+      padding-top: 100%;
     }
   }
 
@@ -48,7 +117,7 @@ body {
     margin-top: -100%;
     padding-top: 100%;
     width: 100%;
-    border-radius: 40%; 
+    border-radius: 40%;
     background: $primary-color;
     opacity: .4;
     animation: drift 3000ms infinite linear;
@@ -65,11 +134,7 @@ body {
   }
 
   .qiniup-banner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    position: relative;
     z-index: 1;
     display: block;
     margin: auto;
@@ -107,7 +172,7 @@ body {
   }
 }
 
-.qiniup .qiniup-body {
+.qiniup-inbox {
   position: relative;
   display: block;
   width: 100%;
@@ -121,6 +186,9 @@ body {
     display: block;
     margin: 0 auto;
     padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: em(13px);
     font-weight: normal;
   }
@@ -145,7 +213,9 @@ body {
     transition: all .28s ease-in;
 
     .qiniup-form-placeholder {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       border: em(2px) dashed rgba(0,0,0,.1);
       width: 100%;
       height: 100%;
@@ -200,12 +270,12 @@ body {
   }
 }
 
-.qiniup.qiniup-upload {
+.qiniup-uploader.upload {
   width: em(220px);
   height: em(300px);
 }
 
-.qiniup.qiniup-upload .qiniup-box {
+.qiniup-uploader.upload .qiniup-monitor {
   height: percentage(25/30);
 
   .qiniup-water {
@@ -225,7 +295,7 @@ body {
   }
 }
 
-.qiniup.qiniup-upload .qiniup-body {
+.qiniup-uploader.upload .qiniup-inbox {
   height: percentage(5/30);
 
   .qiniup-form {
@@ -238,7 +308,7 @@ body {
   }
 }
 
-.qiniup.qiniup-upload.qiniup-upload-success .qiniup-box {
+.qiniup-uploader.upload.success .qiniup-monitor {
   background-color: $success-color;
 
   .qiniup-wave,
@@ -247,7 +317,7 @@ body {
   }
 }
 
-.qiniup.qiniup-upload.qiniup-upload-error .qiniup-box {
+.qiniup-uploader.upload.error .monitor {
   background-color: $error-color;
 
   .qiniup-wave,

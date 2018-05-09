@@ -7,54 +7,52 @@ head
   title Qiniup | Qiniu Clound Uploader
 
 body
-  .qiniup-header
-    h1.qiniup-hero Qiniup
+  .qiniup-container
+    header.qiniup-header
+      h1.qiniup-hero Qiniup
 
-  //- .qiniup-monitor
-  //-   .monitor-block
-  //-   .monitor-block
+    .qiniup-section
+      #qiniup.qiniup-uploader
+        .qiniup-monitor
+          #qiniup-water.qiniup-water
+            .qiniup-wave
+            .qiniup-wave
+            .qiniup-wave
 
-  #qiniup.qiniup
-    .qiniup-box
-      #qiniup-water.qiniup-water
-        .qiniup-wave
-        .qiniup-wave
-        .qiniup-wave
+          .qiniup-banner
+            svg.qiniup-logo(width='448px', height='303px', viewbox='0 0 448 303', version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+              g(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd')
+                g(fill-rule='nonzero', fill='#fff')
+                  path(d='M442.1,27 C456.1,-3.8 438.3,7.8 438.3,7.8 C438.3,7.8 376,109.6 222.7,109.6 C198.4,109.6 176.5,107 156.7,102.6 C148.1,73.9 136.4,51.9 118.8,48.6 C118.8,48.6 119.6,66.5 121.1,92.1 C42.1,62.7 9.2,6.3 9.2,6.3 C9.2,6.3 -4.3,-10.5 1.5,15 C5.9,34.3 39.1,110.7 124.7,146.4 C128.4,194.7 133.7,246.3 140.5,263.7 C154.5,299.3 171.8,302.7 224.2,302.7 C276.6,302.7 305,298.4 312.7,268.1 C320.4,237.8 328.6,169 327.6,165.6 C326.6,162.2 328,153.8 313.6,166.1 C294.7,182.3 274.5,247.9 269,254.1 C263.2,260.8 221.5,270.6 197.6,261.5 C184.8,252.3 178.5,206.7 169.8,160.1 C186.1,163.3 203.9,165.1 223.1,165.1 C383.4,165.1 428.2,57.8 442.1,27 Z')
+            #qiniup-progress.qiniup-progress 100
 
-      .qiniup-banner
-        svg.qiniup-logo(width='448px', height='303px', viewbox='0 0 448 303', version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
-          g(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd')
-            g(fill-rule='nonzero', fill='#fff')
-              path(d='M442.1,27 C456.1,-3.8 438.3,7.8 438.3,7.8 C438.3,7.8 376,109.6 222.7,109.6 C198.4,109.6 176.5,107 156.7,102.6 C148.1,73.9 136.4,51.9 118.8,48.6 C118.8,48.6 119.6,66.5 121.1,92.1 C42.1,62.7 9.2,6.3 9.2,6.3 C9.2,6.3 -4.3,-10.5 1.5,15 C5.9,34.3 39.1,110.7 124.7,146.4 C128.4,194.7 133.7,246.3 140.5,263.7 C154.5,299.3 171.8,302.7 224.2,302.7 C276.6,302.7 305,298.4 312.7,268.1 C320.4,237.8 328.6,169 327.6,165.6 C326.6,162.2 328,153.8 313.6,166.1 C294.7,182.3 274.5,247.9 269,254.1 C263.2,260.8 221.5,270.6 197.6,261.5 C184.8,252.3 178.5,206.7 169.8,160.1 C186.1,163.3 203.9,165.1 223.1,165.1 C383.4,165.1 428.2,57.8 442.1,27 Z')
-        #qiniup-progress.qiniup-progress 100
+        .qiniup-inbox
+          form.qiniup-form
+            .qiniup-form-placeholder
+              input#file-box.qiniup-form-input(data-dropbox='file', type='file', accept='*')
+              svg.qiniup-form-icon(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewbox='0 0 511.999 511.999', style='enable-background:new 0 0 511.999 511.999;', xml:space='preserve')
+                path(d='M54.998,0v415.177l96.821,96.822h305.181V0H54.998z M142.91,460.074l-35.986-35.986h35.986V460.074z M426.583,481.583H173.328v-87.912H85.416V30.417h341.168V481.583z', fill='#d3d3d3')
+                rect(x='113.933', y='292.269', width='284.137', height='30.417', fill='#d3d3d3')
+                rect(x='113.933', y='342.974', width='284.137', height='30.417', fill='#d3d3d3')
+                rect(x='113.933', y='241.574', width='284.137', height='30.417', fill='#d3d3d3')
+                rect(x='113.933', y='190.878', width='284.137', height='30.417', fill='#d3d3d3')
+                polygon(points='256,39.748 188.939,106.81 210.447,128.318 240.791,97.973 240.791,170.596 271.208,170.596 271.208,97.973301.553,128.318 323.061,106.81', fill='#d3d3d3')
 
-    .qiniup-body
-      form.qiniup-form
-        .qiniup-form-placeholder
-          input#file-box.qiniup-form-input(data-dropbox='file', type='file', accept='*')
-          svg.qiniup-form-icon(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewbox='0 0 511.999 511.999', style='enable-background:new 0 0 511.999 511.999;', xml:space='preserve')
-            path(d='M54.998,0v415.177l96.821,96.822h305.181V0H54.998z M142.91,460.074l-35.986-35.986h35.986V460.074z M426.583,481.583H173.328v-87.912H85.416V30.417h341.168V481.583z', fill='#d3d3d3')
-            rect(x='113.933', y='292.269', width='284.137', height='30.417', fill='#d3d3d3')
-            rect(x='113.933', y='342.974', width='284.137', height='30.417', fill='#d3d3d3')
-            rect(x='113.933', y='241.574', width='284.137', height='30.417', fill='#d3d3d3')
-            rect(x='113.933', y='190.878', width='284.137', height='30.417', fill='#d3d3d3')
-            polygon(points='256,39.748 188.939,106.81 210.447,128.318 240.791,97.973 240.791,170.596 271.208,170.596 271.208,97.973301.553,128.318 323.061,106.81', fill='#d3d3d3')
+              p.qiniup-form-placeholder-description
+                b Drag and drop
+                | &nbsp;files here
+                | or
+                br
+                b &nbsp;Click here
+                | &nbsp;to begin the upload
 
-          p.qiniup-form-placeholder-description
-            b Drag and drop
-            |  files here
-            br
-            | or
-            b click here
-            |  to begin the upload
+          .qiniup-form-info
+            h3#qiniup-filename.qiniup-info-name Unknow
+            #qiniup-filesize.qiniup-info-size 0Kb
 
-      .qiniup-form-info
-        h3#qiniup-filename.qiniup-info-name Unknow
-        #qiniup-filesize.qiniup-info-size 0Kb
-
-  footer.qiniup-footer
-    .qiniup-footer-body
-      p Build by&nbsp;
-        a(href='http://blog.davidkk.com', target='_blank') David Jones
-        | &nbsp;|&nbsp;
-        a(href='mailto:qowera@gmail.com') qowera@gmail.com
+    footer.qiniup-footer
+      .qiniup-footer-body
+        p Build by&nbsp;
+          a(href='http://blog.davidkk.com', target='_blank') David Jones
+          | &nbsp;|&nbsp;
+          a(href='mailto:qowera@gmail.com') qowera@gmail.com

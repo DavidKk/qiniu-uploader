@@ -7,6 +7,8 @@ import indexOf from 'lodash/indexOf'
 import { Uploader } from '../../src/index'
 import { sizeStringify } from '../../src/utils'
 import { server } from './server_mock'
+import VConsole from 'vconsole'
+import eruda from 'eruda'
 
 let host = 'simulate.qiniu.com'
 let key = 'simulate_key'
@@ -18,6 +20,8 @@ let tokenPrefix = 'simulate_UpToken'
 let uploader = new Uploader()
 
 jqlite(function () {
+  eruda.init();
+
   jqlite('#file-box').on('change', function (event) {
     let files = []
     let list = event.__files__ || event.target.files
@@ -30,7 +34,7 @@ jqlite(function () {
 
     let file = files[0]
 
-    jqlite('#qiniup').addClass('qiniup-upload')
+    jqlite('#qiniup').addClass('upload')
     jqlite('#qiniup-filename').html(file.name)
     jqlite('#qiniup-filesize').html(sizeStringify(file.size))
     jqlite('#qiniup-progress').html('0')
@@ -128,15 +132,15 @@ jqlite(function () {
     print('INFO', `File will be spliced \`${blockNo}\` blocks and \`${blockNo * chunkNo}\` chunks`)
 
     uploader.upload(file, params, options, (error) => {
-      setTimeout(() => jqlite('#qiniup').removeClass('qiniup-upload qiniup-upload-success qiniup-upload-error'), 3000)
+      setTimeout(() => jqlite('#qiniup').removeClass('upload success error'), 3000)
 
       if (error) {
         window.console.log(error)
-        jqlite('#qiniup').addClass('qiniup-upload-error')
+        jqlite('#qiniup').addClass('error')
         return
       }
 
-      jqlite('#qiniup').addClass('qiniup-upload-success')
+      jqlite('#qiniup').addClass('success')
     })
 
     jqlite(this).val('')

@@ -1,5 +1,6 @@
 import path from 'path'
 import autoprefixer from 'autoprefixer'
+import webpack from 'webpack'
 import WebpackMerger from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
@@ -56,7 +57,7 @@ let plugins = [
    * Inline styles can be externally optimized for loading
    */
   new ExtractTextPlugin({
-    filename: 'styles/[name].[contenthash].css',
+    filename: 'styles/[name].[hash].css',
     allChunks: true
   }),
 
@@ -66,10 +67,11 @@ let plugins = [
   new HtmlWebpackPlugin({
     filename: 'index.html',
     template: './example/index.pug'
-  })
+  }),
 ]
 
 export default WebpackMerger(webpackConf, {
+  mode: 'development',
   entry: {
     [pkg.name]: path.join(__dirname, './example/index.js')
   },
