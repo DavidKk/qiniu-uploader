@@ -37,6 +37,7 @@ export class Tunnel {
    * @property {Integer} defaultSettings.maxConnect 最大连接数
    * @property {Integer} defaultSettings.blockSize 分块大小
    * @property {Integer} defaultSettings.blockSize 分片大小
+   * @property {Integer} defaultSettings.maxBlockTasks 最大分块任务数, 若文件巨大, 可能分块的时候会卡死浏览器, 因此设置最大分块数
    */
   static defaultSettings = {
     useHttps: typeof window === 'undefined' ? false : window.location.protocol,
@@ -51,11 +52,11 @@ export class Tunnel {
   /**
    * 创建通道类对象
    * @param {Object} [options] 配置，可以参考{@link Tunnel.defaultSettings}
-   * @param {Object} [options.useHttps=window.location.protocol] 是否使用 Https 进行上传
+   * @param {Object} [options.useHttps=true] 是否使用 Https 进行上传
    * @param {Boolean} [options.cache=false] 是否缓存
    * @param {Integer} [options.maxConnect=4] 最大连接数
    * @param {Integer} [options.blockSize=4 * M] 分块大小
-   * @param {Integer} [options.blockSize=1 * M] 分片大小
+   * @param {Integer} [options.chunkSize=1 * M] 分片大小
    * @return {Tunnel}
    */
   constructor (options, request = http) {
@@ -119,7 +120,9 @@ export class Tunnel {
    * @param {Object} [params.key] 如果没有指定则: 如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.bucket] 指定的存储区域 https://developer.qiniu.com/kodo/api/3966/bucket-image-source
    * @param {Object} [options={}] 配置
-   * @param {Function} callback
+   * @param {Object} [options.host] 七牛上传地址
+   * @param {Object} [options.useHttps] 是否使用 https
+   * @param {Function} callback 回调函数
    * @memberof Tunnel
    */
   fetch (file, params = {}, options = {}, callback) {
@@ -132,14 +135,15 @@ export class Tunnel {
       return
     }
 
-    let { token, bucket, key } = params
+    let { token } = params
+    let { tokenGetter } = options
     if (!(isString(token) && token)) {
-      if (!isFunction(options.tokenGetter)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -151,13 +155,14 @@ export class Tunnel {
 
     options = defaultsDeep(options, this.settings)
 
-    let { host, useHttps } = options
+    let { host, useHttps, tokenPrefix } = options
     host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
 
+    let { bucket, key } = params
     let url = `${useHttps ? 'https:' : 'http:'}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`
     let headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
     return this.request.post(url, null, assign({ headers }, options), callback)
@@ -188,13 +193,15 @@ export class Tunnel {
       return
     }
 
-    if (!(isString(params.token) && params.token)) {
-      if (!isFunction(options.tokenGetter)) {
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) && token)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -206,11 +213,13 @@ export class Tunnel {
 
     options = defaultsDeep(options, this.settings)
 
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}`
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}`
     let datas = assign({ file: file.file }, params)
     let headers = {
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
     return this.request.upload(url, datas, assign({ headers }, options), callback)
@@ -245,13 +254,15 @@ export class Tunnel {
       return
     }
 
-    if (!(isString(params.token) && params.token)) {
-      if (!isFunction(options.tokenGetter)) {
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) && token)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -267,29 +278,31 @@ export class Tunnel {
 
     options = defaultsDeep(options, this.settings)
 
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/${params.size}`
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
 
-    if (isString(params.key) && params.key) {
-      url += `/key/${encodeURIComponent(params.key)}`
+    let { size, key, mimeType, crc32, userVars } = params
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}/${size}`
+    if (isString(key) && key) {
+      url += `/key/${encodeURIComponent(key)}`
     }
 
-    if (isString(params.mimeType) && params.mimeType) {
-      url += `/mimeType/${encodeURIComponent(params.mimeType)}`
+    if (isString(mimeType) && mimeType) {
+      url += `/mimeType/${encodeURIComponent(mimeType)}`
     }
 
-    if (isString(params.crc32) && params.crc32) {
-      url += `/crc32/${encodeURIComponent(params.crc32)}`
+    if (isString(crc32) && crc32) {
+      url += `/crc32/${encodeURIComponent(crc32)}`
     }
 
-    if (isString(params.userVars) && params.userVars) {
-      url += `/x:user-var/${encodeURIComponent(params.userVars)}`
+    if (isString(userVars) && userVars) {
+      url += `/x:user-var/${encodeURIComponent(userVars)}`
     }
 
     let datas = content.replace(CONFIG.BASE64_REGEXP, '')
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
     return this.request.upload(url, datas, assign({ headers }, options), callback)
@@ -326,13 +339,15 @@ export class Tunnel {
       return
     }
 
-    if (!(isString(params.token) && params.token)) {
-      if (!isFunction(options.tokenGetter)) {
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) && token)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -344,14 +359,16 @@ export class Tunnel {
 
     options = defaultsDeep(options, this.settings)
 
-    let chunk = block.slice(0, options.chunkSize, block.type)
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkblk/${block.size}`
+    let { chunkSize, useHttps, host, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}/mkblk/${block.size}`
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
+    let chunk = block.slice(0, chunkSize, block.type)
     return this.request.upload(url, chunk, assign({ headers }, options), callback)
   }
 
@@ -390,13 +407,15 @@ export class Tunnel {
       return
     }
 
-    if (!(isString(params.token) && params.token)) {
-      if (!isFunction(options.tokenGetter)) {
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) && token)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -406,23 +425,26 @@ export class Tunnel {
       })
     }
 
+    let { ctx, offset } = params
     if (!isString(params.ctx)) {
       callback(new TypeError('Params.ctx is not provided or not be a valid string'))
       return
     }
 
-    if (!(isNumber(params.offset) && isInteger(params.offset) && params.offset > 0)) {
+    if (!(isNumber(offset) && isInteger(offset) && offset > 0)) {
       callback(new TypeError('Params.offset is not provided or not be a valid interger'))
       return
     }
 
     options = defaultsDeep(options, this.settings)
 
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/bput/${params.ctx}/${params.offset}`
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}/bput/${ctx}/${offset}`
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
     return this.request.upload(url, chunk, assign({ headers }, options), callback)
@@ -459,13 +481,15 @@ export class Tunnel {
       return
     }
 
-    if (!(isString(params.token) && params.token)) {
-      if (!isFunction(options.tokenGetter)) {
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) && token)) {
+      if (!isFunction(tokenGetter)) {
         callback(new TypeError('Token is not provided'))
         return
       }
 
-      return this._execTokenGetter(options.tokenGetter, (error, token) => {
+      return this._execTokenGetter(tokenGetter, (error, token) => {
         if (error) {
           callback(error)
           return
@@ -475,34 +499,37 @@ export class Tunnel {
       })
     }
 
-    if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {
+    let { size } = params
+    if (!(isNumber(size) && isInteger(size) && size > 0)) {
       callback(new TypeError('Param.size is not provided or not be a valid integer'))
       return
     }
 
-    let host = options.host || (options.useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
-    let url = `${options.useHttps ? 'https:' : 'http:'}//${host}/mkfile/${params.size}`
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
 
-    if (isString(params.key) && params.key) {
-      url += `/key/${encodeURIComponent(params.key)}`
+    let url = `${useHttps ? 'https:' : 'http:'}//${host}/mkfile/${size}`
+    let { key, mimeType, crc32, userVars } = params
+    if (isString(key) && key) {
+      url += `/key/${encodeURIComponent(key)}`
     }
 
-    if (isString(params.mimeType) && params.mimeType) {
-      url += `/mimeType/${encodeURIComponent(params.mimeType)}`
+    if (isString(mimeType) && mimeType) {
+      url += `/mimeType/${encodeURIComponent(mimeType)}`
     }
 
-    if (isString(params.crc32) && params.crc32) {
-      url += `/crc32/${encodeURIComponent(params.crc32)}`
+    if (isString(crc32) && crc32) {
+      url += `/crc32/${encodeURIComponent(crc32)}`
     }
 
-    if (isString(params.userVars) && params.userVars) {
-      url += `/x:user-var/${encodeURIComponent(params.userVars)}`
+    if (isString(userVars) && userVars) {
+      url += `/x:user-var/${encodeURIComponent(userVars)}`
     }
 
     let data = isArray(ctxs) ? ctxs.join(',') : ctxs
     let headers = {
       'Content-Type': 'application/octet-stream',
-      Authorization: `${options.tokenPrefix || 'UpToken'} ${params.token}`
+      Authorization: `${tokenPrefix || 'UpToken'} ${token}`
     }
 
     return this.request.upload(url, data, assign({ headers }, options), callback)
@@ -543,13 +570,16 @@ export class Tunnel {
 
     options = defaultsDeep(options, { cache: true, override: false }, this.settings)
 
-    if (!(isInteger(options.maxConnect) && options.maxConnect > 0)) {
+    let { maxConnect } = options
+    if (!(isInteger(maxConnect) && maxConnect > 0)) {
       callback(new TypeError('Options.maxConnect is invalid or not a integer'))
       return
     }
 
-    let perBlockSize = options.blockSize
-    let perChunkSize = options.chunkSize
+    let {
+      blockSize: perBlockSize,
+      chunkSize: perChunkSize
+    } = options
 
     if (!isInteger(perBlockSize)) {
       callback(new TypeError('Block size is not a integer'))
@@ -566,12 +596,13 @@ export class Tunnel {
       return
     }
 
-    if (file.size > options.maxFileSize) {
-      callback(new Error(`File size must less than ${options.maxFileSize}`))
+    let { maxFileSize } = options
+    if (file.size > maxFileSize) {
+      callback(new Error(`File size must less than ${maxFileSize}`))
       return
     }
 
-    if (!isInteger(options.maxFileSize)) {
+    if (!isInteger(maxFileSize)) {
       callback(new TypeError('MaxFileSize is not a integer'))
       return
     }
@@ -648,9 +679,7 @@ export class Tunnel {
     }
 
     let abortRequest = function () {
-      forEach(processes, ({ request }) => {
-        request.cancel()
-      })
+      forEach(processes, ({ request }) => request.cancel())
     }
 
     /**

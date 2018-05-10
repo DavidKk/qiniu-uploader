@@ -14,8 +14,7 @@ for (( i=0; $i < 30 ; ++i )); do
   echo -n '.'
   sleep 5
   status=$(curl -Ss -o /dev/null -w '%{http_code}\n' "$finish_path")
-  if [ "$status" -eq 200 ]
-  then
+  if [ "$status" -eq 200 ] then
     break;
   fi
 done

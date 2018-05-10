@@ -18,12 +18,16 @@
     "unitest": "cross-env UNITEST=1 karma start ./karma.conf.js",
     "unitest:coverage": "rimraf ./coverage && cross-env UNITEST=1 COVERAGE=1 karma start ./karma.conf.js",
     "build": "cross-env PRODUCT=1 webpack --config ./webpack.product.config.babel.js",
+    "develop": "webpack-dev-server --config ./webpack.develop.config.babel.js --content-base ./dist",
     "release": "npm run lint && npm run unitest && npm run build",
     "codecov": "npm run unitest:coverage && codecov",
     "sauce": "cross-env SAUCE_LABS=1 npm run unitest",
-    "document": "rimraf ./docs && esdoc -c ./.esdoc.json",
+    "docs:esdoc": "esdoc -c ./.esdoc.json",
+    "docs:used": "cpx './README.md' ./documents && docsify init ./docs/used",
+    "docs:server": "concurrently \"cpx './README.md' ./documents --watch\" \"docsify serve ./documents\"",
+    "docs": "rimraf ./docs && npm run docs:esdoc && npm run docs:used",
     "example": "rimraf ./demo && cross-env PRODUCT=1 webpack --config ./webpack.example.config.babel.js",
-    "start": "webpack-dev-server --config ./webpack.develop.config.babel.js --content-base ./dist"
+    "start": "npm run develop"
   },
   "dependencies": {
     "lodash": "^4.17.10"
@@ -38,9 +42,12 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "concurrently": "^3.5.1",
+    "cpx": "^1.5.0",
     "cross-env": "^5.1.4",
     "crypto-js": "^3.1.9-1",
     "css-loader": "^0.28.11",
+    "docsify-cli": "^4.2.1",
     "eruda": "^1.4.3",
     "esdoc": "^1.1.0",
     "esdoc-ecmascript-proposal-plugin": "^1.0.0",
