@@ -13,27 +13,33 @@
 # 七牛上传控件
 
 
-### 事例
+## 事例
 
-- [Qiniu Clound Mock](https://davidkk.github.io/qiniu-uploader/)
+- [Qiniu Clound Mock](https://davidkk.github.io/qiniu-uploader/demo/)
 - [Unit Test](https://github.com/DavidKk/qiniu-uploader/tree/master/unitest)
 
 
-### 安装
+## 文档
+
+- [使用文档](https://davidkk.github.io/qiniu-uploader/)
+- [开发文档](https://davidkk.github.io/qiniu-uploader/esdoc/)
+
+
+## 安装
 
 ```
 yarn add qiniup
 ```
 
 
-### 特点
+## 特点
 
 - 支持分块分片上传
 - 支持断点续传
 - 支持 base64 文件上传
 
 
-### 使用
+## 使用
 
 ```Javascript
 import { Uploader } from 'qiniup'
@@ -55,7 +61,7 @@ qiniup.upload(file, params, { resumingByFileSize: 4 * 1024 * 1024 /** 默认也�
 
 ```
 
-### 动态获取 token
+## 动态获取 token
 
 ```Javascript
 let qiniup = new Uploader({
@@ -70,7 +76,7 @@ let qiniup = new Uploader({
 })
 ```
 
-### 获取上传状态
+## 获取上传状态
 
 ```Javascript
 let progress = (event) => {

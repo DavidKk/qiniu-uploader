@@ -21,8 +21,8 @@
 
 ## 文档
 
-[使用文档](https://davidkk.github.io/qiniu-uploader/)
-[开发文档](https://davidkk.github.io/qiniu-uploader/esdoc/)
+- [使用文档](https://davidkk.github.io/qiniu-uploader/)
+- [开发文档](https://davidkk.github.io/qiniu-uploader/esdoc/)
 
 
 ## 安装
