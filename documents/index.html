@@ -12,6 +12,28 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
+      name: 'Qiniup',
+      repo: 'https://github.com/DavidKk/qiniu-uploader',
+      nameLink: {
+        '/': 'https://davidkk.github.io/qiniu-uploader/usedoc/'
+      },
+      maxLevel: 3,
+      subMaxLevel: 2,
+      auto2top: true,
+      loadSidebar: true,
+      routerMode: 'hash',
+      search: {
+        maxAge: 43200000,
+        placeholder: {
+          '/': '搜索'
+        },
+        noData: {
+          '/': '找不到结果'
+        }
+      },
+      formatUpdated: '{YYYY}.{MM}.{DD} {HH}:{mm}'
+    }
+    window.$docsify = {
       name: 'qiniup',
       repo: 'https://github.com/DavidKk/qiniu-uploader',
       loadSidebar: true,
