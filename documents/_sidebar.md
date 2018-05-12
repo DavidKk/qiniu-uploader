@@ -2,10 +2,12 @@
   - [快速开始](/zh-cn/quickstart.md)
   - [上传配置](/zh-cn/settings.md)
   - [拦截器](/zh-cn/interceptor.md)
-  - [文件上传](/zh-cn/upload.md)
   - [上传进程](/zh-cn/progress.md)
+  - [分片上传](/zh-cn/resuming.md)
+  - [第三方抓取](/zh-cn/fetch.md)
 
 - 高级
-  - [Base64 文件上传]()
-  - [创建分块](/zh-cn/block.md)
-  - [创建分片](/zh-cn/chunk.md)
+  - [Base64 文件上传](/zh-cn/upb64.md)
+  - [创建分块](/zh-cn/mkblk.md)
+  - [上传分片](/zh-cn/bput.md)
+  - [创建文件](/zh-cn/mkfile.md)

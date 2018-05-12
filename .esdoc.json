@@ -1,6 +1,6 @@
 {
   "source": "./src",
-  "destination": "./docs/esdoc",
+  "destination": "./gh-pages/esdoc",
   "debug": false,
   "index": "./README.md",
   "package": "./package.json",

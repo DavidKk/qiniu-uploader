@@ -4,8 +4,8 @@ import webpackConf from './webpack.develop.config.babel'
 
 export default WebpackMerger(webpackConf, {
   output: {
-    path: path.join(__dirname, './demo'),
-    publicPath: '/qiniu-uploader/',
+    path: path.join(__dirname, './gh-pages/demo'),
+    publicPath: '/qiniu-uploader/demo',
     umdNamedDefine: false
   }
 })

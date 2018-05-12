@@ -114,14 +114,18 @@ export class Tunnel {
   /**
    * 第三方资源抓取
    *
+   * @see https://developer.qiniu.com/kodo/api/1263/fetch
+   *
    * @param {String} file 远程文件
    * @param {Object} [params={}] 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [params.key] 如果没有指定则: 如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.bucket] 指定的存储区域 https://developer.qiniu.com/kodo/api/3966/bucket-image-source
    * @param {Object} [options={}] 配置
-   * @param {Object} [options.host] 七牛上传地址
-   * @param {Object} [options.useHttps] 是否使用 https
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
+   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} callback 回调函数
    * @memberof Tunnel
    */
@@ -177,11 +181,15 @@ export class Tunnel {
    * @param {Object} params.token 七牛令牌
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
-   * @return {Request} 返回一个请求对象
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   upload (file, params = {}, options = {}, callback) {
     if (!isFunction(callback)) {
@@ -227,7 +235,6 @@ export class Tunnel {
 
   /**
    * 上传 base64 资源
-   * 普通文件上传，适合一次过base64文件
    * @see https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code
    *
    * @param {string} content base64文件数据
@@ -237,12 +244,17 @@ export class Tunnel {
    * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
+   * @param {Object} [params.userVars]
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
-   * @return {Request} 返回一个请求对象
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   upb64 (content, params = { size: -1 }, options = {}, callback) {
     if (!isFunction(callback)) {
@@ -322,12 +334,16 @@ export class Tunnel {
    * @param {Object} params 上传参数
    * @param {Object} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {number} [options.chunkSize] 设置每个分片的大小
    * @param {Function} [options.progress] 上传进度
    * @param {mkblkCallback} callback 上传之后执行的回调函数
-   * @return {Request} 返回一个请求对象
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   mkblk (block, params = {}, options = {}, callback) {
     if (!isFunction(callback)) {
@@ -391,11 +407,15 @@ export class Tunnel {
    * @param {String} params.offset 当前片在整个块中的起始偏移
    * @param {String} params.token 七牛令牌
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
-   * @return {Request} 返回一个请求对象
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   bput (chunk, params = {}, options = {}, callback) {
     if (!isFunction(callback)) {
@@ -463,6 +483,8 @@ export class Tunnel {
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Function} [options.progress] 上传进度
@@ -549,6 +571,8 @@ export class Tunnel {
    * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream
    * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验
    * @param {Object} [options={}] 上传配置
+   * @param {Function} [options.tokenGetter] 获取 Token 拦截器
+   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传
    * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
    * @param {String} [options.tokenPrefix] 令牌前缀
    * @param {Boolean} [options.cache=true] 设置本地缓存
@@ -556,7 +580,9 @@ export class Tunnel {
    * @param {Integer} [options.maxConnect=4] 最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中
    * @param {Function} [options.progress] 上传进度
    * @param {Function} callback 回调
-   * @return {Request} 返回一个请求对象
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX 对象
+   * @returns {Function} state.cancel 取消函数
    */
   resuming (file, params, options, callback) {
     if (!isFunction(callback)) {

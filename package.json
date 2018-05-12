@@ -22,11 +22,12 @@
     "release": "npm run lint && npm run unitest && npm run build",
     "codecov": "npm run unitest:coverage && codecov",
     "sauce": "cross-env SAUCE_LABS=1 npm run unitest",
-    "docs:esdoc": "esdoc -c ./.esdoc.json",
-    "docs:used": "cpx './README.md' ./documents && docsify init ./docs/used",
-    "docs:server": "concurrently \"cpx './README.md' ./documents --watch\" \"docsify serve ./documents\"",
-    "docs": "rimraf ./docs && npm run docs:esdoc && npm run docs:used",
+    "docs:esdoc": "rimraf ./gh-pages/esdoc && esdoc -c ./.esdoc.json",
+    "docs:used": "rimraf ./gh-pages/usedoc && cpx './README.md' ./documents && cpx './documents/**/*' ./gh-pages",
+    "docs:used:server": "concurrently \"cpx './README.md' ./documents --watch\" \"docsify serve ./documents\"",
+    "docs": "concurrently \"npm run docs:esdoc\" \"npm run docs:used\"",
     "example": "rimraf ./demo && cross-env PRODUCT=1 webpack --config ./webpack.example.config.babel.js",
+    "gh-pages": "concurrently \"npm run docs\" \"npm run example\" ",
     "start": "npm run develop"
   },
   "dependencies": {

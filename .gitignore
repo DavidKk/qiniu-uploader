@@ -1,15 +1,11 @@
 # Output folders
 /dist
-/demo
+/gh-pages
 /saucelabs.browser.conf.js
 
 
 # Coverage directory used by tools like istanbul
 /coverage
-
-
-# Document
-/docs
 
 
 # Dependency folders
