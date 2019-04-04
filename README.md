@@ -8,6 +8,8 @@
 [![Dependency Status](https://dependencyci.com/github/DavidKk/qiniu-uploader/badge)](https://dependencyci.com/github/DavidKk/qiniu-uploader)
 
 [![Build Status](https://saucelabs.com/browser-matrix/DavidKk.svg)](https://saucelabs.com/beta/builds/72e6def51c8c4388af6212cbc2171461)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DavidKk/qiniu-uploader/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 
 # 七牛上传控件
