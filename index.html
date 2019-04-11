@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>qiniup - Qiniu Uploader</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Qiniu Uploader">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Qiniup',
+      repo: 'https://github.com/DavidKk/qiniu-uploader',
+      nameLink: {
+        '/': 'https://davidkk.github.io/qiniu-uploader'
+      },
+      maxLevel: 3,
+      subMaxLevel: 2,
+      auto2top: true,
+      loadSidebar: true,
+      routerMode: 'hash',
+      search: {
+        maxAge: 43200000,
+        placeholder: {
+          '/': '搜索'
+        },
+        noData: {
+          '/': '找不到结果'
+        }
+      },
+      formatUpdated: '{YYYY}.{MM}.{DD} {HH}:{mm}'
+    }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+</body>
+</html>

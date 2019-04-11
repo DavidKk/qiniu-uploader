@@ -1,0 +1,4280 @@
+[
+  {
+    "__docId__": 1,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Infinity",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~NaN",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~undefined",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~null",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Symbol",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Error",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~EvalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~InternalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~RangeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~ReferenceError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~SyntaxError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~TypeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~URIError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Date",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~String",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~string",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~RegExp",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint8ClampedArray",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Int32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Uint32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Float32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Float64Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Map",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Set",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~WeakMap",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~WeakSet",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~ArrayBuffer",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~DataView",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~JSON",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Promise",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Generator",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~GeneratorFunction",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Reflect",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "src/.external-ecmascript.js",
+    "static": true,
+    "longname": "src/.external-ecmascript.js~Proxy",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "src/config.js",
+    "content": "/**\n * 本地缓存前缀\n * @type {String}\n * @const\n */\nexport const STORAGE_PREFIX = 'QINIU_UPLOAD'\n\n/**\n * Base64 数据正则，用于判断数据是否为 Base64 数据\n * @type {RegExp}\n * @const\n */\nexport const BASE64_REGEXP = /^data:([\\w\\W]+?);base64,/\n\n/**\n * 七牛 HTTPS 上传地址，默认为中国华南地区\n * @see https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n * @type {String}\n * @const\n */\nexport const QINIU_UPLOAD_HTTPS_URL = 'up.qbox.me'\n\n/**\n * 七牛 HTTP 上传地址，默认为中国华南地区\n * @type {String}\n * @const\n */\nexport const QINIU_UPLOAD_HTTP_URL = 'up-z0.qiniu.com'\n\n/**\n * 远程文件路径正则\n * @type {RegExp}\n * @const\n */\nexport const REMOTE_FILE_URL_REGEXP = /^([\\w\\d]+?):\\/\\//\n\n/**\n * 千字节\n * @type {Integer}\n * @const\n */\nexport const K = 1024\n\n/**\n * 兆字节\n * @type {Integer}\n * @const\n */\nexport const M = K * K\n\n/**\n * 千兆字节\n * @type {Integer}\n * @const\n */\nexport const G = M * M\n\n/**\n * 浏览器是否支持\n * @type {Boolean}\n * @const\n */\n\n/* eslint no-mixed-operators: off */\nexport const SUPPORTED = typeof File !== 'undefined' &&\n  typeof window.Blob !== 'undefined' &&\n  typeof FileList !== 'undefined' &&\n  !!window.Blob.prototype.slice ||\n  !!window.Blob.prototype.webkitSlice ||\n  !!window.Blob.prototype.mozSlice ||\n  false\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/config.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "variable",
+    "name": "STORAGE_PREFIX",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~STORAGE_PREFIX",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{STORAGE_PREFIX}",
+    "description": "本地缓存前缀",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "variable",
+    "name": "BASE64_REGEXP",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~BASE64_REGEXP",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{BASE64_REGEXP}",
+    "description": "Base64 数据正则，用于判断数据是否为 Base64 数据",
+    "lineNumber": 13,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 51,
+    "kind": "variable",
+    "name": "QINIU_UPLOAD_HTTPS_URL",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~QINIU_UPLOAD_HTTPS_URL",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{QINIU_UPLOAD_HTTPS_URL}",
+    "description": "七牛 HTTPS 上传地址，默认为中国华南地区",
+    "see": [
+      "https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+    ],
+    "lineNumber": 21,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "name": "QINIU_UPLOAD_HTTP_URL",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~QINIU_UPLOAD_HTTP_URL",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{QINIU_UPLOAD_HTTP_URL}",
+    "description": "七牛 HTTP 上传地址，默认为中国华南地区",
+    "lineNumber": 28,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "variable",
+    "name": "REMOTE_FILE_URL_REGEXP",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~REMOTE_FILE_URL_REGEXP",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{REMOTE_FILE_URL_REGEXP}",
+    "description": "远程文件路径正则",
+    "lineNumber": 35,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "name": "K",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~K",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{K}",
+    "description": "千字节",
+    "lineNumber": 42,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "variable",
+    "name": "M",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~M",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{M}",
+    "description": "兆字节",
+    "lineNumber": 49,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "G",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~G",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{G}",
+    "description": "千兆字节",
+    "lineNumber": 56,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "variable",
+    "name": "SUPPORTED",
+    "memberof": "src/config.js",
+    "static": true,
+    "longname": "src/config.js~SUPPORTED",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/config.js",
+    "importStyle": "{SUPPORTED}",
+    "description": "浏览器是否支持",
+    "lineNumber": 65,
+    "unknown": [
+      {
+        "tagName": "@const",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "file",
+    "name": "src/enum.js",
+    "content": "import invert from 'lodash/invert'\nimport assign from 'lodash/assign'\n\n/**\n * 枚举类\n * @class\n */\nexport class Enum {\n  /**\n   * 创建一个枚举类对象\n   * @param {Object} map 键与对应的值\n   * @return {Enum}\n   */\n  constructor (map) {\n    let inverted = invert(map)\n    let keys = Object.keys(map)\n\n    this._inverted = inverted\n    this._keys = keys\n    this._map = map\n\n    assign(this, this._inverted, this._map)\n  }\n\n  /**\n   * 根据 index 获取 key 值\n   *\n   * @param {Integer} index 索引\n   * @returns {String}\n   */\n  get (index) {\n    return this._keys[index]\n  }\n\n  /**\n   * 判断键值是否为合法值\n   *\n   * @param {String} key 键值\n   * @returns {Boolean}\n   */\n  isValidKey (key) {\n    return !!this.get(key)\n  }\n\n  /**\n   * 通过索引(index) 获取值\n   *\n   * @param {Integer} index 索引\n   * @returns {any}\n   */\n  value (index) {\n    let key = this.get(index)\n    return this._map[key]\n  }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/enum.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 59,
+    "kind": "class",
+    "name": "Enum",
+    "memberof": "src/enum.js",
+    "static": true,
+    "longname": "src/enum.js~Enum",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/enum.js",
+    "importStyle": "{Enum}",
+    "description": "枚举类",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 60,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/enum.js~Enum",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/enum.js~Enum#constructor",
+    "access": "public",
+    "description": "创建一个枚举类对象",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "map",
+        "description": "键与对应的值"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Enum"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "member",
+    "name": "_inverted",
+    "memberof": "src/enum.js~Enum",
+    "static": false,
+    "longname": "src/enum.js~Enum#_inverted",
+    "access": "private",
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 62,
+    "kind": "member",
+    "name": "_keys",
+    "memberof": "src/enum.js~Enum",
+    "static": false,
+    "longname": "src/enum.js~Enum#_keys",
+    "access": "private",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "member",
+    "name": "_map",
+    "memberof": "src/enum.js~Enum",
+    "static": false,
+    "longname": "src/enum.js~Enum#_map",
+    "access": "private",
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 64,
+    "kind": "method",
+    "name": "get",
+    "memberof": "src/enum.js~Enum",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/enum.js~Enum#get",
+    "access": "public",
+    "description": "根据 index 获取 key 值",
+    "lineNumber": 31,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{String}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "index",
+        "description": "索引"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "method",
+    "name": "isValidKey",
+    "memberof": "src/enum.js~Enum",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/enum.js~Enum#isValidKey",
+    "access": "public",
+    "description": "判断键值是否为合法值",
+    "lineNumber": 41,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Boolean}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "键值"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 66,
+    "kind": "method",
+    "name": "value",
+    "memberof": "src/enum.js~Enum",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/enum.js~Enum#value",
+    "access": "public",
+    "description": "通过索引(index) 获取值",
+    "lineNumber": 51,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{any}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "index",
+        "description": "索引"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "any"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "file",
+    "name": "src/event.js",
+    "content": "import isFunction from 'lodash/isFunction'\n\n/**\n * 事件类\n * @class\n * @extends {Event}\n */\nexport class QiniupEvent {\n  /**\n   * 创建一个事件类\n   * @param {String} 事件名称\n   * @param {Object} [params={ bubbles: false, cancelable: false, detail: undefined }]\n   */\n  constructor (event, params = { bubbles: false, cancelable: false, detail: undefined }) {\n    if (isFunction(window.CustomEvent)) {\n      return new window.CustomEvent(event, params)\n    }\n\n    /**\n     * CustomEvent in IE\n     * Docs: https://stackoverflow.com/questions/26596123/internet-explorer-9-10-11-event-constructor-doesnt-work\n     */\n    var evt = document.createEvent('CustomEvent')\n    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail)\n    return evt\n  }\n}\n\nQiniupEvent.prototype = window.Event.prototype\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/event.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 68,
+    "kind": "class",
+    "name": "QiniupEvent",
+    "memberof": "src/event.js",
+    "static": true,
+    "longname": "src/event.js~QiniupEvent",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/event.js",
+    "importStyle": "{QiniupEvent}",
+    "description": "事件类",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "Event"
+    ]
+  },
+  {
+    "__docId__": 69,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/event.js~QiniupEvent",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/event.js~QiniupEvent#constructor",
+    "access": "public",
+    "description": "创建一个事件类",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "事件名称",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{ bubbles: false, cancelable: false, detail: undefined }",
+        "defaultRaw": "{ bubbles: false, cancelable: false, detail: undefined }",
+        "name": "params",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 70,
+    "kind": "file",
+    "name": "src/file.js",
+    "content": "import isArray from 'lodash/isArray'\nimport isString from 'lodash/isString'\nimport isInteger from 'lodash/isInteger'\nimport isFunction from 'lodash/isFunction'\nimport isPlainObject from 'lodash/isPlainObject'\nimport find from 'lodash/find'\nimport assign from 'lodash/assign'\nimport forEach from 'lodash/forEach'\nimport defaultsDeep from 'lodash/defaultsDeep'\nimport sha256 from 'crypto-js/sha256'\nimport * as CONFIG from './config'\nimport { Enum } from './enum'\nimport { Storage } from './storage'\n\n/**\n * 文件类\n * 能够统一文件类型，可以传入多种类型对象\n * 能够保存文件分块分片信息到本地缓存中\n * 通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果\n *\n * @class\n */\nexport class File {\n  /**\n   * File 默认配置\n   * @type {Object}\n   * @property {String} defaultSettings.mimeType 文件类型，默认为 plain/text 文本类型\n   * @property {Integer} defaultSettings.chunkSize\n   * 分片大小，默认为 4M，表示一片，虽然没有限制，\n   * 但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，\n   * 因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk\n   *\n   * @property {Integer} defaultSettings.chunkInBlock 分片数量，默认为 1\n   * @property {Boolean} defaultSettings.cache 是否缓存\n   * @property {Integer} defaultSettings.expired 过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间\n   */\n  static defaultSettings = {\n    mimeType: 'plain/text',\n    chunkSize: 4 * CONFIG.M,\n    chunkInBlock: 1,\n    cache: true,\n    expired: 1000 * 60 * 60 * 24\n  }\n\n  /**\n   * 上传状态格式\n   * @type {Enum}\n   */\n  static stateFormatter = new Enum({\n    OBJECT: 1,\n    JSON: 2\n  })\n\n  /**\n   * 文件大小\n   * @type {Integer}\n   */\n  get size () {\n    return this.blob.size\n  }\n\n  /**\n   * 创建一个文件对象\n   *\n   * @param {File|Blob|String} file\n   * 需要上传的文件，可以为 Form 获取的 File 对象，\n   * 可以为 Blob，或者是 Base64 等字符串\n   *\n   * @param {Object} [options={}] 配置，可以参考{@link File.defaultSettings}\n   * @param {String} [options.mimeType='plain/text] 文件类型，默认为 plain/text 文本类型\n   * @param {Integer} [options.chunkSize=4 * M]\n   * 分片大小，默认为 4M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，\n   * 最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，\n   * 参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk\n   *\n   * @param {Integer} options.chunkInBlock 分片数量，默认为 1\n   * @param {Integer} options.expired\n   * 过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间\n   *\n   * @return {File} 文件对象\n   */\n  constructor (file, options) {\n    /**\n     * 配置\n     *\n     * @type {Object}\n     */\n    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)\n\n    /**\n     * 文件类型\n     *\n     * @type {String}\n     */\n    this.type = file.type || this.settings.mimeType\n\n    /**\n     * 源文件\n     *\n     * @type {File|Blob|String}\n     */\n    this.file = file\n\n    /**\n     * 源文件转化成的 Blob 对象\n     * 将文件(File), 文件列表(Array[<File, File...>]), base64(String) 文件数据转换成 Blob 基础文件对象\n     *\n     * @type {Blob}\n     */\n    this.blob = file instanceof window.Blob ? file : new window.Blob(isArray(file) ? file : [file], { type: this.type })\n\n    /**\n     * 文件哈希值，根据文件名文件大小文件类型与最后修改时间来确定；\n     * 如果源文件为字符串则直接将字符串进行哈希处理\n     *\n     * @type {String}\n     */\n    this.hash = sha256(isString(file) ? file : file.name + file.size + file.type + file.lastModified).toString()\n\n    /**\n     * 文件状态，用于存储文件上传信息\n     *\n     * @type {Array<Object>}\n     */\n    this.state = []\n\n    /**\n     * 存储对象，主要用于本地存储\n     *\n     * @type {Storage}\n     */\n    this.storage = new Storage()\n\n    /**\n     * 查找并读取本地缓存的上传数据，若没有则不会做任何操作\n     */\n    this.settings.cache === true && this.loadState()\n  }\n\n  /**\n   * 文件切片，将文件切割成 Blob 文件段，开始位置与结束位置不能小于 0 并不能大于文件大小，\n   * 开始位置不能大于结束位置\n   *\n   * @param {Integer} beginPos 开始位置，默认为 0，位置必须大于 0, 且不能大于或等于结束位置\n   * @param {Integer} endPos 结束位置，必须大于开始位置\n   * @param {String} [type=this.type] 类型，默认为文件的类型\n   * @return {Blob} 分片文件\n   */\n  slice (beginPos = 0, endPos, type = this.type) {\n    if (!(isInteger(beginPos) && isInteger(endPos))) {\n      throw new TypeError('One of begin pos and end pos is not a integer')\n    }\n\n    if (!(beginPos < endPos)) {\n      throw new Error('End pos must over begin pos')\n    }\n\n    return this.blob.slice(beginPos, endPos, type)\n  }\n\n  /**\n   * 保存状态信息\n   *\n   * @param {Integer} beginPos 起始位置\n   * @param {Integer} endPos 结束位置\n   * @param {Object} state 状态，保存的状态\n   * @param {Boolean} [cache=this.settings.cache] 是否缓存\n   */\n  setState (beginPos, endPos, state = {}, cache = this.settings.cache) {\n    if (!(isInteger(beginPos) && isInteger(endPos))) {\n      throw new TypeError('One of begin pos and end pos is not a integer')\n    }\n\n    if (!(beginPos < endPos)) {\n      throw new Error('End pos must over begin pos')\n    }\n\n    let data = assign({ beginPos, endPos }, state)\n    this.state.push(data)\n\n    cache === true && this.saveState()\n  }\n\n  /**\n   * 获取文件上传信息\n   *\n   * @param {Integer} beginPos 起始位置\n   * @param {Integer} endPos 结束位置\n   * @return {Object} 信息数据\n   */\n  getState (beginPos, endPos) {\n    if (!(isInteger(beginPos) && isInteger(endPos))) {\n      throw new TypeError('One of begin pos and end pos is not a integer')\n    }\n\n    if (!(beginPos < endPos)) {\n      throw new Error('End pos must over begin pos')\n    }\n\n    return find(this.state, { beginPos, endPos })\n  }\n\n  /**\n   * 检测分块或者分片是否被上传\n   *\n   * @param {Integer} beginPos 起始位置\n   * @param {Integer} endPos 结束位置\n   * @return {Boolean} 返回是否上传成功\n   */\n  isUploaded (beginPos, endPos) {\n    let item = this.getState(beginPos, endPos) || {}\n    return item.status === 'uploaded'\n  }\n\n  /**\n   * 导入文件上传状态信息\n   *\n   * @param {Object|Json} source 上传状态信息数据\n   * @param {Function} [callback] 回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息\n   */\n  import (source, callback) {\n    if (isString(source)) {\n      let data = JSON.parse(source)\n      return this.import(data, callback)\n    }\n\n    if (callback && !isFunction(callback)) {\n      throw new TypeError('Callback is not a function')\n    }\n\n    if (!isPlainObject(source)) {\n      callback && callback(new Error('Source is not a plain object'))\n      return\n    }\n\n    if (this.hash !== source.hash) {\n      callback && callback(new Error('Source is invalid'))\n      return\n    }\n\n    if (source.expired < Date.now()) {\n      callback && callback(new Error('Source is out of date'))\n      return\n    }\n\n    if (!isArray(source.state)) {\n      callback && callback(new TypeError('Source is invalid'))\n      return\n    }\n\n    let state = []\n    for (let i = 0, datas = source.state, len = datas.length; i < len; i++) {\n      state.push(datas[i])\n    }\n\n    this.state.splice(0)\n    this.state = this.state.concat(state)\n\n    callback && callback(null)\n  }\n\n  /**\n   * 导出文件上传状态信息\n   *\n   * @param {Integer} [type=this.constructor.stateFormatter.OBJECT] 格式类型，具体值参考 File.stateFormatter\n   * @param {Function} callback 回调函数，导出成功将返回数据\n   */\n  export (type = this.constructor.stateFormatter.OBJECT, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provided or not be a function')\n    }\n\n    if (!this.constructor.stateFormatter.isValidKey(type)) {\n      callback(new TypeError('Type is invalid, it must equal one of File.stateFormatter'))\n      return\n    }\n\n    if (type === this.constructor.stateFormatter.JSON) {\n      return this.export(this.constructor.stateFormatter.OBJECT, function (error, data) {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        let source\n\n        try {\n          source = JSON.stringify(data)\n        } catch (error) {\n          callback(error)\n          return\n        }\n\n        callback(null, source)\n      })\n    }\n\n    callback(null, {\n      hash: this.hash,\n      state: this.state,\n      expired: Date.now() + this.settings.expired\n    })\n  }\n\n  /**\n   * 从本地缓存中读取并导入文件上传状态信息\n   *\n   * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值\n   * @param {Function} [callback] 回调函数，错误会抛出错误异常\n   */\n  loadState (hashCode = this.hash, callback) {\n    if (arguments.length < 2 && isFunction(hashCode)) {\n      return this.loadState(this.hash, hashCode)\n    }\n\n    if (callback && !isFunction(callback)) {\n      throw new TypeError('Callback is not a function')\n    }\n\n    let source = this.storage.get(hashCode)\n    this.import(source, callback)\n  }\n\n  /**\n   * 导出并保存文件上传状态信息到本地缓存中\n   *\n   * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值\n   * @param {Function} [callback] 回调函数，错误会抛出错误异常\n   */\n  saveState (hashCode = this.hash, callback) {\n    if (arguments.length < 2 && isFunction(hashCode)) {\n      return this.saveState(this.hash, hashCode)\n    }\n\n    if (callback && !isFunction(callback)) {\n      throw new TypeError('Callback is not a function')\n    }\n\n    this.export(this.constructor.stateFormatter.JSON, (error, source) => {\n      if (error) {\n        callback && callback(error)\n        return\n      }\n\n      this.storage.set(hashCode, source)\n      callback && callback(null)\n    })\n  }\n\n  /**\n   * 删除文件上传信息的本地缓存\n   *\n   * @param {String} [hashCode=this.hash] 文件哈希值，默认为读取文件的哈希值\n   */\n  cleanCache (hashCode = this.hash) {\n    this.storage.del(hashCode)\n  }\n\n  /**\n   * 销毁对象\n   */\n  destory () {\n    this.cleanCache()\n\n    forEach(this, function (value, key) {\n      this[key] = isFunction(value) ? Function.prototype : undefined\n    })\n  }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/file.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 71,
+    "kind": "class",
+    "name": "File",
+    "memberof": "src/file.js",
+    "static": true,
+    "longname": "src/file.js~File",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/file.js",
+    "importStyle": "{File}",
+    "description": "文件类\n能够统一文件类型，可以传入多种类型对象\n能够保存文件分块分片信息到本地缓存中\n通过哈希文件获取缓存中的文件以达到保存文件上传情况与断点续传等效果",
+    "lineNumber": 23,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 72,
+    "kind": "member",
+    "name": "defaultSettings",
+    "memberof": "src/file.js~File",
+    "static": true,
+    "longname": "src/file.js~File.defaultSettings",
+    "access": "public",
+    "description": "File 默认配置",
+    "lineNumber": 37,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.mimeType",
+        "description": "文件类型，默认为 plain/text 文本类型"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.chunkSize",
+        "description": "分片大小，默认为 4M，表示一片，虽然没有限制，\n但是七牛官方文档表示分块(Block)为4M，最后一个分块(Block)也不能大于 4M，\n因此分片不可能大于分块的大小，参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.chunkInBlock",
+        "description": "分片数量，默认为 1"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.cache",
+        "description": "是否缓存"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.expired",
+        "description": "过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间"
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 73,
+    "kind": "member",
+    "name": "stateFormatter",
+    "memberof": "src/file.js~File",
+    "static": true,
+    "longname": "src/file.js~File.stateFormatter",
+    "access": "public",
+    "description": null,
+    "lineNumber": 49,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 74,
+    "kind": "get",
+    "name": "size",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#size",
+    "access": "public",
+    "description": "文件大小",
+    "lineNumber": 58,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 75,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#constructor",
+    "access": "public",
+    "description": "创建一个文件对象",
+    "lineNumber": 82,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "File",
+          "Blob",
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "需要上传的文件，可以为 Form 获取的 File 对象，\n可以为 Blob，或者是 Base64 等字符串"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "配置，可以参考{@link File.defaultSettings}"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "'plain/text",
+        "defaultRaw": "'plain/text",
+        "name": "options.mimeType",
+        "description": "文件类型，默认为 plain/text 文本类型"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "4 * M",
+        "defaultRaw": "4 * M",
+        "name": "options.chunkSize",
+        "description": "分片大小，默认为 4M，表示一片，虽然没有限制，但是七牛官方文档表示分块(Block)为4M，\n最后一个分块(Block)也不能大于 4M，因此分片不可能大于分块的大小，\n参考文档: https://developer.qiniu.com/kodo/api/1286/mkblk"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.chunkInBlock",
+        "description": "分片数量，默认为 1"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.expired",
+        "description": "过期时间，默认为一天 (1000 x 60 x 60 x 24)，该事件为保存文件信息到本地缓存中缓存的过期时间"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "File"
+      ],
+      "spread": false,
+      "description": "文件对象"
+    }
+  },
+  {
+    "__docId__": 76,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#settings",
+    "access": "public",
+    "description": "配置",
+    "lineNumber": 88,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 77,
+    "kind": "member",
+    "name": "type",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#type",
+    "access": "public",
+    "description": "文件类型",
+    "lineNumber": 95,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "member",
+    "name": "file",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#file",
+    "access": "public",
+    "description": "源文件",
+    "lineNumber": 102,
+    "type": {
+      "nullable": null,
+      "types": [
+        "File",
+        "Blob",
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "member",
+    "name": "blob",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#blob",
+    "access": "public",
+    "description": "源文件转化成的 Blob 对象\n将文件(File), 文件列表(Array[<File, File...>]), base64(String) 文件数据转换成 Blob 基础文件对象",
+    "lineNumber": 110,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Blob"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "member",
+    "name": "hash",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#hash",
+    "access": "public",
+    "description": "文件哈希值，根据文件名文件大小文件类型与最后修改时间来确定；\n如果源文件为字符串则直接将字符串进行哈希处理",
+    "lineNumber": 118,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 81,
+    "kind": "member",
+    "name": "state",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#state",
+    "access": "public",
+    "description": "文件状态，用于存储文件上传信息",
+    "lineNumber": 125,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Array<Object>"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 82,
+    "kind": "member",
+    "name": "storage",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#storage",
+    "access": "public",
+    "description": "存储对象，主要用于本地存储",
+    "lineNumber": 132,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Storage"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "method",
+    "name": "slice",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#slice",
+    "access": "public",
+    "description": "文件切片，将文件切割成 Blob 文件段，开始位置与结束位置不能小于 0 并不能大于文件大小，\n开始位置不能大于结束位置",
+    "lineNumber": 149,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "beginPos",
+        "description": "开始位置，默认为 0，位置必须大于 0, 且不能大于或等于结束位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endPos",
+        "description": "结束位置，必须大于开始位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.type",
+        "defaultRaw": "this.type",
+        "name": "type",
+        "description": "类型，默认为文件的类型"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Blob"
+      ],
+      "spread": false,
+      "description": "分片文件"
+    }
+  },
+  {
+    "__docId__": 84,
+    "kind": "method",
+    "name": "setState",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#setState",
+    "access": "public",
+    "description": "保存状态信息",
+    "lineNumber": 169,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "beginPos",
+        "description": "起始位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endPos",
+        "description": "结束位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "state",
+        "description": "状态，保存的状态"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.settings.cache",
+        "defaultRaw": "this.settings.cache",
+        "name": "cache",
+        "description": "是否缓存"
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 85,
+    "kind": "method",
+    "name": "getState",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#getState",
+    "access": "public",
+    "description": "获取文件上传信息",
+    "lineNumber": 191,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "beginPos",
+        "description": "起始位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endPos",
+        "description": "结束位置"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "信息数据"
+    }
+  },
+  {
+    "__docId__": 86,
+    "kind": "method",
+    "name": "isUploaded",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#isUploaded",
+    "access": "public",
+    "description": "检测分块或者分片是否被上传",
+    "lineNumber": 210,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "beginPos",
+        "description": "起始位置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endPos",
+        "description": "结束位置"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "返回是否上传成功"
+    }
+  },
+  {
+    "__docId__": 87,
+    "kind": "method",
+    "name": "import",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#import",
+    "access": "public",
+    "description": "导入文件上传状态信息",
+    "lineNumber": 221,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object",
+          "Json"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "上传状态信息数据"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "callback",
+        "description": "回调函数，成功导入将不会抛出异常，失败第一个参数将返回错误信息"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 89,
+    "kind": "method",
+    "name": "export",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#export",
+    "access": "public",
+    "description": "导出文件上传状态信息",
+    "lineNumber": 268,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.constructor.stateFormatter.OBJECT",
+        "defaultRaw": "this.constructor.stateFormatter.OBJECT",
+        "name": "type",
+        "description": "格式类型，具体值参考 File.stateFormatter"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数，导出成功将返回数据"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 90,
+    "kind": "method",
+    "name": "loadState",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#loadState",
+    "access": "public",
+    "description": "从本地缓存中读取并导入文件上传状态信息",
+    "lineNumber": 311,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.hash",
+        "defaultRaw": "this.hash",
+        "name": "hashCode",
+        "description": "文件哈希值，默认为读取文件的哈希值"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "callback",
+        "description": "回调函数，错误会抛出错误异常"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 91,
+    "kind": "method",
+    "name": "saveState",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#saveState",
+    "access": "public",
+    "description": "导出并保存文件上传状态信息到本地缓存中",
+    "lineNumber": 330,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.hash",
+        "defaultRaw": "this.hash",
+        "name": "hashCode",
+        "description": "文件哈希值，默认为读取文件的哈希值"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "callback",
+        "description": "回调函数，错误会抛出错误异常"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 92,
+    "kind": "method",
+    "name": "cleanCache",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#cleanCache",
+    "access": "public",
+    "description": "删除文件上传信息的本地缓存",
+    "lineNumber": 355,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "this.hash",
+        "defaultRaw": "this.hash",
+        "name": "hashCode",
+        "description": "文件哈希值，默认为读取文件的哈希值"
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 93,
+    "kind": "method",
+    "name": "destory",
+    "memberof": "src/file.js~File",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/file.js~File#destory",
+    "access": "public",
+    "description": "销毁对象",
+    "lineNumber": 362,
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 94,
+    "kind": "member",
+    "name": "[key]",
+    "memberof": "src/file.js~File",
+    "static": false,
+    "longname": "src/file.js~File#[key]",
+    "access": "public",
+    "description": null,
+    "lineNumber": 366,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 95,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "export { File } from './file'\nexport { Tunnel } from './tunnel'\nexport { Uploader } from './uploader'\nexport { SUPPORTED as supported, K, M, G } from './config'\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/index.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 96,
+    "kind": "file",
+    "name": "src/request.js",
+    "content": "import defaultsDeep from 'lodash/defaultsDeep'\nimport isFunction from 'lodash/isFunction'\nimport isPlainObject from 'lodash/isPlainObject'\nimport isEmpty from 'lodash/isEmpty'\nimport forEach from 'lodash/forEach'\nimport assign from 'lodash/assign'\nimport URI from 'urijs'\nimport { G, M, K } from './config'\n\n/**\n * @typedef {Object} Request\n * @property {XMLHttpRequest} xhr AJAX 对象\n * @property {Function} cancel 取消函数\n */\n\nlet settings = {}\n\n/**\n * 设置默认配置\n *\n * @param {Object} [options={}] 配置\n */\nexport function configure (options = {}) {\n  settings = defaultsDeep({}, options, settings)\n}\n\n/**\n * 上传，执行 POST 请求 XMLHttpRequest\n *\n * @param {String} url 请求地址\n * @param {Object} data 提交数据\n * @param {Object} [options] 配置\n * @param {Function} callback 回调函数\n * @return {Request} 返回一个请求对象\n */\nexport function upload (url, data, options, callback) {\n  return request('POST', url, data, options, callback)\n}\n\n/**\n * 执行 GET 请求 XMLHttpRequest\n *\n * @param {String} url 请求地址\n * @param {Object} data 提交数据\n * @param {Object} [options] 配置\n * @param {Function} callback 回调函数\n * @return {Request} 返回一个请求对象\n */\nexport function post (url, data, options, callback) {\n  return request('POST', url, data, options, callback)\n}\n\n/**\n * 请求 XMLHttpRequest\n *\n * @param {string} [method='POST'] 提交方法\n * @param {String} url 请求地址\n * @param {Object} data 提交数据，若请求方法为 GET，则数据将转换成请求地址的 query\n * @param {Object} [options={}] 请求配置\n * @param {Function} callback 回调函数\n * @return {Request} 返回一个请求对象\n */\nexport function request (method = 'POST', url, data, options = {}, callback) {\n  if (arguments.length < 3) {\n    return request('POST', method, {}, {}, url)\n  }\n\n  if (arguments.length < 4) {\n    return request(method, url, {}, {}, data)\n  }\n\n  if (arguments.length < 5) {\n    return request(method, url, data, {}, options)\n  }\n\n  if (!isFunction(callback)) {\n    throw new TypeError('Callback is not provided or not be a function')\n  }\n\n  method = method.toUpperCase()\n  options = defaultsDeep(options, settings)\n\n  let xhr = new window.XMLHttpRequest()\n\n  let xhrComplete = function () {\n    xhr.onerror = null\n    xhr.onreadystatechange = null\n    xhr = undefined\n  }\n\n  xhr.onerror = (error) => {\n    if (xhr.aborted === true) {\n      return\n    }\n\n    xhr.errorFlag = true\n    callback(error)\n    xhrComplete()\n  }\n\n  xhr.onreadystatechange = () => {\n    if (xhr.errorFlag === true || xhr.aborted === true) {\n      return\n    }\n\n    if (xhr.readyState === 4) {\n      let parsedData\n\n      if (!xhr.responseText) {\n        callback(new Error('Response text is empty'))\n        xhrComplete()\n        return\n      }\n\n      try {\n        parsedData = JSON.parse(xhr.responseText)\n      } catch (error) {\n        callback(new Error(`Reponse data is invalid JSON\\n${xhr.responseText}`))\n        xhrComplete()\n        return\n      }\n\n      xhr.status === 200\n        ? callback(null, parsedData)\n        : callback(new Error(parsedData))\n\n      xhrComplete()\n    }\n  }\n\n  if (isFunction(options.progress)) {\n    let startDatetime = Date.now()\n\n    xhr.upload.addEventListener('progress', (event) => {\n      if (event.lengthComputable) {\n        let nowDatetime = Date.now()\n        let spendTime = nowDatetime - startDatetime\n        let size = event.loaded\n        let time = spendTime / 1000\n        let speed = size / time || 0\n        let description = `${speed.toFixed(2)}Byte/s`\n\n        if (speed > G) {\n          description = `${(speed / G).toFixed(2)}Gb/s`\n        } else if (speed > M) {\n          description = `${(speed / M).toFixed(2)}Mb/s`\n        } else if (speed > K) {\n          description = `${(speed / K).toFixed(2)}Kb/s`\n        }\n\n        event.during = time\n        event.speed = speed\n        event.speedDescription = description\n\n        options.progress.call(xhr, event)\n      }\n    }, false)\n  }\n\n  let isGetMethod = method === 'GET' && isPlainObject(data)\n  if (isGetMethod) {\n    if (isEmpty(data)) {\n      xhr.open(method, url, true)\n    } else {\n      let uri = new URI(url)\n      let params = URI.parseParameters(uri.query())\n\n      params = assign(params, data)\n      uri.query(params)\n\n      xhr.open(method, uri.href(), true)\n    }\n  } else {\n    xhr.open(method, url, true)\n  }\n\n  /**\n   * 必须在 xhr.open 后才能配置\n   */\n  xhr.withCredentials = !!options.withCredentials\n  forEach(options.headers, (header, name) => xhr.setRequestHeader(name, header))\n\n  if (isGetMethod) {\n    xhr.send(null)\n  } else {\n    if (isPlainObject(data)) {\n      let formData = new window.FormData()\n      forEach(data, (value, key) => formData.append(key, value))\n      xhr.send(formData)\n    } else {\n      xhr.send(data || null)\n    }\n  }\n\n  let cancel = function () {\n    if (xhr) {\n      xhr.readyState !== 4 && xhr.abort()\n      xhr.aborted = true\n\n      callback(new Error('Request is canceled'))\n    }\n  }\n\n  return { cancel, xhr }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/request.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 97,
+    "kind": "typedef",
+    "name": "Request",
+    "memberof": "src/request.js",
+    "static": true,
+    "longname": "src/request.js~Request",
+    "access": "public",
+    "description": "",
+    "lineNumber": 16,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "XMLHttpRequest"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xhr",
+        "description": "AJAX 对象"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cancel",
+        "description": "取消函数"
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "Request"
+    }
+  },
+  {
+    "__docId__": 98,
+    "kind": "function",
+    "name": "configure",
+    "memberof": "src/request.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/request.js~configure",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/request.js",
+    "importStyle": "{configure}",
+    "description": "设置默认配置",
+    "lineNumber": 23,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "配置"
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 99,
+    "kind": "function",
+    "name": "upload",
+    "memberof": "src/request.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/request.js~upload",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/request.js",
+    "importStyle": "{upload}",
+    "description": "上传，执行 POST 请求 XMLHttpRequest",
+    "lineNumber": 36,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "请求地址"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "提交数据"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Request"
+      ],
+      "spread": false,
+      "description": "返回一个请求对象"
+    }
+  },
+  {
+    "__docId__": 100,
+    "kind": "function",
+    "name": "post",
+    "memberof": "src/request.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/request.js~post",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/request.js",
+    "importStyle": "{post}",
+    "description": "执行 GET 请求 XMLHttpRequest",
+    "lineNumber": 49,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "请求地址"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "提交数据"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Request"
+      ],
+      "spread": false,
+      "description": "返回一个请求对象"
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "function",
+    "name": "request",
+    "memberof": "src/request.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/request.js~request",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/request.js",
+    "importStyle": "{request}",
+    "description": "请求 XMLHttpRequest",
+    "lineNumber": 63,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "'POST'",
+        "defaultRaw": "'POST'",
+        "name": "method",
+        "description": "提交方法"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "url",
+        "description": "请求地址"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "提交数据，若请求方法为 GET，则数据将转换成请求地址的 query"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "请求配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Request"
+      ],
+      "spread": false,
+      "description": "返回一个请求对象"
+    }
+  },
+  {
+    "__docId__": 102,
+    "kind": "file",
+    "name": "src/storage.js",
+    "content": "import defaultsDeep from 'lodash/defaultsDeep'\nimport isString from 'lodash/isString'\nimport { STORAGE_PREFIX } from './config'\n\n/**\n * 存储类\n * 存储的值拥有前缀，具体参考配置\n * @class\n */\nexport class Storage {\n  /**\n   * 默认配置\n   * @property {String} prefix 前缀\n   */\n  static defaultSettings = {\n    prefix: STORAGE_PREFIX\n  }\n\n  /**\n   * 创建一个存储类对象\n   * @param {Object} [options={}] 配置，可以参考{@link Storage.defaultSettings}\n   * @return {Storage} 存储类的对象\n   */\n  constructor (options = {}) {\n    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)\n  }\n\n  /**\n   * 设置本地缓存\n   *\n   * @param {String} name 名字\n   * @param {any} value 值，该值会进行 JSON.parse，因此请确保传入值没有循环引用\n   */\n  set (name, value) {\n    if (!isString(value)) {\n      value = JSON.stringify(value)\n    }\n\n    window.localStorage.setItem(`${this.settings.prefix}.${name}`, value)\n  }\n\n  /**\n   * 获取本地缓存\n   *\n   * @param {String} name 名称\n   * @returns {any} 值\n   */\n  get (name) {\n    let source = window.localStorage.getItem(`${this.settings.prefix}.${name}`)\n\n    if (source) {\n      try {\n        return JSON.parse(source)\n      } catch (error) {\n        // nothing to do...\n      }\n    }\n\n    return null\n  }\n\n  /**\n   * 删除本地缓存\n   *\n   * @param {String} name 名称\n   */\n  del (name) {\n    window.localStorage.removeItem(`${this.settings.prefix}.${name}`)\n  }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/storage.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 103,
+    "kind": "class",
+    "name": "Storage",
+    "memberof": "src/storage.js",
+    "static": true,
+    "longname": "src/storage.js~Storage",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/storage.js",
+    "importStyle": "{Storage}",
+    "description": "存储类\n存储的值拥有前缀，具体参考配置",
+    "lineNumber": 10,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 104,
+    "kind": "member",
+    "name": "defaultSettings",
+    "memberof": "src/storage.js~Storage",
+    "static": true,
+    "longname": "src/storage.js~Storage.defaultSettings",
+    "access": "public",
+    "description": "默认配置",
+    "lineNumber": 15,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "prefix",
+        "description": "前缀"
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 105,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "src/storage.js~Storage",
+    "static": false,
+    "longname": "src/storage.js~Storage#settings",
+    "access": "public",
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 107,
+    "kind": "method",
+    "name": "set",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#set",
+    "access": "public",
+    "description": "设置本地缓存",
+    "lineNumber": 34,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "名字"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "any"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "值，该值会进行 JSON.parse，因此请确保传入值没有循环引用"
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 108,
+    "kind": "method",
+    "name": "get",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#get",
+    "access": "public",
+    "description": "获取本地缓存",
+    "lineNumber": 48,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{any} 值"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "名称"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "any"
+      ],
+      "spread": false,
+      "description": "值"
+    }
+  },
+  {
+    "__docId__": 109,
+    "kind": "method",
+    "name": "del",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#del",
+    "access": "public",
+    "description": "删除本地缓存",
+    "lineNumber": 67,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "名称"
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 110,
+    "kind": "file",
+    "name": "src/tunnel.js",
+    "content": "import isEmpty from 'lodash/isEmpty'\nimport isArray from 'lodash/isArray'\nimport isString from 'lodash/isString'\nimport isNumber from 'lodash/isNumber'\nimport isInteger from 'lodash/isInteger'\nimport isFunction from 'lodash/isFunction'\nimport isPlainObject from 'lodash/isPlainObject'\nimport map from 'lodash/map'\nimport times from 'lodash/times'\nimport forEach from 'lodash/forEach'\nimport assign from 'lodash/assign'\nimport sortBy from 'lodash/sortBy'\nimport defaultsDeep from 'lodash/defaultsDeep'\nimport waterfall from 'async/waterfall'\nimport parallel from 'async/parallel'\nimport * as http from './request'\nimport * as CONFIG from './config'\nimport { File } from './file'\nimport { QiniupEvent } from './event'\nimport { isNumeric } from './utils'\n\n/**\n * 七牛通道类\n * 支持普通文件上传，适合图片文本等小文件上传\n * 支持 Base64 文件上传，Base64 字符串长度并不等于文件大小，可参考：https://en.wikipedia.org/wiki/Base64\n * 支持断点续传，缓存上传了的块与片保存在本地缓存中，若清除本地缓存则不能保证能继续上次的断点\n * 块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB\n * 所有接口均参考七牛官方文档，一切均以七牛官方文档为准\n * @class\n */\nexport class Tunnel {\n  /**\n   * 七牛通道类默认配置\n   * @type {Object}\n   * @property {Boolean} defaultSettings.useHttps 是否使用 Https 进行上传\n   * @property {Boolean} defaultSettings.cache 是否缓存\n   * @property {Integer} defaultSettings.maxConnect 最大连接数\n   * @property {Integer} defaultSettings.blockSize 分块大小\n   * @property {Integer} defaultSettings.blockSize 分片大小\n   * @property {Integer} defaultSettings.maxBlockTasks 最大分块任务数, 若文件巨大, 可能分块的时候会卡死浏览器, 因此设置最大分块数\n   */\n  static defaultSettings = {\n    useHttps: typeof window === 'undefined' ? false : window.location.protocol,\n    cache: false,\n    maxConnect: 4,\n    blockSize: 4 * CONFIG.M,\n    chunkSize: 1 * CONFIG.M,\n    maxFileSize: 1 * CONFIG.G,\n    maxBlockTasks: 2000\n  }\n\n  /**\n   * 创建通道类对象\n   * @param {Object} [options] 配置，可以参考{@link Tunnel.defaultSettings}\n   * @param {Object} [options.useHttps=true] 是否使用 Https 进行上传\n   * @param {Boolean} [options.cache=false] 是否缓存\n   * @param {Integer} [options.maxConnect=4] 最大连接数\n   * @param {Integer} [options.blockSize=4 * M] 分块大小\n   * @param {Integer} [options.chunkSize=1 * M] 分片大小\n   * @return {Tunnel}\n   */\n  constructor (options, request = http) {\n    /**\n     * 配置\n     * @type {Object}\n     */\n    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)\n\n    /**\n     * 令牌\n     * @type {String}\n     */\n    this.token = ''\n\n    /**\n     * 令牌过期时间\n     * @type {Integer}\n     */\n    this.tokenExpire = 0\n\n    /**\n     * 设置 request\n     * @type {Object}\n     */\n    this.request = request\n  }\n\n  _execTokenGetter (getter, callback) {\n    if (!isFunction(getter)) {\n      throw new TypeError('Getter is not a fucntion')\n    }\n\n    if (this.tokenExpire > Date.now() && this.token) {\n      return callback(null, this.token)\n    }\n\n    getter((error, token) => {\n      if (error) {\n        return callback(error)\n      }\n\n      if (isPlainObject(token)) {\n        this.token = token.token\n        this.tokenExpire = isNumeric(token.expire) ? token.expire * 1 : 0\n      } else {\n        this.token = token\n        this.tokenExpire = 0\n      }\n\n      return callback(null, this.token)\n    })\n  }\n\n  /**\n   * 第三方资源抓取\n   *\n   * @see https://developer.qiniu.com/kodo/api/1263/fetch\n   *\n   * @param {String} file 远程文件\n   * @param {Object} [params={}] 上传参数\n   * @param {Object} params.token 七牛令牌\n   * @param {Object} [params.key] 如果没有指定则: 如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码\n   * @param {Object} [params.bucket] 指定的存储区域 https://developer.qiniu.com/kodo/api/3966/bucket-image-source\n   * @param {Object} [options={}] 配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} callback 回调函数\n   * @memberof Tunnel\n   */\n  fetch (file, params = {}, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (!CONFIG.REMOTE_FILE_URL_REGEXP.test(file)) {\n      callback(new TypeError('File is not provided or invalid remote source url'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.fetch(file, assign({ token }, params), options, callback)\n      })\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    let { host, useHttps, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let { bucket, key } = params\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`\n    let headers = {\n      'Content-Type': 'application/x-www-form-urlencoded',\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    return this.request.post(url, null, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 上传文件\n   * 普通文件上传，适合小文件\n   *\n   * @param {File|Blob} file 文件\n   * @param {Object} [params={}] 上传参数\n   * @param {Object} params.token 七牛令牌\n   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} [options.progress] 上传进度\n   * @param {Function} callback 回调\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  upload (file, params = {}, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (!(file instanceof File || file instanceof window.Blob)) {\n      callback(new TypeError('File is not provided or not instanceof File'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.upload(file, assign({ token }, params), options, callback)\n      })\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    let { host, useHttps, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}`\n    let datas = assign({ file: file.file }, params)\n    let headers = {\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    return this.request.upload(url, datas, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 上传 base64 资源\n   * @see https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code\n   *\n   * @param {string} content base64文件数据\n   * @param {Object} params 上传参数\n   * @param {Object} params.token 七牛令牌\n   * @param {Integer} [params.size=-1] 文件大小，-1为自动获取\n   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码\n   * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream\n   * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验\n   * @param {Object} [params.userVars]\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} [options.progress] 上传进度\n   * @param {Function} callback 回调\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  upb64 (content, params = { size: -1 }, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (isEmpty(content) || !CONFIG.BASE64_REGEXP.exec(content)) {\n      callback(new TypeError('Content is not provided or not a valid base64 string'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.upb64(content, assign({ token }, params), options, callback)\n      })\n    }\n\n    if (!(isNumber(params.size) && isInteger(params.size) && params.size > 0)) {\n      params.size = -1\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    let { host, useHttps, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let { size, key, mimeType, crc32, userVars } = params\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}/${size}`\n    if (isString(key) && key) {\n      url += `/key/${encodeURIComponent(key)}`\n    }\n\n    if (isString(mimeType) && mimeType) {\n      url += `/mimeType/${encodeURIComponent(mimeType)}`\n    }\n\n    if (isString(crc32) && crc32) {\n      url += `/crc32/${encodeURIComponent(crc32)}`\n    }\n\n    if (isString(userVars) && userVars) {\n      url += `/x:user-var/${encodeURIComponent(userVars)}`\n    }\n\n    let datas = content.replace(CONFIG.BASE64_REGEXP, '')\n    let headers = {\n      'Content-Type': 'application/octet-stream',\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    return this.request.upload(url, datas, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 上传块:\n   * 块只是一个虚拟的概念，块表示多个分片的集合的一个统称\n   * 1. 将文件分成若干块，可以并发进行上传，而块中拥有多个分片\n   * 每个块上传的开始必须将第一个分片同时上传\n   * 2. 上传完之后会返回第一个分片的哈希值(ctx)，第二个分片必\n   * 须同时上传第一个分片的哈希值\n   *\n   * @see https://developer.qiniu.com/kodo/api/1286/mkblk\n   *\n   * @param {Blob} block 块\n   * @param {Object} params 上传参数\n   * @param {Object} params.token 七牛令牌\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {number} [options.chunkSize] 设置每个分片的大小\n   * @param {Function} [options.progress] 上传进度\n   * @param {mkblkCallback} callback 上传之后执行的回调函数\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  mkblk (block, params = {}, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (!block || !(block instanceof window.Blob)) {\n      callback(new TypeError('Block is not provided or not instanceof Blob'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.mkblk(block, assign({ token }, params), options, callback)\n      })\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    let { chunkSize, useHttps, host, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}/mkblk/${block.size}`\n    let headers = {\n      'Content-Type': 'application/octet-stream',\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    let chunk = block.slice(0, chunkSize, block.type)\n    return this.request.upload(url, chunk, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 上传分片\n   * 1. 多个分片可以组成一个块，每一个分片的开始与结尾都必须\n   * 在创建的时候并定义好，且第一个分片在上传块的时候必须\n   * 一并上传\n   * 2. 七牛会返回一个哈希值（ctx），上传下一个分片的时候必须\n   * 将前一个分片的哈希值同时上传给服务器，第二个分片拿创建\n   * 块时上传的第一个分片范围的哈希值\n   * 3. 最后一个分片值代表该块的结束，必须记录好哈希值(ctx)；\n   * 在合并文件的时候可以通过这些最后的哈希值进行合成文件\n   *\n   * @see https://developer.qiniu.com/kodo/api/1251/bput\n   *\n   * @param {Blob} chunk 片\n   * @param {Object} params 参数\n   * @param {String} params.ctx 前一次上传返回的块级上传控制信息\n   * @param {String} params.offset 当前片在整个块中的起始偏移\n   * @param {String} params.token 七牛令牌\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} [options.progress] 上传进度\n   * @param {Function} callback 回调\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  bput (chunk, params = {}, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (!chunk || !(chunk instanceof window.Blob)) {\n      callback(new TypeError('Block is not provided or not instanceof Blob'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.bput(chunk, assign({ token }, params), options, callback)\n      })\n    }\n\n    let { ctx, offset } = params\n    if (!isString(params.ctx)) {\n      callback(new TypeError('Params.ctx is not provided or not be a valid string'))\n      return\n    }\n\n    if (!(isNumber(offset) && isInteger(offset) && offset > 0)) {\n      callback(new TypeError('Params.offset is not provided or not be a valid interger'))\n      return\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    let { host, useHttps, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}/bput/${ctx}/${offset}`\n    let headers = {\n      'Content-Type': 'application/octet-stream',\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    return this.request.upload(url, chunk, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 提交组合文件，将所有块与分片组合起来并生成文件\n   * 当所有块与分片都上传了，将所有块的返回\n   *\n   * @see https://developer.qiniu.com/kodo/api/1287/mkfile\n   *\n   * @param {Array|String} ctxs 文件\n   * @param {Object} params 参数\n   * @param {Integer} params.size 文件大小\n   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码\n   * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream\n   * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} [options.progress] 上传进度\n   * @param {Function} callback 回调\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  mkfile (ctxs, params = {}, options = {}, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (isEmpty(ctxs) || !(isArray(ctxs) || isString(ctxs))) {\n      callback(new TypeError('Ctxs is not provided or not be a valid value'))\n      return\n    }\n\n    let { token } = params\n    let { tokenGetter } = options\n    if (!(isString(token) && token)) {\n      if (!isFunction(tokenGetter)) {\n        callback(new TypeError('Token is not provided'))\n        return\n      }\n\n      return this._execTokenGetter(tokenGetter, (error, token) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        return this.mkfile(ctxs, assign({ token }, params), options, callback)\n      })\n    }\n\n    let { size } = params\n    if (!(isNumber(size) && isInteger(size) && size > 0)) {\n      callback(new TypeError('Param.size is not provided or not be a valid integer'))\n      return\n    }\n\n    let { host, useHttps, tokenPrefix } = options\n    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)\n\n    let url = `${useHttps ? 'https:' : 'http:'}//${host}/mkfile/${size}`\n    let { key, mimeType, crc32, userVars } = params\n    if (isString(key) && key) {\n      url += `/key/${encodeURIComponent(key)}`\n    }\n\n    if (isString(mimeType) && mimeType) {\n      url += `/mimeType/${encodeURIComponent(mimeType)}`\n    }\n\n    if (isString(crc32) && crc32) {\n      url += `/crc32/${encodeURIComponent(crc32)}`\n    }\n\n    if (isString(userVars) && userVars) {\n      url += `/x:user-var/${encodeURIComponent(userVars)}`\n    }\n\n    let data = isArray(ctxs) ? ctxs.join(',') : ctxs\n    let headers = {\n      'Content-Type': 'application/octet-stream',\n      Authorization: `${tokenPrefix || 'UpToken'} ${token}`\n    }\n\n    return this.request.upload(url, data, assign({ headers }, options), callback)\n  }\n\n  /**\n   * 分割文件并上传\n   * 一次过将文件分成多个，并进行并发上传\n   * 上传的快慢并不代表分个数的大小, 我们应该尽量\n   * 创建适当多个块(Block), 因为没上传的块只是阻塞\n   * 在任务队列中\n   *\n   * @param {File|Blob} file 文件\n   * @param {Object} params 上传参数\n   * @param {Object} params.token 七牛令牌\n   * @param {Object} [params.key] 如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码\n   * @param {Object} [params.mimeType] 文件的 MIME 类型，默认是 application/octet-stream\n   * @param {Object} [params.crc32] 文件内容的 crc32 校验值，不指定则不进行校验\n   * @param {Object} [options={}] 上传配置\n   * @param {Function} [options.tokenGetter] 获取 Token 拦截器\n   * @param {Boolean} [options.useHttps] 是否使用 Https 进行上传\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Boolean} [options.cache=true] 设置本地缓存\n   * @param {Boolean} [options.override=false] 无论是否已经上传都进行重新上传\n   * @param {Integer} [options.maxConnect=4] 最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中\n   * @param {Function} [options.progress] 上传进度\n   * @param {Function} callback 回调\n   * @returns {Object} state\n   * @returns {XMLHttpsRequest} state.xhr AJAX 对象\n   * @returns {Function} state.cancel 取消函数\n   */\n  resuming (file, params, options, callback) {\n    if (!isFunction(callback)) {\n      throw new TypeError('Callback is not provied or not be a function')\n    }\n\n    if (!(file instanceof File)) {\n      callback(new TypeError('File is not provided or not instanceof File (QiniuUploader.File)'))\n      return\n    }\n\n    options = defaultsDeep(options, { cache: true, override: false }, this.settings)\n\n    let { maxConnect } = options\n    if (!(isInteger(maxConnect) && maxConnect > 0)) {\n      callback(new TypeError('Options.maxConnect is invalid or not a integer'))\n      return\n    }\n\n    let {\n      blockSize: perBlockSize,\n      chunkSize: perChunkSize\n    } = options\n\n    if (!isInteger(perBlockSize)) {\n      callback(new TypeError('Block size is not a integer'))\n      return\n    }\n\n    if (!isInteger(perChunkSize)) {\n      callback(new TypeError('Chunk size is not a integer'))\n      return\n    }\n\n    if (perBlockSize < perChunkSize) {\n      callback(new Error('Chunk size must less than block size'))\n      return\n    }\n\n    let { maxFileSize } = options\n    if (file.size > maxFileSize) {\n      callback(new Error(`File size must less than ${maxFileSize}`))\n      return\n    }\n\n    if (!isInteger(maxFileSize)) {\n      callback(new TypeError('MaxFileSize is not a integer'))\n      return\n    }\n\n    let _resumingProgressHandle = options.progress\n    options.progress = undefined\n\n    let processes = []\n    let listenProgress = isFunction(_resumingProgressHandle)\n\n    let registerRequest = function (type, request, progressRelativeData) {\n      if (!(request && request.xhr && request.xhr instanceof window.XMLHttpRequest)) {\n        return\n      }\n\n      let { xhr } = request\n\n      /* eslint standard/object-curly-even-spacing:0 */\n      let process = { request, xhr /** , size, beginOffset, endOffset */ }\n\n      if (!isEmpty(progressRelativeData)) {\n        assign(process, progressRelativeData)\n\n        if (listenProgress) {\n          xhr.upload.addEventListener('progress', (event) => {\n            if (event.lengthComputable) {\n              process.loaded = event.loaded\n              process.total = event.total\n            }\n\n            triggerRequestProgress(type, xhr, process)\n          }, false)\n        }\n      }\n\n      type === 'bput' && processes.push(process)\n    }\n\n    let triggerRequestProgress = function (type, xhr, process) {\n      let uploadSize = 0\n\n      forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {\n        if (isInteger(size) && isInteger(loaded) && isInteger(total)) {\n          uploadSize += size * loaded / total\n        }\n      })\n\n      let event = new QiniupEvent(type)\n      event.processes = processes\n      event.process = process\n      event.loaded = uploadSize\n      event.total = file.size\n\n      let nowDatetime = Date.now()\n      let spendTime = nowDatetime - startDatetime\n      let size = event.loaded\n      let time = spendTime / 1000\n      let speed = size / time || 0\n      let description = `${speed.toFixed(2)}Byte/s`\n\n      if (speed > CONFIG.G) {\n        description = `${(speed / CONFIG.G).toFixed(2)}Gb/s`\n      } else if (speed > CONFIG.M) {\n        description = `${(speed / CONFIG.M).toFixed(2)}Mb/s`\n      } else if (speed > CONFIG.K) {\n        description = `${(speed / CONFIG.K).toFixed(2)}Kb/s`\n      }\n\n      event.during = time\n      event.speed = speed\n      event.speedDescription = description\n\n      _resumingProgressHandle.call(xhr, event)\n    }\n\n    let abortRequest = function () {\n      forEach(processes, ({ request }) => request.cancel())\n    }\n\n    /**\n     * 创建分块任务\n     * @param {File} file 文件对象\n     * @param {Integer} beginPos 起始位置\n     * @param {Integer} endPos 结束位置\n     * @param {Function} callback 回调函数\n     */\n    let mkblk = (file, beginPos, endPos, info, callback) => {\n      /**\n       * 如果该段已经被上传则执行下一个切割任务\n       * 每次切割任务都必须判断分片(Chunk)是否上传完成\n       */\n      let state = file.getState(beginPos, endPos)\n      if (info.options.override === false && state) {\n        callback(null, state)\n        return\n      }\n\n      /**\n       * 当到该段上传的时候才进行切割，否则大型文件在切割的情况下会变得好卡\n       * 这样也能减少资源与内存的消耗\n       */\n      let block = file.slice(beginPos, endPos)\n      let request = this.mkblk(block, info.params, info.options, (error, response) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        let state = assign({ status: 'uploaded', beginPos, endPos }, response)\n        file.setState(beginPos, endPos, state, info.options.cache)\n        callback(null, assign({ file, block, state }, info))\n      })\n\n      /**\n       * 这里是返回的是分块(block)中的第一个分片(chunk)\n       * 与上面的末位置不同(endPos)\n       */\n      let size = block.size > perChunkSize ? perChunkSize : block.size\n      registerRequest('mkblk', request, { size: block.size, beginOffset: beginPos, endOffset: endPos })\n      registerRequest('bput', request, { size, beginOffset: beginPos, endOffset: beginPos + size })\n    }\n\n    /**\n     * 创建分片任务\n     * @param {Blob} block 分块\n     * @param {File} file 文件对象\n     * @param {String} ctx 七牛创建分块并上传第一个分片完成后返回哈希值\n     * @param {Integer} beginPos 起始位置\n     * @param {Integer} endPos 结束位置\n     * @param {Function} callback 回调函数\n     */\n    let mkchk = (block, beginPos, endPos, info, callback) => {\n      /**\n       * 如果该段已经被上传则执行下一个切割任务\n       * 每次切割任务都必须判断分片(Chunk)是否上传完成\n       */\n      let state = info.file.getState(info.beginOffset, info.endOffset)\n      if (info.options.override === false && state) {\n        callback(null, state)\n        return\n      }\n\n      let chunk = block.slice(beginPos, endPos, block.type)\n      let params = assign({ ctx: info.ctx, offset: beginPos }, info.params)\n      let request = this.bput(chunk, params, info.options, (error, response) => {\n        if (error) {\n          callback(error)\n          return\n        }\n\n        let state = assign({ status: 'uploaded', beginPos, endPos }, response)\n        file.setState(beginPos, endPos, state, info.options.cache)\n        callback(null, assign({ state, chunk, block }, info))\n      })\n\n      let datas = {\n        size: chunk.size,\n        beginOffset: info.beginOffset,\n        endOffset: info.endOffset\n      }\n\n      registerRequest('bput', request, datas)\n    }\n\n    let totalBlockNo = Math.ceil(file.size / perBlockSize)\n    if (totalBlockNo > options.maxBlockTasks) {\n      callback(new Error(`Block total number (${totalBlockNo}) is too large, it must be less than ${options.maxBlockTasks}, please check uploader options`))\n      return\n    }\n\n    let tasks = times(totalBlockNo, (blockNo) => {\n      let tasks = []\n      let blockOffset = perBlockSize * blockNo\n      let blockBeginPos = blockOffset\n      let blockEndPos = blockOffset + perBlockSize\n\n      if (blockEndPos > file.size) {\n        blockEndPos = file.size\n      }\n\n      /**\n       * 因为上传块(Block)的时候必须同时上传第一个切割片(Chunk)\n       * 因此我们可以直接判断当前块的第一个切片(Chunk)是否已经上传\n       * 不用额外将块(Block)上传信息另外保存起来\n       */\n      let task = (callback) => {\n        let info = { params, options }\n        return mkblk(file, blockBeginPos, blockEndPos, info, callback)\n      }\n\n      tasks.push(task)\n\n      /**\n       * 上传片(Chunk)\n       * 每个块都由许多片(Chunk)组成\n       * 因此要先预设每个快(Block)中的片(Chunk)的起始位置(offset)\n       * 这样就预先定义好上传的任务队列\n       *\n       * 注意:\n       * 因为切割块(Block)是比较浪费资源，而且保存多个片(Chunk)会导致\n       * 内存大幅增加，因此我们必须在每个任务上传之前先给定相应的配置(起始位置与片大小等)\n       * 来进行定义任务，而非切割多个片(Chunk)资源，而且上传完必须销毁\n       */\n      let blockSize = blockEndPos - blockBeginPos\n      let totalChunkNo = Math.ceil(blockSize / perChunkSize)\n\n      /**\n       * 因为上传分块(Block)已经上传了第一个分片(Chunk)\n       * 所以可以忽略第一个分片(Chunk)，而分片(Chunk)的总数也减一\n       */\n      times(totalChunkNo - 1, (chunkNo) => {\n        let chunkOffset = perChunkSize * (chunkNo + 1)\n        let chunkBeginPos = chunkOffset\n        let chunkEndPos = chunkOffset + perChunkSize\n\n        if (chunkEndPos > blockSize) {\n          chunkEndPos = blockSize\n        }\n\n        let task = ({ state, block, file }, callback) => {\n          let info = {\n            file,\n            ctx: state.ctx,\n            params,\n            options,\n            beginOffset: blockBeginPos + chunkBeginPos,\n            endOffset: blockBeginPos + chunkEndPos\n          }\n\n          return mkchk(block, chunkBeginPos, chunkEndPos, info, callback)\n        }\n\n        tasks.push(task)\n      })\n\n      return (callback) => waterfall(tasks, callback)\n    })\n\n    let startDatetime = Date.now()\n\n    /**\n     * 当所有块(Block)都全部上传完\n     * 则执行合并文件操作\n     */\n    parallel(tasks, (error, responses) => {\n      if (error) {\n        callback(error)\n        return\n      }\n\n      /**\n       * 合并文件的时候必须要注意的是上传的 ctxs 值必须\n       * 是分割的顺序的，所以可以根据起始位置(beginPos)或者\n       * 结束位置(endPos)进行排序\n       */\n      responses = sortBy(responses, 'state.beginPos')\n\n      /**\n       * 获取所有分块中最后分片上传完成返回的哈希值(ctx)，\n       * 并组成数组提交创建文件接口\n       */\n      let ctxs = map(responses, 'state.ctx')\n      let size = file.size\n      let request = this.mkfile(ctxs, assign({ size }, params), options, callback)\n\n      registerRequest('mkfile', request, { size })\n    })\n\n    return { cancel: abortRequest, xhr: null }\n  }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/tunnel.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 111,
+    "kind": "class",
+    "name": "Tunnel",
+    "memberof": "src/tunnel.js",
+    "static": true,
+    "longname": "src/tunnel.js~Tunnel",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/tunnel.js",
+    "importStyle": "{Tunnel}",
+    "description": "七牛通道类\n支持普通文件上传，适合图片文本等小文件上传\n支持 Base64 文件上传，Base64 字符串长度并不等于文件大小，可参考：https://en.wikipedia.org/wiki/Base64\n支持断点续传，缓存上传了的块与片保存在本地缓存中，若清除本地缓存则不能保证能继续上次的断点\n块大小，每块均为4MB（1024*1024*4），最后一块大小不超过4MB\n所有接口均参考七牛官方文档，一切均以七牛官方文档为准",
+    "lineNumber": 31,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 112,
+    "kind": "member",
+    "name": "defaultSettings",
+    "memberof": "src/tunnel.js~Tunnel",
+    "static": true,
+    "longname": "src/tunnel.js~Tunnel.defaultSettings",
+    "access": "public",
+    "description": "七牛通道类默认配置",
+    "lineNumber": 42,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.cache",
+        "description": "是否缓存"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.maxConnect",
+        "description": "最大连接数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.blockSize",
+        "description": "分块大小"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.blockSize",
+        "description": "分片大小"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.maxBlockTasks",
+        "description": "最大分块任务数, 若文件巨大, 可能分块的时候会卡死浏览器, 因此设置最大分块数"
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 113,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 62,
+    "undocument": true
+  },
+  {
+    "__docId__": 114,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "src/tunnel.js~Tunnel",
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#settings",
+    "access": "public",
+    "description": "配置",
+    "lineNumber": 67,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 115,
+    "kind": "member",
+    "name": "token",
+    "memberof": "src/tunnel.js~Tunnel",
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#token",
+    "access": "public",
+    "description": "令牌",
+    "lineNumber": 73,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 116,
+    "kind": "member",
+    "name": "tokenExpire",
+    "memberof": "src/tunnel.js~Tunnel",
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#tokenExpire",
+    "access": "public",
+    "description": "令牌过期时间",
+    "lineNumber": 79,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 117,
+    "kind": "member",
+    "name": "request",
+    "memberof": "src/tunnel.js~Tunnel",
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#request",
+    "access": "public",
+    "description": "设置 request",
+    "lineNumber": 85,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 118,
+    "kind": "method",
+    "name": "_execTokenGetter",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#_execTokenGetter",
+    "access": "private",
+    "description": null,
+    "lineNumber": 88,
+    "undocument": true,
+    "params": [
+      {
+        "name": "getter",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "callback",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 123,
+    "kind": "method",
+    "name": "fetch",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#fetch",
+    "access": "public",
+    "description": "第三方资源抓取",
+    "see": [
+      "https://developer.qiniu.com/kodo/api/1263/fetch"
+    ],
+    "lineNumber": 132,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "远程文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.key",
+        "description": "如果没有指定则: 如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.bucket",
+        "description": "指定的存储区域 https://developer.qiniu.com/kodo/api/3966/bucket-image-source"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 124,
+    "kind": "method",
+    "name": "upload",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#upload",
+    "access": "public",
+    "description": "上传文件\n普通文件上传，适合小文件",
+    "lineNumber": 194,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "File",
+          "Blob"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.key",
+        "description": "如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 125,
+    "kind": "method",
+    "name": "upb64",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#upb64",
+    "access": "public",
+    "description": "上传 base64 资源",
+    "see": [
+      "https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code"
+    ],
+    "lineNumber": 259,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "content",
+        "description": "base64文件数据"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "-1",
+        "defaultRaw": -1,
+        "name": "params.size",
+        "description": "文件大小，-1为自动获取"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.key",
+        "description": "如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.mimeType",
+        "description": "文件的 MIME 类型，默认是 application/octet-stream"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.crc32",
+        "description": "文件内容的 crc32 校验值，不指定则不进行校验"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.userVars",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 126,
+    "kind": "method",
+    "name": "mkblk",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#mkblk",
+    "access": "public",
+    "description": "上传块:\n块只是一个虚拟的概念，块表示多个分片的集合的一个统称\n1. 将文件分成若干块，可以并发进行上传，而块中拥有多个分片\n每个块上传的开始必须将第一个分片同时上传\n2. 上传完之后会返回第一个分片的哈希值(ctx)，第二个分片必\n须同时上传第一个分片的哈希值",
+    "see": [
+      "https://developer.qiniu.com/kodo/api/1286/mkblk"
+    ],
+    "lineNumber": 348,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Blob"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "block",
+        "description": "块"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.chunkSize",
+        "description": "设置每个分片的大小"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "mkblkCallback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "上传之后执行的回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 127,
+    "kind": "method",
+    "name": "bput",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#bput",
+    "access": "public",
+    "description": "上传分片\n1. 多个分片可以组成一个块，每一个分片的开始与结尾都必须\n在创建的时候并定义好，且第一个分片在上传块的时候必须\n一并上传\n2. 七牛会返回一个哈希值（ctx），上传下一个分片的时候必须\n将前一个分片的哈希值同时上传给服务器，第二个分片拿创建\n块时上传的第一个分片范围的哈希值\n3. 最后一个分片值代表该块的结束，必须记录好哈希值(ctx)；\n在合并文件的时候可以通过这些最后的哈希值进行合成文件",
+    "see": [
+      "https://developer.qiniu.com/kodo/api/1251/bput"
+    ],
+    "lineNumber": 420,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Blob"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "chunk",
+        "description": "片"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.ctx",
+        "description": "前一次上传返回的块级上传控制信息"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.offset",
+        "description": "当前片在整个块中的起始偏移"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 128,
+    "kind": "method",
+    "name": "mkfile",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#mkfile",
+    "access": "public",
+    "description": "提交组合文件，将所有块与分片组合起来并生成文件\n当所有块与分片都上传了，将所有块的返回",
+    "see": [
+      "https://developer.qiniu.com/kodo/api/1287/mkfile"
+    ],
+    "lineNumber": 496,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array",
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "ctxs",
+        "description": "文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.size",
+        "description": "文件大小"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.key",
+        "description": "如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.mimeType",
+        "description": "文件的 MIME 类型，默认是 application/octet-stream"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.crc32",
+        "description": "文件内容的 crc32 校验值，不指定则不进行校验"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 129,
+    "kind": "method",
+    "name": "resuming",
+    "memberof": "src/tunnel.js~Tunnel",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/tunnel.js~Tunnel#resuming",
+    "access": "public",
+    "description": "分割文件并上传\n一次过将文件分成多个，并进行并发上传\n上传的快慢并不代表分个数的大小, 我们应该尽量\n创建适当多个块(Block), 因为没上传的块只是阻塞\n在任务队列中",
+    "lineNumber": 587,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} state"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{XMLHttpsRequest} state.xhr AJAX 对象"
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Function} state.cancel 取消函数"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "File",
+          "Blob"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.key",
+        "description": "如果没有指定则：如果 uptoken.SaveKey 存在则基于 SaveKey 生产 key，否则用 hash 值作 key。EncodedKey 需要经过 base64 编码"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.mimeType",
+        "description": "文件的 MIME 类型，默认是 application/octet-stream"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "params.crc32",
+        "description": "文件内容的 crc32 校验值，不指定则不进行校验"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenGetter",
+        "description": "获取 Token 拦截器"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.useHttps",
+        "description": "是否使用 Https 进行上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "options.cache",
+        "description": "设置本地缓存"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "options.override",
+        "description": "无论是否已经上传都进行重新上传"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "4",
+        "defaultRaw": 4,
+        "name": "options.maxConnect",
+        "description": "最大连接数，设置最大上传分块(Block)的数量，其余分块(Block)将会插入队列中"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.progress",
+        "description": "上传进度"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": "state.cancel 取消函数"
+    }
+  },
+  {
+    "__docId__": 130,
+    "kind": "file",
+    "name": "src/uploader.js",
+    "content": "import isFunction from 'lodash/isFunction'\nimport defaultsDeep from 'lodash/defaultsDeep'\nimport { File } from './file'\nimport * as http from './request'\nimport { Tunnel } from './tunnel'\nimport {\n  G, M,\n  BASE64_REGEXP, REMOTE_FILE_URL_REGEXP,\n  SUPPORTED\n} from './config'\nimport { sizeStringify } from './utils'\n\n/**\n * 七牛上传类\n * @class\n */\nexport class Uploader {\n  /**\n   * 浏览器是否支持\n   * @type {Boolean}\n   */\n  static supported = SUPPORTED\n\n  /**\n   * 上传类默认配置\n   * @type {Object}\n   * @property {Boolean} defaultSettings.maxFileSize 最大文件大小\n   * @property {Boolean} defaultSettings.minFileSize 最小文件大小\n   */\n  static defaultSettings = {\n    maxFileSize: G,\n    minFileSize: 0,\n    resumingByFileSize: 4 * M\n  }\n\n  /**\n   * 上传类\n   * @param {Object} [options={}] 配置，可以参考{@link Uploader.defaultSettings}\n   * @param {Object} [options.maxFileSize=1 * G] 最大文件大小\n   * @param {Object} [options.minFileSize=0] 最小文件大小\n   * @return {Uploader} 上传对象\n   */\n  constructor (options = {}, request = http) {\n    /**\n     * 配置\n     * @type {Object}\n     */\n    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)\n\n    /**\n     * 通道类对象\n     * @type {Tunnel}\n     */\n    this.tunnel = new Tunnel(this.settings, request)\n  }\n\n  /**\n   * 上传\n   * @param {File|Blob|String|Array} file 需要上传的文件\n   * @param {Object} [params={}] 上传参数\n   * @param {String} params.token 七牛令牌\n   * @param {Object} [options={}] 上传配置\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} callback 回调函数\n   * @return {Request} 请求对象\n   */\n  upload (file, params = {}, options = {}, callback) {\n    if (arguments.length < 3) {\n      return this.upload(file, params, {}, options)\n    }\n\n    if (!isFunction(callback)) {\n      throw new Error('Callback is not provided')\n    }\n\n    options = defaultsDeep(options, this.settings)\n\n    if (REMOTE_FILE_URL_REGEXP.test(file)) {\n      this.fetch(file, params, options, callback)\n      return\n    }\n\n    if (BASE64_REGEXP.test(file)) {\n      this.tunnel.up64(file, params, options, callback)\n      return\n    }\n\n    if (file.size > options.maxFileSize) {\n      callback(new Error(`File size must be smaller than ${sizeStringify(options.maxFileSize)}`))\n      return\n    }\n\n    if (file.size < options.minFileSize) {\n      callback(new Error(`File size must be larger than ${sizeStringify(options.minFileSize)}`))\n      return\n    }\n\n    file = file instanceof File ? file : new File(file)\n\n    file.size > options.resumingByFileSize\n      ? this.tunnel.resuming(file, params, options, callback)\n      : this.tunnel.upload(file, params, options, callback)\n  }\n\n  /**\n   * 抓取远程文件\n   * @param {String} file 远程文件\n   * @param {Object} [params={}] 上传参数\n   * @param {String} params.token 七牛令牌\n   * @param {Object} [options={}] 上传配置\n   * @param {String} [options.host] 七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint\n   * @param {String} [options.tokenPrefix] 令牌前缀\n   * @param {Function} callback 回调函数\n   * @return {Request} 请求对象\n   */\n  fetch (file, params, options, callback) {\n    if (arguments.length < 3) {\n      return this.fetch(file, params, {}, options)\n    }\n\n    if (!isFunction(callback)) {\n      throw new Error('Callback is not provided')\n    }\n\n    if (!REMOTE_FILE_URL_REGEXP.test(file)) {\n      callback(new TypeError('File is not a valid remote url'))\n      return\n    }\n\n    options = defaultsDeep(options, this.settings)\n    this.tunnel.fetch(file, params, options, callback)\n  }\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/uploader.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 131,
+    "kind": "class",
+    "name": "Uploader",
+    "memberof": "src/uploader.js",
+    "static": true,
+    "longname": "src/uploader.js~Uploader",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/uploader.js",
+    "importStyle": "{Uploader}",
+    "description": "七牛上传类",
+    "lineNumber": 17,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 132,
+    "kind": "member",
+    "name": "supported",
+    "memberof": "src/uploader.js~Uploader",
+    "static": true,
+    "longname": "src/uploader.js~Uploader.supported",
+    "access": "public",
+    "description": "浏览器是否支持",
+    "lineNumber": 22,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 133,
+    "kind": "member",
+    "name": "defaultSettings",
+    "memberof": "src/uploader.js~Uploader",
+    "static": true,
+    "longname": "src/uploader.js~Uploader.defaultSettings",
+    "access": "public",
+    "description": "上传类默认配置",
+    "lineNumber": 30,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.maxFileSize",
+        "description": "最大文件大小"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "defaultSettings.minFileSize",
+        "description": "最小文件大小"
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 134,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/uploader.js~Uploader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/uploader.js~Uploader#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true
+  },
+  {
+    "__docId__": 135,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "src/uploader.js~Uploader",
+    "static": false,
+    "longname": "src/uploader.js~Uploader#settings",
+    "access": "public",
+    "description": "配置",
+    "lineNumber": 48,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 136,
+    "kind": "member",
+    "name": "tunnel",
+    "memberof": "src/uploader.js~Uploader",
+    "static": false,
+    "longname": "src/uploader.js~Uploader#tunnel",
+    "access": "public",
+    "description": "通道类对象",
+    "lineNumber": 54,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Tunnel"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 137,
+    "kind": "method",
+    "name": "upload",
+    "memberof": "src/uploader.js~Uploader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/uploader.js~Uploader#upload",
+    "access": "public",
+    "description": "上传",
+    "lineNumber": 68,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "File",
+          "Blob",
+          "String",
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "需要上传的文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Request"
+      ],
+      "spread": false,
+      "description": "请求对象"
+    }
+  },
+  {
+    "__docId__": 138,
+    "kind": "method",
+    "name": "fetch",
+    "memberof": "src/uploader.js~Uploader",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/uploader.js~Uploader#fetch",
+    "access": "public",
+    "description": "抓取远程文件",
+    "lineNumber": 117,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "file",
+        "description": "远程文件"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "params",
+        "description": "上传参数"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "params.token",
+        "description": "七牛令牌"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "上传配置"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.host",
+        "description": "七牛HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.tokenPrefix",
+        "description": "令牌前缀"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "回调函数"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Request"
+      ],
+      "spread": false,
+      "description": "请求对象"
+    }
+  },
+  {
+    "__docId__": 139,
+    "kind": "file",
+    "name": "src/utils.js",
+    "content": "import { G, M, K } from './config'\n\n/**\n * 转换大小成描述\n * @param {Integer} size 字节\n * @return {Stirng} 描述\n */\nexport function sizeStringify (size) {\n  if (size > G) {\n    return `${(size / G).toFixed(2)}Gb`\n  }\n\n  if (size > M) {\n    return `${(size / M).toFixed(2)}Mb`\n  }\n\n  if (size > K) {\n    return `${(size / K).toFixed(2)}Kb`\n  }\n\n  return `${size.toFixed(2)}Byte`\n}\n\n/**\n * 判断是否为数字\n * @param {Number|String} number 需要判断的数字\n * @return {Boolean} 结果\n */\nexport function isNumeric (number) {\n  return !isNaN(parseFloat(number)) && isFinite(number) && number.constructor !== Array\n}\n",
+    "static": true,
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/src/utils.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 140,
+    "kind": "function",
+    "name": "sizeStringify",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~sizeStringify",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/utils.js",
+    "importStyle": "{sizeStringify}",
+    "description": "转换大小成描述",
+    "lineNumber": 8,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Integer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "size",
+        "description": "字节"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Stirng"
+      ],
+      "spread": false,
+      "description": "描述"
+    }
+  },
+  {
+    "__docId__": 141,
+    "kind": "function",
+    "name": "isNumeric",
+    "memberof": "src/utils.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/utils.js~isNumeric",
+    "access": "public",
+    "export": true,
+    "importPath": "qiniup/src/utils.js",
+    "importStyle": "{isNumeric}",
+    "description": "判断是否为数字",
+    "lineNumber": 29,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Number",
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "number",
+        "description": "需要判断的数字"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "结果"
+    }
+  },
+  {
+    "kind": "index",
+    "content": "[![GitHub version](https://badge.fury.io/gh/DavidKk%2Fqiniu-uploader.svg)](https://badge.fury.io/gh/DavidKk%2Fqiniu-uploader)\n[![npm version](https://badge.fury.io/js/qiniup.svg)](https://badge.fury.io/js/qiniup)\n[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)\n\n[![Build Status](https://travis-ci.org/DavidKk/qiniu-uploader.svg?branch=master)](https://travis-ci.org/DavidKk/qiniu-uploader)\n[![codecov](https://codecov.io/gh/DavidKk/qiniu-uploader/branch/master/graph/badge.svg)](https://codecov.io/gh/DavidKk/qiniu-uploader)\n[![Document](https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/badge.svg?t=0)](https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader)\n[![Dependency Status](https://dependencyci.com/github/DavidKk/qiniu-uploader/badge)](https://dependencyci.com/github/DavidKk/qiniu-uploader)\n\n[![Build Status](https://saucelabs.com/browser-matrix/DavidKk.svg)](https://saucelabs.com/beta/builds/72e6def51c8c4388af6212cbc2171461)\n[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/DavidKk/qiniu-uploader/blob/master/LICENSE)\n[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)\n\n\n# 七牛上传控件\n\n\n## 事例\n\n- [Qiniu Clound Mock](https://davidkk.github.io/qiniu-uploader/demo/)\n- [Unit Test](https://github.com/DavidKk/qiniu-uploader/tree/master/unitest)\n\n\n## 文档\n\n- [使用文档](https://davidkk.github.io/qiniu-uploader/)\n- [开发文档](https://davidkk.github.io/qiniu-uploader/esdoc/)\n\n\n## 安装\n\n```\nyarn add qiniup\n```\n\n\n## 特点\n\n- 支持分块分片上传\n- 支持断点续传\n- 支持 base64 文件上传\n\n\n## 使用\n\n```Javascript\nimport { Uploader } from 'qiniup'\n\n// Docs: https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/class/src/uploader.js~Uploader.html#instance-constructor-constructor\nlet qiniup = new Uploader()\n\nlet params = { token: 'generated by sdk' }\n\n// Docs: https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/class/src/uploader.js~Uploader.html#instance-method-upload\nqiniup.upload(file, params, { resumingByFileSize: 4 * 1024 * 1024 /** 默认也为 4M, 如果大于4M则使用分块分片(同时支持断点续传)上传 */ }, function (error) {\n  if (error) {\n    console.log(error)\n    return\n  }\n\n  // upload success, somthing todo...\n})\n\n```\n\n## 动态获取 token\n\n```Javascript\nlet qiniup = new Uploader({\n  tokenGetter (callback) {\n    // do some async or sync request logic to get token\n    callback(null, token)\n\n    // or\n    // 同时也可以设置过期时间（在 0.2.0 版本以上才适用）\n    callback(null, { token, expire })\n  }\n})\n```\n\n## 获取上传状态\n\n```Javascript\nlet progress = (event) => {\n  console.log('当前进度为', event.loaded)\n  console.log('总进度为', event.total)\n  console.log('进程百分比', event.loaded / event.total)\n\n  console.log('上传事件类型', event.type)\n  console.log('当前上传进程', event.process)\n  console.log('所有已注册上传进程', event.processes)\n}\n\n// `resumingByFileSize = 0` 表示一定使用分段上传\nqiniup.upload(file, params, { resumingByFileSize: 0, progress }, function () {\n  // do something...\n})\n```\n",
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "{\n  \"name\": \"qiniup\",\n  \"version\": \"0.2.1\",\n  \"description\": \"Qiniu Uploader\",\n  \"main\": \"dist/qiniup.js\",\n  \"author\": \"<David Jones qowera@gmail.com>\",\n  \"license\": \"MIT\",\n  \"lint-staged\": {\n    \"*.js\": [\n      \"npm run lint\",\n      \"git add\"\n    ]\n  },\n  \"scripts\": {\n    \"yamllint\": \"yamllint .travis.yml\",\n    \"eslint\": \"eslint --config .eslintrc.js --ext .js --fix './src/**/*.js'\",\n    \"lint\": \"npm run yamllint && npm run eslint\",\n    \"unitest\": \"cross-env UNITEST=1 karma start ./karma.conf.js\",\n    \"unitest:coverage\": \"rimraf ./coverage && cross-env UNITEST=1 COVERAGE=1 karma start ./karma.conf.js\",\n    \"build\": \"cross-env PRODUCT=1 webpack --config ./webpack.product.config.babel.js\",\n    \"develop\": \"webpack-dev-server --config ./webpack.develop.config.babel.js --content-base ./dist\",\n    \"release\": \"npm run lint && npm run unitest && npm run build\",\n    \"codecov\": \"npm run unitest:coverage && codecov\",\n    \"sauce\": \"cross-env SAUCE_LABS=1 npm run unitest\",\n    \"docs:esdoc\": \"rimraf ./gh-pages/esdoc && esdoc -c ./.esdoc.json\",\n    \"docs:used\": \"cpx './README.md' ./documents && cpx './documents/.nojekyll' ./gh-pages && cpx './documents/**/*' ./gh-pages\",\n    \"docs:used:server\": \"concurrently \\\"cpx './README.md' ./documents --watch\\\" \\\"docsify serve ./documents\\\"\",\n    \"docs\": \"concurrently \\\"npm run docs:esdoc\\\" \\\"npm run docs:used\\\"\",\n    \"example\": \"rimraf ./demo && cross-env PRODUCT=1 webpack --config ./webpack.example.config.babel.js\",\n    \"gh-pages\": \"rimraf gh-pages && concurrently \\\"npm run docs\\\" \\\"npm run example\\\" \",\n    \"start\": \"npm run develop\"\n  },\n  \"dependencies\": {\n    \"codecov\": \"^3.3.0\",\n    \"lodash\": \"^4.17.10\"\n  },\n  \"devDependencies\": {\n    \"async\": \"^2.6.0\",\n    \"autoprefixer\": \"^8.4.1\",\n    \"babel-eslint\": \"^8.2.3\",\n    \"babel-loader\": \"^7.1.4\",\n    \"babel-plugin-transform-export-extensions\": \"^6.22.0\",\n    \"babel-preset-es2015\": \"^6.24.1\",\n    \"babel-preset-stage-0\": \"^6.24.1\",\n    \"babel-register\": \"^6.26.0\",\n    \"chai\": \"^4.1.2\",\n    \"concurrently\": \"^3.5.1\",\n    \"cpx\": \"^1.5.0\",\n    \"cross-env\": \"^5.1.4\",\n    \"crypto-js\": \"^3.1.9-1\",\n    \"css-loader\": \"^0.28.11\",\n    \"docsify-cli\": \"^4.2.1\",\n    \"eruda\": \"^1.4.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.0.0-alpha.2\",\n    \"eslint-config-standard\": \"12.0.0-alpha.0\",\n    \"eslint-plugin-import\": \"^2.11.0\",\n    \"eslint-plugin-node\": \"^6.0.1\",\n    \"eslint-plugin-promise\": \"^3.7.0\",\n    \"eslint-plugin-standard\": \"^3.1.0\",\n    \"extract-text-webpack-plugin\": \"^4.0.0-alpha.0\",\n    \"fs-extra\": \"^6.0.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"husky\": \"^0.14.3\",\n    \"istanbul-instrumenter-loader\": \"^3.0.1\",\n    \"jqlite\": \"^0.2.42\",\n    \"karma\": \"^2.0.0\",\n    \"karma-chai\": \"^0.1.0\",\n    \"karma-coverage-istanbul-reporter\": \"^1.4.2\",\n    \"karma-mocha\": \"^1.3.0\",\n    \"karma-mocha-reporter\": \"^2.2.5\",\n    \"karma-phantomjs-launcher\": \"^1.0.4\",\n    \"karma-sauce-launcher\": \"^1.2.0\",\n    \"karma-sinon\": \"^1.0.5\",\n    \"karma-sourcemap-loader\": \"^0.3.7\",\n    \"karma-webpack\": \"^3.0.0\",\n    \"mocha\": \"^5.0.1\",\n    \"node-sass\": \"^4.9.0\",\n    \"postcss-loader\": \"^2.1.5\",\n    \"pug\": \"^2.0.3\",\n    \"pug-loader\": \"^2.4.0\",\n    \"rimraf\": \"^2.6.1\",\n    \"sass-loader\": \"^7.0.1\",\n    \"sinon\": \"^5.0.7\",\n    \"style-loader\": \"^0.21.0\",\n    \"urijs\": \"^1.19.1\",\n    \"webpack\": \"4.8.1\",\n    \"webpack-cli\": \"^2.1.3\",\n    \"webpack-dev-server\": \"^3.1.4\",\n    \"webpack-merge\": \"^4.1.2\",\n    \"yaml-lint\": \"^1.2.3\"\n  }\n}\n",
+    "longname": "/home/travis/build/DavidKk/qiniu-uploader/package.json",
+    "name": "package.json",
+    "static": true,
+    "access": "public"
+  }
+]

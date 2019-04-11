@@ -1,0 +1,67 @@
+{
+  "coverage": "87.17%",
+  "expectCount": 78,
+  "actualCount": 68,
+  "files": {
+    "src/config.js": {
+      "expectCount": 9,
+      "actualCount": 9,
+      "undocumentLines": []
+    },
+    "src/enum.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        18,
+        19,
+        20
+      ]
+    },
+    "src/event.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/file.js": {
+      "expectCount": 23,
+      "actualCount": 21,
+      "undocumentLines": [
+        49,
+        366
+      ]
+    },
+    "src/request.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "src/storage.js": {
+      "expectCount": 7,
+      "actualCount": 5,
+      "undocumentLines": [
+        24,
+        25
+      ]
+    },
+    "src/tunnel.js": {
+      "expectCount": 15,
+      "actualCount": 13,
+      "undocumentLines": [
+        62,
+        88
+      ]
+    },
+    "src/uploader.js": {
+      "expectCount": 8,
+      "actualCount": 7,
+      "undocumentLines": [
+        43
+      ]
+    },
+    "src/utils.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    }
+  }
+}

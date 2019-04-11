@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | qiniup</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Qiniu Uploader"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="qiniup"><meta property="twitter:description" content="Qiniu Uploader"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/enum.js~Enum.html">Enum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~QiniupEvent.html">QiniupEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/storage.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tunnel.js~Tunnel.html">Tunnel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-configure">configure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-upload">upload</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNumeric">isNumeric</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sizeStringify">sizeStringify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BASE64_REGEXP">BASE64_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-G">G</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M">M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTPS_URL">QINIU_UPLOAD_HTTPS_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTP_URL">QINIU_UPLOAD_HTTP_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REMOTE_FILE_URL_REGEXP">REMOTE_FILE_URL_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STORAGE_PREFIX">STORAGE_PREFIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED">SUPPORTED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Request">Request</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><a href="https://badge.fury.io/gh/DavidKk%2Fqiniu-uploader"><img src="https://badge.fury.io/gh/DavidKk%2Fqiniu-uploader.svg" alt="GitHub version"></a>
+<a href="https://badge.fury.io/js/qiniup"><img src="https://badge.fury.io/js/qiniup.svg" alt="npm version"></a>
+<a href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="js-standard-style"></a></p>
+<p><a href="https://travis-ci.org/DavidKk/qiniu-uploader"><img src="https://travis-ci.org/DavidKk/qiniu-uploader.svg?branch=master" alt="Build Status"></a>
+<a href="https://codecov.io/gh/DavidKk/qiniu-uploader"><img src="https://codecov.io/gh/DavidKk/qiniu-uploader/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader"><img src="https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/badge.svg?t=0" alt="Document"></a>
+<a href="https://dependencyci.com/github/DavidKk/qiniu-uploader"><img src="https://dependencyci.com/github/DavidKk/qiniu-uploader/badge" alt="Dependency Status"></a></p>
+<p><a href="https://saucelabs.com/beta/builds/72e6def51c8c4388af6212cbc2171461"><img src="https://saucelabs.com/browser-matrix/DavidKk.svg" alt="Build Status"></a>
+<a href="https://github.com/DavidKk/qiniu-uploader/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="GitHub"></a>
+<a href="https://github.com/996icu/996.ICU/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Anti%20996-blue.svg" alt="LICENSE"></a></p>
+<h1 id="&#x4E03;&#x725B;&#x4E0A;&#x4F20;&#x63A7;&#x4EF6;">&#x4E03;&#x725B;&#x4E0A;&#x4F20;&#x63A7;&#x4EF6;</h1><h2 id="&#x4E8B;&#x4F8B;">&#x4E8B;&#x4F8B;</h2><ul>
+<li><a href="https://davidkk.github.io/qiniu-uploader/demo/">Qiniu Clound Mock</a></li>
+<li><a href="https://github.com/DavidKk/qiniu-uploader/tree/master/unitest">Unit Test</a></li>
+</ul>
+<h2 id="&#x6587;&#x6863;">&#x6587;&#x6863;</h2><ul>
+<li><a href="https://davidkk.github.io/qiniu-uploader/">&#x4F7F;&#x7528;&#x6587;&#x6863;</a></li>
+<li><a href="https://davidkk.github.io/qiniu-uploader/esdoc/">&#x5F00;&#x53D1;&#x6587;&#x6863;</a></li>
+</ul>
+<h2 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h2><pre><code><code class="source-code prettyprint">yarn add qiniup</code>
+</code></pre><h2 id="&#x7279;&#x70B9;">&#x7279;&#x70B9;</h2><ul>
+<li>&#x652F;&#x6301;&#x5206;&#x5757;&#x5206;&#x7247;&#x4E0A;&#x4F20;</li>
+<li>&#x652F;&#x6301;&#x65AD;&#x70B9;&#x7EED;&#x4F20;</li>
+<li>&#x652F;&#x6301; base64 &#x6587;&#x4EF6;&#x4E0A;&#x4F20;</li>
+</ul>
+<h2 id="&#x4F7F;&#x7528;">&#x4F7F;&#x7528;</h2><pre><code class="lang-Javascript"><code class="source-code prettyprint">import { Uploader } from &apos;qiniup&apos;
+
+// Docs: https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/class/src/uploader.js~Uploader.html#instance-constructor-constructor
+let qiniup = new Uploader()
+
+let params = { token: &apos;generated by sdk&apos; }
+
+// Docs: https://doc.esdoc.org/github.com/DavidKk/qiniu-uploader/class/src/uploader.js~Uploader.html#instance-method-upload
+qiniup.upload(file, params, { resumingByFileSize: 4 * 1024 * 1024 /** &#x9ED8;&#x8BA4;&#x4E5F;&#x4E3A; 4M, &#x5982;&#x679C;&#x5927;&#x4E8E;4M&#x5219;&#x4F7F;&#x7528;&#x5206;&#x5757;&#x5206;&#x7247;(&#x540C;&#x65F6;&#x652F;&#x6301;&#x65AD;&#x70B9;&#x7EED;&#x4F20;)&#x4E0A;&#x4F20; */ }, function (error) {
+  if (error) {
+    console.log(error)
+    return
+  }
+
+  // upload success, somthing todo...
+})
+</code>
+</code></pre>
+<h2 id="&#x52A8;&#x6001;&#x83B7;&#x53D6;-token">&#x52A8;&#x6001;&#x83B7;&#x53D6; token</h2><pre><code class="lang-Javascript"><code class="source-code prettyprint">let qiniup = new Uploader({
+  tokenGetter (callback) {
+    // do some async or sync request logic to get token
+    callback(null, token)
+
+    // or
+    // &#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF08;&#x5728; 0.2.0 &#x7248;&#x672C;&#x4EE5;&#x4E0A;&#x624D;&#x9002;&#x7528;&#xFF09;
+    callback(null, { token, expire })
+  }
+})</code>
+</code></pre>
+<h2 id="&#x83B7;&#x53D6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;">&#x83B7;&#x53D6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;</h2><pre><code class="lang-Javascript"><code class="source-code prettyprint">let progress = (event) =&gt; {
+  console.log(&apos;&#x5F53;&#x524D;&#x8FDB;&#x5EA6;&#x4E3A;&apos;, event.loaded)
+  console.log(&apos;&#x603B;&#x8FDB;&#x5EA6;&#x4E3A;&apos;, event.total)
+  console.log(&apos;&#x8FDB;&#x7A0B;&#x767E;&#x5206;&#x6BD4;&apos;, event.loaded / event.total)
+
+  console.log(&apos;&#x4E0A;&#x4F20;&#x4E8B;&#x4EF6;&#x7C7B;&#x578B;&apos;, event.type)
+  console.log(&apos;&#x5F53;&#x524D;&#x4E0A;&#x4F20;&#x8FDB;&#x7A0B;&apos;, event.process)
+  console.log(&apos;&#x6240;&#x6709;&#x5DF2;&#x6CE8;&#x518C;&#x4E0A;&#x4F20;&#x8FDB;&#x7A0B;&apos;, event.processes)
+}
+
+// `resumingByFileSize = 0` &#x8868;&#x793A;&#x4E00;&#x5B9A;&#x4F7F;&#x7528;&#x5206;&#x6BB5;&#x4E0A;&#x4F20;
+qiniup.upload(file, params, { resumingByFileSize: 0, progress }, function () {
+  // do something...
+})</code>
+</code></pre>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

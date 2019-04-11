@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/tunnel.js | qiniup</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Qiniu Uploader"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="qiniup"><meta property="twitter:description" content="Qiniu Uploader"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/enum.js~Enum.html">Enum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~QiniupEvent.html">QiniupEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/storage.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tunnel.js~Tunnel.html">Tunnel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-configure">configure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-upload">upload</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNumeric">isNumeric</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sizeStringify">sizeStringify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BASE64_REGEXP">BASE64_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-G">G</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M">M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTPS_URL">QINIU_UPLOAD_HTTPS_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTP_URL">QINIU_UPLOAD_HTTP_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REMOTE_FILE_URL_REGEXP">REMOTE_FILE_URL_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STORAGE_PREFIX">STORAGE_PREFIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED">SUPPORTED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Request">Request</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/tunnel.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import isEmpty from &apos;lodash/isEmpty&apos;
+import isArray from &apos;lodash/isArray&apos;
+import isString from &apos;lodash/isString&apos;
+import isNumber from &apos;lodash/isNumber&apos;
+import isInteger from &apos;lodash/isInteger&apos;
+import isFunction from &apos;lodash/isFunction&apos;
+import isPlainObject from &apos;lodash/isPlainObject&apos;
+import map from &apos;lodash/map&apos;
+import times from &apos;lodash/times&apos;
+import forEach from &apos;lodash/forEach&apos;
+import assign from &apos;lodash/assign&apos;
+import sortBy from &apos;lodash/sortBy&apos;
+import defaultsDeep from &apos;lodash/defaultsDeep&apos;
+import waterfall from &apos;async/waterfall&apos;
+import parallel from &apos;async/parallel&apos;
+import * as http from &apos;./request&apos;
+import * as CONFIG from &apos;./config&apos;
+import { File } from &apos;./file&apos;
+import { QiniupEvent } from &apos;./event&apos;
+import { isNumeric } from &apos;./utils&apos;
+
+/**
+ * &#x4E03;&#x725B;&#x901A;&#x9053;&#x7C7B;
+ * &#x652F;&#x6301;&#x666E;&#x901A;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#xFF0C;&#x9002;&#x5408;&#x56FE;&#x7247;&#x6587;&#x672C;&#x7B49;&#x5C0F;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;
+ * &#x652F;&#x6301; Base64 &#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#xFF0C;Base64 &#x5B57;&#x7B26;&#x4E32;&#x957F;&#x5EA6;&#x5E76;&#x4E0D;&#x7B49;&#x4E8E;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x53EF;&#x53C2;&#x8003;&#xFF1A;https://en.wikipedia.org/wiki/Base64
+ * &#x652F;&#x6301;&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#xFF0C;&#x7F13;&#x5B58;&#x4E0A;&#x4F20;&#x4E86;&#x7684;&#x5757;&#x4E0E;&#x7247;&#x4FDD;&#x5B58;&#x5728;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x82E5;&#x6E05;&#x9664;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x5219;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x80FD;&#x7EE7;&#x7EED;&#x4E0A;&#x6B21;&#x7684;&#x65AD;&#x70B9;
+ * &#x5757;&#x5927;&#x5C0F;&#xFF0C;&#x6BCF;&#x5757;&#x5747;&#x4E3A;4MB&#xFF08;1024*1024*4&#xFF09;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x5757;&#x5927;&#x5C0F;&#x4E0D;&#x8D85;&#x8FC7;4MB
+ * &#x6240;&#x6709;&#x63A5;&#x53E3;&#x5747;&#x53C2;&#x8003;&#x4E03;&#x725B;&#x5B98;&#x65B9;&#x6587;&#x6863;&#xFF0C;&#x4E00;&#x5207;&#x5747;&#x4EE5;&#x4E03;&#x725B;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E3A;&#x51C6;
+ * @class
+ */
+export class Tunnel {
+  /**
+   * &#x4E03;&#x725B;&#x901A;&#x9053;&#x7C7B;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;
+   * @type {Object}
+   * @property {Boolean} defaultSettings.useHttps &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @property {Boolean} defaultSettings.cache &#x662F;&#x5426;&#x7F13;&#x5B58;
+   * @property {Integer} defaultSettings.maxConnect &#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;
+   * @property {Integer} defaultSettings.blockSize &#x5206;&#x5757;&#x5927;&#x5C0F;
+   * @property {Integer} defaultSettings.blockSize &#x5206;&#x7247;&#x5927;&#x5C0F;
+   * @property {Integer} defaultSettings.maxBlockTasks &#x6700;&#x5927;&#x5206;&#x5757;&#x4EFB;&#x52A1;&#x6570;, &#x82E5;&#x6587;&#x4EF6;&#x5DE8;&#x5927;, &#x53EF;&#x80FD;&#x5206;&#x5757;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5361;&#x6B7B;&#x6D4F;&#x89C8;&#x5668;, &#x56E0;&#x6B64;&#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x5206;&#x5757;&#x6570;
+   */
+  static defaultSettings = {
+    useHttps: typeof window === &apos;undefined&apos; ? false : window.location.protocol,
+    cache: false,
+    maxConnect: 4,
+    blockSize: 4 * CONFIG.M,
+    chunkSize: 1 * CONFIG.M,
+    maxFileSize: 1 * CONFIG.G,
+    maxBlockTasks: 2000
+  }
+
+  /**
+   * &#x521B;&#x5EFA;&#x901A;&#x9053;&#x7C7B;&#x5BF9;&#x8C61;
+   * @param {Object} [options] &#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;{@link Tunnel.defaultSettings}
+   * @param {Object} [options.useHttps=true] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {Boolean} [options.cache=false] &#x662F;&#x5426;&#x7F13;&#x5B58;
+   * @param {Integer} [options.maxConnect=4] &#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;
+   * @param {Integer} [options.blockSize=4 * M] &#x5206;&#x5757;&#x5927;&#x5C0F;
+   * @param {Integer} [options.chunkSize=1 * M] &#x5206;&#x7247;&#x5927;&#x5C0F;
+   * @return {Tunnel}
+   */
+  constructor (options, request = http) {
+    /**
+     * &#x914D;&#x7F6E;
+     * @type {Object}
+     */
+    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)
+
+    /**
+     * &#x4EE4;&#x724C;
+     * @type {String}
+     */
+    this.token = &apos;&apos;
+
+    /**
+     * &#x4EE4;&#x724C;&#x8FC7;&#x671F;&#x65F6;&#x95F4;
+     * @type {Integer}
+     */
+    this.tokenExpire = 0
+
+    /**
+     * &#x8BBE;&#x7F6E; request
+     * @type {Object}
+     */
+    this.request = request
+  }
+
+  _execTokenGetter (getter, callback) {
+    if (!isFunction(getter)) {
+      throw new TypeError(&apos;Getter is not a fucntion&apos;)
+    }
+
+    if (this.tokenExpire &gt; Date.now() &amp;&amp; this.token) {
+      return callback(null, this.token)
+    }
+
+    getter((error, token) =&gt; {
+      if (error) {
+        return callback(error)
+      }
+
+      if (isPlainObject(token)) {
+        this.token = token.token
+        this.tokenExpire = isNumeric(token.expire) ? token.expire * 1 : 0
+      } else {
+        this.token = token
+        this.tokenExpire = 0
+      }
+
+      return callback(null, this.token)
+    })
+  }
+
+  /**
+   * &#x7B2C;&#x4E09;&#x65B9;&#x8D44;&#x6E90;&#x6293;&#x53D6;
+   *
+   * @see https://developer.qiniu.com/kodo/api/1263/fetch
+   *
+   * @param {String} file &#x8FDC;&#x7A0B;&#x6587;&#x4EF6;
+   * @param {Object} [params={}] &#x4E0A;&#x4F20;&#x53C2;&#x6570;
+   * @param {Object} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Object} [params.key] &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5219;: &#x5982;&#x679C; uptoken.SaveKey &#x5B58;&#x5728;&#x5219;&#x57FA;&#x4E8E; SaveKey &#x751F;&#x4EA7; key&#xFF0C;&#x5426;&#x5219;&#x7528; hash &#x503C;&#x4F5C; key&#x3002;EncodedKey &#x9700;&#x8981;&#x7ECF;&#x8FC7; base64 &#x7F16;&#x7801;
+   * @param {Object} [params.bucket] &#x6307;&#x5B9A;&#x7684;&#x5B58;&#x50A8;&#x533A;&#x57DF; https://developer.qiniu.com/kodo/api/3966/bucket-image-source
+   * @param {Object} [options={}] &#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+   * @memberof Tunnel
+   */
+  fetch (file, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (!CONFIG.REMOTE_FILE_URL_REGEXP.test(file)) {
+      callback(new TypeError(&apos;File is not provided or invalid remote source url&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.fetch(file, assign({ token }, params), options, callback)
+      })
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let { bucket, key } = params
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}/fetch/${window.btoa(file)}/to/${bucket}:${key}`
+    let headers = {
+      &apos;Content-Type&apos;: &apos;application/x-www-form-urlencoded&apos;,
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    return this.request.post(url, null, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x4E0A;&#x4F20;&#x6587;&#x4EF6;
+   * &#x666E;&#x901A;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#xFF0C;&#x9002;&#x5408;&#x5C0F;&#x6587;&#x4EF6;
+   *
+   * @param {File|Blob} file &#x6587;&#x4EF6;
+   * @param {Object} [params={}] &#x4E0A;&#x4F20;&#x53C2;&#x6570;
+   * @param {Object} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Object} [params.key] &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5219;&#xFF1A;&#x5982;&#x679C; uptoken.SaveKey &#x5B58;&#x5728;&#x5219;&#x57FA;&#x4E8E; SaveKey &#x751F;&#x4EA7; key&#xFF0C;&#x5426;&#x5219;&#x7528; hash &#x503C;&#x4F5C; key&#x3002;EncodedKey &#x9700;&#x8981;&#x7ECF;&#x8FC7; base64 &#x7F16;&#x7801;
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {Function} callback &#x56DE;&#x8C03;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  upload (file, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (!(file instanceof File || file instanceof window.Blob)) {
+      callback(new TypeError(&apos;File is not provided or not instanceof File&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.upload(file, assign({ token }, params), options, callback)
+      })
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}`
+    let datas = assign({ file: file.file }, params)
+    let headers = {
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    return this.request.upload(url, datas, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x4E0A;&#x4F20; base64 &#x8D44;&#x6E90;
+   * @see https://developer.qiniu.com/kodo/kb/1326/how-to-upload-photos-to-seven-niuyun-base64-code
+   *
+   * @param {string} content base64&#x6587;&#x4EF6;&#x6570;&#x636E;
+   * @param {Object} params &#x4E0A;&#x4F20;&#x53C2;&#x6570;
+   * @param {Object} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Integer} [params.size=-1] &#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;-1&#x4E3A;&#x81EA;&#x52A8;&#x83B7;&#x53D6;
+   * @param {Object} [params.key] &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5219;&#xFF1A;&#x5982;&#x679C; uptoken.SaveKey &#x5B58;&#x5728;&#x5219;&#x57FA;&#x4E8E; SaveKey &#x751F;&#x4EA7; key&#xFF0C;&#x5426;&#x5219;&#x7528; hash &#x503C;&#x4F5C; key&#x3002;EncodedKey &#x9700;&#x8981;&#x7ECF;&#x8FC7; base64 &#x7F16;&#x7801;
+   * @param {Object} [params.mimeType] &#x6587;&#x4EF6;&#x7684; MIME &#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; application/octet-stream
+   * @param {Object} [params.crc32] &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x7684; crc32 &#x6821;&#x9A8C;&#x503C;&#xFF0C;&#x4E0D;&#x6307;&#x5B9A;&#x5219;&#x4E0D;&#x8FDB;&#x884C;&#x6821;&#x9A8C;
+   * @param {Object} [params.userVars]
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {Function} callback &#x56DE;&#x8C03;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  upb64 (content, params = { size: -1 }, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (isEmpty(content) || !CONFIG.BASE64_REGEXP.exec(content)) {
+      callback(new TypeError(&apos;Content is not provided or not a valid base64 string&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.upb64(content, assign({ token }, params), options, callback)
+      })
+    }
+
+    if (!(isNumber(params.size) &amp;&amp; isInteger(params.size) &amp;&amp; params.size &gt; 0)) {
+      params.size = -1
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let { size, key, mimeType, crc32, userVars } = params
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}/${size}`
+    if (isString(key) &amp;&amp; key) {
+      url += `/key/${encodeURIComponent(key)}`
+    }
+
+    if (isString(mimeType) &amp;&amp; mimeType) {
+      url += `/mimeType/${encodeURIComponent(mimeType)}`
+    }
+
+    if (isString(crc32) &amp;&amp; crc32) {
+      url += `/crc32/${encodeURIComponent(crc32)}`
+    }
+
+    if (isString(userVars) &amp;&amp; userVars) {
+      url += `/x:user-var/${encodeURIComponent(userVars)}`
+    }
+
+    let datas = content.replace(CONFIG.BASE64_REGEXP, &apos;&apos;)
+    let headers = {
+      &apos;Content-Type&apos;: &apos;application/octet-stream&apos;,
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    return this.request.upload(url, datas, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x4E0A;&#x4F20;&#x5757;:
+   * &#x5757;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x5757;&#x8868;&#x793A;&#x591A;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x96C6;&#x5408;&#x7684;&#x4E00;&#x4E2A;&#x7EDF;&#x79F0;
+   * 1. &#x5C06;&#x6587;&#x4EF6;&#x5206;&#x6210;&#x82E5;&#x5E72;&#x5757;&#xFF0C;&#x53EF;&#x4EE5;&#x5E76;&#x53D1;&#x8FDB;&#x884C;&#x4E0A;&#x4F20;&#xFF0C;&#x800C;&#x5757;&#x4E2D;&#x62E5;&#x6709;&#x591A;&#x4E2A;&#x5206;&#x7247;
+   * &#x6BCF;&#x4E2A;&#x5757;&#x4E0A;&#x4F20;&#x7684;&#x5F00;&#x59CB;&#x5FC5;&#x987B;&#x5C06;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x540C;&#x65F6;&#x4E0A;&#x4F20;
+   * 2. &#x4E0A;&#x4F20;&#x5B8C;&#x4E4B;&#x540E;&#x4F1A;&#x8FD4;&#x56DE;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x54C8;&#x5E0C;&#x503C;(ctx)&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5206;&#x7247;&#x5FC5;
+   * &#x987B;&#x540C;&#x65F6;&#x4E0A;&#x4F20;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x54C8;&#x5E0C;&#x503C;
+   *
+   * @see https://developer.qiniu.com/kodo/api/1286/mkblk
+   *
+   * @param {Blob} block &#x5757;
+   * @param {Object} params &#x4E0A;&#x4F20;&#x53C2;&#x6570;
+   * @param {Object} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {number} [options.chunkSize] &#x8BBE;&#x7F6E;&#x6BCF;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x5927;&#x5C0F;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {mkblkCallback} callback &#x4E0A;&#x4F20;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  mkblk (block, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (!block || !(block instanceof window.Blob)) {
+      callback(new TypeError(&apos;Block is not provided or not instanceof Blob&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.mkblk(block, assign({ token }, params), options, callback)
+      })
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let { chunkSize, useHttps, host, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}/mkblk/${block.size}`
+    let headers = {
+      &apos;Content-Type&apos;: &apos;application/octet-stream&apos;,
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    let chunk = block.slice(0, chunkSize, block.type)
+    return this.request.upload(url, chunk, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x4E0A;&#x4F20;&#x5206;&#x7247;
+   * 1. &#x591A;&#x4E2A;&#x5206;&#x7247;&#x53EF;&#x4EE5;&#x7EC4;&#x6210;&#x4E00;&#x4E2A;&#x5757;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x5F00;&#x59CB;&#x4E0E;&#x7ED3;&#x5C3E;&#x90FD;&#x5FC5;&#x987B;
+   * &#x5728;&#x521B;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x5E76;&#x5B9A;&#x4E49;&#x597D;&#xFF0C;&#x4E14;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x5728;&#x4E0A;&#x4F20;&#x5757;&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;
+   * &#x4E00;&#x5E76;&#x4E0A;&#x4F20;
+   * 2. &#x4E03;&#x725B;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x503C;&#xFF08;ctx&#xFF09;&#xFF0C;&#x4E0A;&#x4F20;&#x4E0B;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;
+   * &#x5C06;&#x524D;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x540C;&#x65F6;&#x4E0A;&#x4F20;&#x7ED9;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5206;&#x7247;&#x62FF;&#x521B;&#x5EFA;
+   * &#x5757;&#x65F6;&#x4E0A;&#x4F20;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x8303;&#x56F4;&#x7684;&#x54C8;&#x5E0C;&#x503C;
+   * 3. &#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x503C;&#x4EE3;&#x8868;&#x8BE5;&#x5757;&#x7684;&#x7ED3;&#x675F;&#xFF0C;&#x5FC5;&#x987B;&#x8BB0;&#x5F55;&#x597D;&#x54C8;&#x5E0C;&#x503C;(ctx)&#xFF1B;
+   * &#x5728;&#x5408;&#x5E76;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E9B;&#x6700;&#x540E;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x8FDB;&#x884C;&#x5408;&#x6210;&#x6587;&#x4EF6;
+   *
+   * @see https://developer.qiniu.com/kodo/api/1251/bput
+   *
+   * @param {Blob} chunk &#x7247;
+   * @param {Object} params &#x53C2;&#x6570;
+   * @param {String} params.ctx &#x524D;&#x4E00;&#x6B21;&#x4E0A;&#x4F20;&#x8FD4;&#x56DE;&#x7684;&#x5757;&#x7EA7;&#x4E0A;&#x4F20;&#x63A7;&#x5236;&#x4FE1;&#x606F;
+   * @param {String} params.offset &#x5F53;&#x524D;&#x7247;&#x5728;&#x6574;&#x4E2A;&#x5757;&#x4E2D;&#x7684;&#x8D77;&#x59CB;&#x504F;&#x79FB;
+   * @param {String} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {Function} callback &#x56DE;&#x8C03;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  bput (chunk, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (!chunk || !(chunk instanceof window.Blob)) {
+      callback(new TypeError(&apos;Block is not provided or not instanceof Blob&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.bput(chunk, assign({ token }, params), options, callback)
+      })
+    }
+
+    let { ctx, offset } = params
+    if (!isString(params.ctx)) {
+      callback(new TypeError(&apos;Params.ctx is not provided or not be a valid string&apos;))
+      return
+    }
+
+    if (!(isNumber(offset) &amp;&amp; isInteger(offset) &amp;&amp; offset &gt; 0)) {
+      callback(new TypeError(&apos;Params.offset is not provided or not be a valid interger&apos;))
+      return
+    }
+
+    options = defaultsDeep(options, this.settings)
+
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}/bput/${ctx}/${offset}`
+    let headers = {
+      &apos;Content-Type&apos;: &apos;application/octet-stream&apos;,
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    return this.request.upload(url, chunk, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x63D0;&#x4EA4;&#x7EC4;&#x5408;&#x6587;&#x4EF6;&#xFF0C;&#x5C06;&#x6240;&#x6709;&#x5757;&#x4E0E;&#x5206;&#x7247;&#x7EC4;&#x5408;&#x8D77;&#x6765;&#x5E76;&#x751F;&#x6210;&#x6587;&#x4EF6;
+   * &#x5F53;&#x6240;&#x6709;&#x5757;&#x4E0E;&#x5206;&#x7247;&#x90FD;&#x4E0A;&#x4F20;&#x4E86;&#xFF0C;&#x5C06;&#x6240;&#x6709;&#x5757;&#x7684;&#x8FD4;&#x56DE;
+   *
+   * @see https://developer.qiniu.com/kodo/api/1287/mkfile
+   *
+   * @param {Array|String} ctxs &#x6587;&#x4EF6;
+   * @param {Object} params &#x53C2;&#x6570;
+   * @param {Integer} params.size &#x6587;&#x4EF6;&#x5927;&#x5C0F;
+   * @param {Object} [params.key] &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5219;&#xFF1A;&#x5982;&#x679C; uptoken.SaveKey &#x5B58;&#x5728;&#x5219;&#x57FA;&#x4E8E; SaveKey &#x751F;&#x4EA7; key&#xFF0C;&#x5426;&#x5219;&#x7528; hash &#x503C;&#x4F5C; key&#x3002;EncodedKey &#x9700;&#x8981;&#x7ECF;&#x8FC7; base64 &#x7F16;&#x7801;
+   * @param {Object} [params.mimeType] &#x6587;&#x4EF6;&#x7684; MIME &#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; application/octet-stream
+   * @param {Object} [params.crc32] &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x7684; crc32 &#x6821;&#x9A8C;&#x503C;&#xFF0C;&#x4E0D;&#x6307;&#x5B9A;&#x5219;&#x4E0D;&#x8FDB;&#x884C;&#x6821;&#x9A8C;
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {Function} callback &#x56DE;&#x8C03;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  mkfile (ctxs, params = {}, options = {}, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (isEmpty(ctxs) || !(isArray(ctxs) || isString(ctxs))) {
+      callback(new TypeError(&apos;Ctxs is not provided or not be a valid value&apos;))
+      return
+    }
+
+    let { token } = params
+    let { tokenGetter } = options
+    if (!(isString(token) &amp;&amp; token)) {
+      if (!isFunction(tokenGetter)) {
+        callback(new TypeError(&apos;Token is not provided&apos;))
+        return
+      }
+
+      return this._execTokenGetter(tokenGetter, (error, token) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        return this.mkfile(ctxs, assign({ token }, params), options, callback)
+      })
+    }
+
+    let { size } = params
+    if (!(isNumber(size) &amp;&amp; isInteger(size) &amp;&amp; size &gt; 0)) {
+      callback(new TypeError(&apos;Param.size is not provided or not be a valid integer&apos;))
+      return
+    }
+
+    let { host, useHttps, tokenPrefix } = options
+    host = host || (useHttps ? CONFIG.QINIU_UPLOAD_HTTPS_URL : CONFIG.QINIU_UPLOAD_HTTP_URL)
+
+    let url = `${useHttps ? &apos;https:&apos; : &apos;http:&apos;}//${host}/mkfile/${size}`
+    let { key, mimeType, crc32, userVars } = params
+    if (isString(key) &amp;&amp; key) {
+      url += `/key/${encodeURIComponent(key)}`
+    }
+
+    if (isString(mimeType) &amp;&amp; mimeType) {
+      url += `/mimeType/${encodeURIComponent(mimeType)}`
+    }
+
+    if (isString(crc32) &amp;&amp; crc32) {
+      url += `/crc32/${encodeURIComponent(crc32)}`
+    }
+
+    if (isString(userVars) &amp;&amp; userVars) {
+      url += `/x:user-var/${encodeURIComponent(userVars)}`
+    }
+
+    let data = isArray(ctxs) ? ctxs.join(&apos;,&apos;) : ctxs
+    let headers = {
+      &apos;Content-Type&apos;: &apos;application/octet-stream&apos;,
+      Authorization: `${tokenPrefix || &apos;UpToken&apos;} ${token}`
+    }
+
+    return this.request.upload(url, data, assign({ headers }, options), callback)
+  }
+
+  /**
+   * &#x5206;&#x5272;&#x6587;&#x4EF6;&#x5E76;&#x4E0A;&#x4F20;
+   * &#x4E00;&#x6B21;&#x8FC7;&#x5C06;&#x6587;&#x4EF6;&#x5206;&#x6210;&#x591A;&#x4E2A;&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x5E76;&#x53D1;&#x4E0A;&#x4F20;
+   * &#x4E0A;&#x4F20;&#x7684;&#x5FEB;&#x6162;&#x5E76;&#x4E0D;&#x4EE3;&#x8868;&#x5206;&#x4E2A;&#x6570;&#x7684;&#x5927;&#x5C0F;, &#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;
+   * &#x521B;&#x5EFA;&#x9002;&#x5F53;&#x591A;&#x4E2A;&#x5757;(Block), &#x56E0;&#x4E3A;&#x6CA1;&#x4E0A;&#x4F20;&#x7684;&#x5757;&#x53EA;&#x662F;&#x963B;&#x585E;
+   * &#x5728;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x4E2D;
+   *
+   * @param {File|Blob} file &#x6587;&#x4EF6;
+   * @param {Object} params &#x4E0A;&#x4F20;&#x53C2;&#x6570;
+   * @param {Object} params.token &#x4E03;&#x725B;&#x4EE4;&#x724C;
+   * @param {Object} [params.key] &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5219;&#xFF1A;&#x5982;&#x679C; uptoken.SaveKey &#x5B58;&#x5728;&#x5219;&#x57FA;&#x4E8E; SaveKey &#x751F;&#x4EA7; key&#xFF0C;&#x5426;&#x5219;&#x7528; hash &#x503C;&#x4F5C; key&#x3002;EncodedKey &#x9700;&#x8981;&#x7ECF;&#x8FC7; base64 &#x7F16;&#x7801;
+   * @param {Object} [params.mimeType] &#x6587;&#x4EF6;&#x7684; MIME &#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; application/octet-stream
+   * @param {Object} [params.crc32] &#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x7684; crc32 &#x6821;&#x9A8C;&#x503C;&#xFF0C;&#x4E0D;&#x6307;&#x5B9A;&#x5219;&#x4E0D;&#x8FDB;&#x884C;&#x6821;&#x9A8C;
+   * @param {Object} [options={}] &#x4E0A;&#x4F20;&#x914D;&#x7F6E;
+   * @param {Function} [options.tokenGetter] &#x83B7;&#x53D6; Token &#x62E6;&#x622A;&#x5668;
+   * @param {Boolean} [options.useHttps] &#x662F;&#x5426;&#x4F7F;&#x7528; Https &#x8FDB;&#x884C;&#x4E0A;&#x4F20;
+   * @param {String} [options.host] &#x4E03;&#x725B;HOST https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+   * @param {String} [options.tokenPrefix] &#x4EE4;&#x724C;&#x524D;&#x7F00;
+   * @param {Boolean} [options.cache=true] &#x8BBE;&#x7F6E;&#x672C;&#x5730;&#x7F13;&#x5B58;
+   * @param {Boolean} [options.override=false] &#x65E0;&#x8BBA;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x4E0A;&#x4F20;&#x90FD;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x4E0A;&#x4F20;
+   * @param {Integer} [options.maxConnect=4] &#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;&#xFF0C;&#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x4E0A;&#x4F20;&#x5206;&#x5757;(Block)&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x5176;&#x4F59;&#x5206;&#x5757;(Block)&#x5C06;&#x4F1A;&#x63D2;&#x5165;&#x961F;&#x5217;&#x4E2D;
+   * @param {Function} [options.progress] &#x4E0A;&#x4F20;&#x8FDB;&#x5EA6;
+   * @param {Function} callback &#x56DE;&#x8C03;
+   * @returns {Object} state
+   * @returns {XMLHttpsRequest} state.xhr AJAX &#x5BF9;&#x8C61;
+   * @returns {Function} state.cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+   */
+  resuming (file, params, options, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provied or not be a function&apos;)
+    }
+
+    if (!(file instanceof File)) {
+      callback(new TypeError(&apos;File is not provided or not instanceof File (QiniuUploader.File)&apos;))
+      return
+    }
+
+    options = defaultsDeep(options, { cache: true, override: false }, this.settings)
+
+    let { maxConnect } = options
+    if (!(isInteger(maxConnect) &amp;&amp; maxConnect &gt; 0)) {
+      callback(new TypeError(&apos;Options.maxConnect is invalid or not a integer&apos;))
+      return
+    }
+
+    let {
+      blockSize: perBlockSize,
+      chunkSize: perChunkSize
+    } = options
+
+    if (!isInteger(perBlockSize)) {
+      callback(new TypeError(&apos;Block size is not a integer&apos;))
+      return
+    }
+
+    if (!isInteger(perChunkSize)) {
+      callback(new TypeError(&apos;Chunk size is not a integer&apos;))
+      return
+    }
+
+    if (perBlockSize &lt; perChunkSize) {
+      callback(new Error(&apos;Chunk size must less than block size&apos;))
+      return
+    }
+
+    let { maxFileSize } = options
+    if (file.size &gt; maxFileSize) {
+      callback(new Error(`File size must less than ${maxFileSize}`))
+      return
+    }
+
+    if (!isInteger(maxFileSize)) {
+      callback(new TypeError(&apos;MaxFileSize is not a integer&apos;))
+      return
+    }
+
+    let _resumingProgressHandle = options.progress
+    options.progress = undefined
+
+    let processes = []
+    let listenProgress = isFunction(_resumingProgressHandle)
+
+    let registerRequest = function (type, request, progressRelativeData) {
+      if (!(request &amp;&amp; request.xhr &amp;&amp; request.xhr instanceof window.XMLHttpRequest)) {
+        return
+      }
+
+      let { xhr } = request
+
+      /* eslint standard/object-curly-even-spacing:0 */
+      let process = { request, xhr /** , size, beginOffset, endOffset */ }
+
+      if (!isEmpty(progressRelativeData)) {
+        assign(process, progressRelativeData)
+
+        if (listenProgress) {
+          xhr.upload.addEventListener(&apos;progress&apos;, (event) =&gt; {
+            if (event.lengthComputable) {
+              process.loaded = event.loaded
+              process.total = event.total
+            }
+
+            triggerRequestProgress(type, xhr, process)
+          }, false)
+        }
+      }
+
+      type === &apos;bput&apos; &amp;&amp; processes.push(process)
+    }
+
+    let triggerRequestProgress = function (type, xhr, process) {
+      let uploadSize = 0
+
+      forEach(processes, function ({ size, loaded, total, beginPos, endPos }) {
+        if (isInteger(size) &amp;&amp; isInteger(loaded) &amp;&amp; isInteger(total)) {
+          uploadSize += size * loaded / total
+        }
+      })
+
+      let event = new QiniupEvent(type)
+      event.processes = processes
+      event.process = process
+      event.loaded = uploadSize
+      event.total = file.size
+
+      let nowDatetime = Date.now()
+      let spendTime = nowDatetime - startDatetime
+      let size = event.loaded
+      let time = spendTime / 1000
+      let speed = size / time || 0
+      let description = `${speed.toFixed(2)}Byte/s`
+
+      if (speed &gt; CONFIG.G) {
+        description = `${(speed / CONFIG.G).toFixed(2)}Gb/s`
+      } else if (speed &gt; CONFIG.M) {
+        description = `${(speed / CONFIG.M).toFixed(2)}Mb/s`
+      } else if (speed &gt; CONFIG.K) {
+        description = `${(speed / CONFIG.K).toFixed(2)}Kb/s`
+      }
+
+      event.during = time
+      event.speed = speed
+      event.speedDescription = description
+
+      _resumingProgressHandle.call(xhr, event)
+    }
+
+    let abortRequest = function () {
+      forEach(processes, ({ request }) =&gt; request.cancel())
+    }
+
+    /**
+     * &#x521B;&#x5EFA;&#x5206;&#x5757;&#x4EFB;&#x52A1;
+     * @param {File} file &#x6587;&#x4EF6;&#x5BF9;&#x8C61;
+     * @param {Integer} beginPos &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;
+     * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+     * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+     */
+    let mkblk = (file, beginPos, endPos, info, callback) =&gt; {
+      /**
+       * &#x5982;&#x679C;&#x8BE5;&#x6BB5;&#x5DF2;&#x7ECF;&#x88AB;&#x4E0A;&#x4F20;&#x5219;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x5207;&#x5272;&#x4EFB;&#x52A1;
+       * &#x6BCF;&#x6B21;&#x5207;&#x5272;&#x4EFB;&#x52A1;&#x90FD;&#x5FC5;&#x987B;&#x5224;&#x65AD;&#x5206;&#x7247;(Chunk)&#x662F;&#x5426;&#x4E0A;&#x4F20;&#x5B8C;&#x6210;
+       */
+      let state = file.getState(beginPos, endPos)
+      if (info.options.override === false &amp;&amp; state) {
+        callback(null, state)
+        return
+      }
+
+      /**
+       * &#x5F53;&#x5230;&#x8BE5;&#x6BB5;&#x4E0A;&#x4F20;&#x7684;&#x65F6;&#x5019;&#x624D;&#x8FDB;&#x884C;&#x5207;&#x5272;&#xFF0C;&#x5426;&#x5219;&#x5927;&#x578B;&#x6587;&#x4EF6;&#x5728;&#x5207;&#x5272;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x53D8;&#x5F97;&#x597D;&#x5361;
+       * &#x8FD9;&#x6837;&#x4E5F;&#x80FD;&#x51CF;&#x5C11;&#x8D44;&#x6E90;&#x4E0E;&#x5185;&#x5B58;&#x7684;&#x6D88;&#x8017;
+       */
+      let block = file.slice(beginPos, endPos)
+      let request = this.mkblk(block, info.params, info.options, (error, response) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        let state = assign({ status: &apos;uploaded&apos;, beginPos, endPos }, response)
+        file.setState(beginPos, endPos, state, info.options.cache)
+        callback(null, assign({ file, block, state }, info))
+      })
+
+      /**
+       * &#x8FD9;&#x91CC;&#x662F;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x5206;&#x5757;(block)&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;(chunk)
+       * &#x4E0E;&#x4E0A;&#x9762;&#x7684;&#x672B;&#x4F4D;&#x7F6E;&#x4E0D;&#x540C;(endPos)
+       */
+      let size = block.size &gt; perChunkSize ? perChunkSize : block.size
+      registerRequest(&apos;mkblk&apos;, request, { size: block.size, beginOffset: beginPos, endOffset: endPos })
+      registerRequest(&apos;bput&apos;, request, { size, beginOffset: beginPos, endOffset: beginPos + size })
+    }
+
+    /**
+     * &#x521B;&#x5EFA;&#x5206;&#x7247;&#x4EFB;&#x52A1;
+     * @param {Blob} block &#x5206;&#x5757;
+     * @param {File} file &#x6587;&#x4EF6;&#x5BF9;&#x8C61;
+     * @param {String} ctx &#x4E03;&#x725B;&#x521B;&#x5EFA;&#x5206;&#x5757;&#x5E76;&#x4E0A;&#x4F20;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;&#x5B8C;&#x6210;&#x540E;&#x8FD4;&#x56DE;&#x54C8;&#x5E0C;&#x503C;
+     * @param {Integer} beginPos &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;
+     * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+     * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+     */
+    let mkchk = (block, beginPos, endPos, info, callback) =&gt; {
+      /**
+       * &#x5982;&#x679C;&#x8BE5;&#x6BB5;&#x5DF2;&#x7ECF;&#x88AB;&#x4E0A;&#x4F20;&#x5219;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x5207;&#x5272;&#x4EFB;&#x52A1;
+       * &#x6BCF;&#x6B21;&#x5207;&#x5272;&#x4EFB;&#x52A1;&#x90FD;&#x5FC5;&#x987B;&#x5224;&#x65AD;&#x5206;&#x7247;(Chunk)&#x662F;&#x5426;&#x4E0A;&#x4F20;&#x5B8C;&#x6210;
+       */
+      let state = info.file.getState(info.beginOffset, info.endOffset)
+      if (info.options.override === false &amp;&amp; state) {
+        callback(null, state)
+        return
+      }
+
+      let chunk = block.slice(beginPos, endPos, block.type)
+      let params = assign({ ctx: info.ctx, offset: beginPos }, info.params)
+      let request = this.bput(chunk, params, info.options, (error, response) =&gt; {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        let state = assign({ status: &apos;uploaded&apos;, beginPos, endPos }, response)
+        file.setState(beginPos, endPos, state, info.options.cache)
+        callback(null, assign({ state, chunk, block }, info))
+      })
+
+      let datas = {
+        size: chunk.size,
+        beginOffset: info.beginOffset,
+        endOffset: info.endOffset
+      }
+
+      registerRequest(&apos;bput&apos;, request, datas)
+    }
+
+    let totalBlockNo = Math.ceil(file.size / perBlockSize)
+    if (totalBlockNo &gt; options.maxBlockTasks) {
+      callback(new Error(`Block total number (${totalBlockNo}) is too large, it must be less than ${options.maxBlockTasks}, please check uploader options`))
+      return
+    }
+
+    let tasks = times(totalBlockNo, (blockNo) =&gt; {
+      let tasks = []
+      let blockOffset = perBlockSize * blockNo
+      let blockBeginPos = blockOffset
+      let blockEndPos = blockOffset + perBlockSize
+
+      if (blockEndPos &gt; file.size) {
+        blockEndPos = file.size
+      }
+
+      /**
+       * &#x56E0;&#x4E3A;&#x4E0A;&#x4F20;&#x5757;(Block)&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;&#x540C;&#x65F6;&#x4E0A;&#x4F20;&#x7B2C;&#x4E00;&#x4E2A;&#x5207;&#x5272;&#x7247;(Chunk)
+       * &#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5224;&#x65AD;&#x5F53;&#x524D;&#x5757;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5207;&#x7247;(Chunk)&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x4E0A;&#x4F20;
+       * &#x4E0D;&#x7528;&#x989D;&#x5916;&#x5C06;&#x5757;(Block)&#x4E0A;&#x4F20;&#x4FE1;&#x606F;&#x53E6;&#x5916;&#x4FDD;&#x5B58;&#x8D77;&#x6765;
+       */
+      let task = (callback) =&gt; {
+        let info = { params, options }
+        return mkblk(file, blockBeginPos, blockEndPos, info, callback)
+      }
+
+      tasks.push(task)
+
+      /**
+       * &#x4E0A;&#x4F20;&#x7247;(Chunk)
+       * &#x6BCF;&#x4E2A;&#x5757;&#x90FD;&#x7531;&#x8BB8;&#x591A;&#x7247;(Chunk)&#x7EC4;&#x6210;
+       * &#x56E0;&#x6B64;&#x8981;&#x5148;&#x9884;&#x8BBE;&#x6BCF;&#x4E2A;&#x5FEB;(Block)&#x4E2D;&#x7684;&#x7247;(Chunk)&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;(offset)
+       * &#x8FD9;&#x6837;&#x5C31;&#x9884;&#x5148;&#x5B9A;&#x4E49;&#x597D;&#x4E0A;&#x4F20;&#x7684;&#x4EFB;&#x52A1;&#x961F;&#x5217;
+       *
+       * &#x6CE8;&#x610F;:
+       * &#x56E0;&#x4E3A;&#x5207;&#x5272;&#x5757;(Block)&#x662F;&#x6BD4;&#x8F83;&#x6D6A;&#x8D39;&#x8D44;&#x6E90;&#xFF0C;&#x800C;&#x4E14;&#x4FDD;&#x5B58;&#x591A;&#x4E2A;&#x7247;(Chunk)&#x4F1A;&#x5BFC;&#x81F4;
+       * &#x5185;&#x5B58;&#x5927;&#x5E45;&#x589E;&#x52A0;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x5728;&#x6BCF;&#x4E2A;&#x4EFB;&#x52A1;&#x4E0A;&#x4F20;&#x4E4B;&#x524D;&#x5148;&#x7ED9;&#x5B9A;&#x76F8;&#x5E94;&#x7684;&#x914D;&#x7F6E;(&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x4E0E;&#x7247;&#x5927;&#x5C0F;&#x7B49;)
+       * &#x6765;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;&#xFF0C;&#x800C;&#x975E;&#x5207;&#x5272;&#x591A;&#x4E2A;&#x7247;(Chunk)&#x8D44;&#x6E90;&#xFF0C;&#x800C;&#x4E14;&#x4E0A;&#x4F20;&#x5B8C;&#x5FC5;&#x987B;&#x9500;&#x6BC1;
+       */
+      let blockSize = blockEndPos - blockBeginPos
+      let totalChunkNo = Math.ceil(blockSize / perChunkSize)
+
+      /**
+       * &#x56E0;&#x4E3A;&#x4E0A;&#x4F20;&#x5206;&#x5757;(Block)&#x5DF2;&#x7ECF;&#x4E0A;&#x4F20;&#x4E86;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;(Chunk)
+       * &#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x7B2C;&#x4E00;&#x4E2A;&#x5206;&#x7247;(Chunk)&#xFF0C;&#x800C;&#x5206;&#x7247;(Chunk)&#x7684;&#x603B;&#x6570;&#x4E5F;&#x51CF;&#x4E00;
+       */
+      times(totalChunkNo - 1, (chunkNo) =&gt; {
+        let chunkOffset = perChunkSize * (chunkNo + 1)
+        let chunkBeginPos = chunkOffset
+        let chunkEndPos = chunkOffset + perChunkSize
+
+        if (chunkEndPos &gt; blockSize) {
+          chunkEndPos = blockSize
+        }
+
+        let task = ({ state, block, file }, callback) =&gt; {
+          let info = {
+            file,
+            ctx: state.ctx,
+            params,
+            options,
+            beginOffset: blockBeginPos + chunkBeginPos,
+            endOffset: blockBeginPos + chunkEndPos
+          }
+
+          return mkchk(block, chunkBeginPos, chunkEndPos, info, callback)
+        }
+
+        tasks.push(task)
+      })
+
+      return (callback) =&gt; waterfall(tasks, callback)
+    })
+
+    let startDatetime = Date.now()
+
+    /**
+     * &#x5F53;&#x6240;&#x6709;&#x5757;(Block)&#x90FD;&#x5168;&#x90E8;&#x4E0A;&#x4F20;&#x5B8C;
+     * &#x5219;&#x6267;&#x884C;&#x5408;&#x5E76;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;
+     */
+    parallel(tasks, (error, responses) =&gt; {
+      if (error) {
+        callback(error)
+        return
+      }
+
+      /**
+       * &#x5408;&#x5E76;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x4E0A;&#x4F20;&#x7684; ctxs &#x503C;&#x5FC5;&#x987B;
+       * &#x662F;&#x5206;&#x5272;&#x7684;&#x987A;&#x5E8F;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;(beginPos)&#x6216;&#x8005;
+       * &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;(endPos)&#x8FDB;&#x884C;&#x6392;&#x5E8F;
+       */
+      responses = sortBy(responses, &apos;state.beginPos&apos;)
+
+      /**
+       * &#x83B7;&#x53D6;&#x6240;&#x6709;&#x5206;&#x5757;&#x4E2D;&#x6700;&#x540E;&#x5206;&#x7247;&#x4E0A;&#x4F20;&#x5B8C;&#x6210;&#x8FD4;&#x56DE;&#x7684;&#x54C8;&#x5E0C;&#x503C;(ctx)&#xFF0C;
+       * &#x5E76;&#x7EC4;&#x6210;&#x6570;&#x7EC4;&#x63D0;&#x4EA4;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x63A5;&#x53E3;
+       */
+      let ctxs = map(responses, &apos;state.ctx&apos;)
+      let size = file.size
+      let request = this.mkfile(ctxs, assign({ size }, params), options, callback)
+
+      registerRequest(&apos;mkfile&apos;, request, { size })
+    })
+
+    return { cancel: abortRequest, xhr: null }
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

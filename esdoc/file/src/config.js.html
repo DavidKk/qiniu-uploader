@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/config.js | qiniup</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Qiniu Uploader"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="qiniup"><meta property="twitter:description" content="Qiniu Uploader"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/enum.js~Enum.html">Enum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~QiniupEvent.html">QiniupEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/storage.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tunnel.js~Tunnel.html">Tunnel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-configure">configure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-upload">upload</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNumeric">isNumeric</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sizeStringify">sizeStringify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BASE64_REGEXP">BASE64_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-G">G</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M">M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTPS_URL">QINIU_UPLOAD_HTTPS_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTP_URL">QINIU_UPLOAD_HTTP_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REMOTE_FILE_URL_REGEXP">REMOTE_FILE_URL_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STORAGE_PREFIX">STORAGE_PREFIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED">SUPPORTED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Request">Request</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/config.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * &#x672C;&#x5730;&#x7F13;&#x5B58;&#x524D;&#x7F00;
+ * @type {String}
+ * @const
+ */
+export const STORAGE_PREFIX = &apos;QINIU_UPLOAD&apos;
+
+/**
+ * Base64 &#x6570;&#x636E;&#x6B63;&#x5219;&#xFF0C;&#x7528;&#x4E8E;&#x5224;&#x65AD;&#x6570;&#x636E;&#x662F;&#x5426;&#x4E3A; Base64 &#x6570;&#x636E;
+ * @type {RegExp}
+ * @const
+ */
+export const BASE64_REGEXP = /^data:([\w\W]+?);base64,/
+
+/**
+ * &#x4E03;&#x725B; HTTPS &#x4E0A;&#x4F20;&#x5730;&#x5740;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x4E2D;&#x56FD;&#x534E;&#x5357;&#x5730;&#x533A;
+ * @see https://developer.qiniu.com/kodo/manual/1671/region-endpoint
+ * @type {String}
+ * @const
+ */
+export const QINIU_UPLOAD_HTTPS_URL = &apos;up.qbox.me&apos;
+
+/**
+ * &#x4E03;&#x725B; HTTP &#x4E0A;&#x4F20;&#x5730;&#x5740;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x4E2D;&#x56FD;&#x534E;&#x5357;&#x5730;&#x533A;
+ * @type {String}
+ * @const
+ */
+export const QINIU_UPLOAD_HTTP_URL = &apos;up-z0.qiniu.com&apos;
+
+/**
+ * &#x8FDC;&#x7A0B;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x6B63;&#x5219;
+ * @type {RegExp}
+ * @const
+ */
+export const REMOTE_FILE_URL_REGEXP = /^([\w\d]+?):\/\//
+
+/**
+ * &#x5343;&#x5B57;&#x8282;
+ * @type {Integer}
+ * @const
+ */
+export const K = 1024
+
+/**
+ * &#x5146;&#x5B57;&#x8282;
+ * @type {Integer}
+ * @const
+ */
+export const M = K * K
+
+/**
+ * &#x5343;&#x5146;&#x5B57;&#x8282;
+ * @type {Integer}
+ * @const
+ */
+export const G = M * M
+
+/**
+ * &#x6D4F;&#x89C8;&#x5668;&#x662F;&#x5426;&#x652F;&#x6301;
+ * @type {Boolean}
+ * @const
+ */
+
+/* eslint no-mixed-operators: off */
+export const SUPPORTED = typeof File !== &apos;undefined&apos; &amp;&amp;
+  typeof window.Blob !== &apos;undefined&apos; &amp;&amp;
+  typeof FileList !== &apos;undefined&apos; &amp;&amp;
+  !!window.Blob.prototype.slice ||
+  !!window.Blob.prototype.webkitSlice ||
+  !!window.Blob.prototype.mozSlice ||
+  false
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

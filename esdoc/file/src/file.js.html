@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/file.js | qiniup</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Qiniu Uploader"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="qiniup"><meta property="twitter:description" content="Qiniu Uploader"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/enum.js~Enum.html">Enum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~QiniupEvent.html">QiniupEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/storage.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tunnel.js~Tunnel.html">Tunnel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-configure">configure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-upload">upload</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNumeric">isNumeric</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sizeStringify">sizeStringify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BASE64_REGEXP">BASE64_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-G">G</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M">M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTPS_URL">QINIU_UPLOAD_HTTPS_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTP_URL">QINIU_UPLOAD_HTTP_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REMOTE_FILE_URL_REGEXP">REMOTE_FILE_URL_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STORAGE_PREFIX">STORAGE_PREFIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED">SUPPORTED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Request">Request</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/file.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import isArray from &apos;lodash/isArray&apos;
+import isString from &apos;lodash/isString&apos;
+import isInteger from &apos;lodash/isInteger&apos;
+import isFunction from &apos;lodash/isFunction&apos;
+import isPlainObject from &apos;lodash/isPlainObject&apos;
+import find from &apos;lodash/find&apos;
+import assign from &apos;lodash/assign&apos;
+import forEach from &apos;lodash/forEach&apos;
+import defaultsDeep from &apos;lodash/defaultsDeep&apos;
+import sha256 from &apos;crypto-js/sha256&apos;
+import * as CONFIG from &apos;./config&apos;
+import { Enum } from &apos;./enum&apos;
+import { Storage } from &apos;./storage&apos;
+
+/**
+ * &#x6587;&#x4EF6;&#x7C7B;
+ * &#x80FD;&#x591F;&#x7EDF;&#x4E00;&#x6587;&#x4EF6;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x591A;&#x79CD;&#x7C7B;&#x578B;&#x5BF9;&#x8C61;
+ * &#x80FD;&#x591F;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x5206;&#x5757;&#x5206;&#x7247;&#x4FE1;&#x606F;&#x5230;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;
+ * &#x901A;&#x8FC7;&#x54C8;&#x5E0C;&#x6587;&#x4EF6;&#x83B7;&#x53D6;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x4EE5;&#x8FBE;&#x5230;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x60C5;&#x51B5;&#x4E0E;&#x65AD;&#x70B9;&#x7EED;&#x4F20;&#x7B49;&#x6548;&#x679C;
+ *
+ * @class
+ */
+export class File {
+  /**
+   * File &#x9ED8;&#x8BA4;&#x914D;&#x7F6E;
+   * @type {Object}
+   * @property {String} defaultSettings.mimeType &#x6587;&#x4EF6;&#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; plain/text &#x6587;&#x672C;&#x7C7B;&#x578B;
+   * @property {Integer} defaultSettings.chunkSize
+   * &#x5206;&#x7247;&#x5927;&#x5C0F;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 4M&#xFF0C;&#x8868;&#x793A;&#x4E00;&#x7247;&#xFF0C;&#x867D;&#x7136;&#x6CA1;&#x6709;&#x9650;&#x5236;&#xFF0C;
+   * &#x4F46;&#x662F;&#x4E03;&#x725B;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x8868;&#x793A;&#x5206;&#x5757;(Block)&#x4E3A;4M&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5206;&#x5757;(Block)&#x4E5F;&#x4E0D;&#x80FD;&#x5927;&#x4E8E; 4M&#xFF0C;
+   * &#x56E0;&#x6B64;&#x5206;&#x7247;&#x4E0D;&#x53EF;&#x80FD;&#x5927;&#x4E8E;&#x5206;&#x5757;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x53C2;&#x8003;&#x6587;&#x6863;: https://developer.qiniu.com/kodo/api/1286/mkblk
+   *
+   * @property {Integer} defaultSettings.chunkInBlock &#x5206;&#x7247;&#x6570;&#x91CF;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 1
+   * @property {Boolean} defaultSettings.cache &#x662F;&#x5426;&#x7F13;&#x5B58;
+   * @property {Integer} defaultSettings.expired &#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x4E00;&#x5929; (1000 x 60 x 60 x 24)&#xFF0C;&#x8BE5;&#x4E8B;&#x4EF6;&#x4E3A;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#x5230;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;&#x7F13;&#x5B58;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;
+   */
+  static defaultSettings = {
+    mimeType: &apos;plain/text&apos;,
+    chunkSize: 4 * CONFIG.M,
+    chunkInBlock: 1,
+    cache: true,
+    expired: 1000 * 60 * 60 * 24
+  }
+
+  /**
+   * &#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x683C;&#x5F0F;
+   * @type {Enum}
+   */
+  static stateFormatter = new Enum({
+    OBJECT: 1,
+    JSON: 2
+  })
+
+  /**
+   * &#x6587;&#x4EF6;&#x5927;&#x5C0F;
+   * @type {Integer}
+   */
+  get size () {
+    return this.blob.size
+  }
+
+  /**
+   * &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5BF9;&#x8C61;
+   *
+   * @param {File|Blob|String} file
+   * &#x9700;&#x8981;&#x4E0A;&#x4F20;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x4E3A; Form &#x83B7;&#x53D6;&#x7684; File &#x5BF9;&#x8C61;&#xFF0C;
+   * &#x53EF;&#x4EE5;&#x4E3A; Blob&#xFF0C;&#x6216;&#x8005;&#x662F; Base64 &#x7B49;&#x5B57;&#x7B26;&#x4E32;
+   *
+   * @param {Object} [options={}] &#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;{@link File.defaultSettings}
+   * @param {String} [options.mimeType=&apos;plain/text] &#x6587;&#x4EF6;&#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; plain/text &#x6587;&#x672C;&#x7C7B;&#x578B;
+   * @param {Integer} [options.chunkSize=4 * M]
+   * &#x5206;&#x7247;&#x5927;&#x5C0F;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 4M&#xFF0C;&#x8868;&#x793A;&#x4E00;&#x7247;&#xFF0C;&#x867D;&#x7136;&#x6CA1;&#x6709;&#x9650;&#x5236;&#xFF0C;&#x4F46;&#x662F;&#x4E03;&#x725B;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x8868;&#x793A;&#x5206;&#x5757;(Block)&#x4E3A;4M&#xFF0C;
+   * &#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5206;&#x5757;(Block)&#x4E5F;&#x4E0D;&#x80FD;&#x5927;&#x4E8E; 4M&#xFF0C;&#x56E0;&#x6B64;&#x5206;&#x7247;&#x4E0D;&#x53EF;&#x80FD;&#x5927;&#x4E8E;&#x5206;&#x5757;&#x7684;&#x5927;&#x5C0F;&#xFF0C;
+   * &#x53C2;&#x8003;&#x6587;&#x6863;: https://developer.qiniu.com/kodo/api/1286/mkblk
+   *
+   * @param {Integer} options.chunkInBlock &#x5206;&#x7247;&#x6570;&#x91CF;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 1
+   * @param {Integer} options.expired
+   * &#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x4E00;&#x5929; (1000 x 60 x 60 x 24)&#xFF0C;&#x8BE5;&#x4E8B;&#x4EF6;&#x4E3A;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#x5230;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;&#x7F13;&#x5B58;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;
+   *
+   * @return {File} &#x6587;&#x4EF6;&#x5BF9;&#x8C61;
+   */
+  constructor (file, options) {
+    /**
+     * &#x914D;&#x7F6E;
+     *
+     * @type {Object}
+     */
+    this.settings = defaultsDeep({}, options, this.constructor.defaultSettings)
+
+    /**
+     * &#x6587;&#x4EF6;&#x7C7B;&#x578B;
+     *
+     * @type {String}
+     */
+    this.type = file.type || this.settings.mimeType
+
+    /**
+     * &#x6E90;&#x6587;&#x4EF6;
+     *
+     * @type {File|Blob|String}
+     */
+    this.file = file
+
+    /**
+     * &#x6E90;&#x6587;&#x4EF6;&#x8F6C;&#x5316;&#x6210;&#x7684; Blob &#x5BF9;&#x8C61;
+     * &#x5C06;&#x6587;&#x4EF6;(File), &#x6587;&#x4EF6;&#x5217;&#x8868;(Array[&lt;File, File...&gt;]), base64(String) &#x6587;&#x4EF6;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x6210; Blob &#x57FA;&#x7840;&#x6587;&#x4EF6;&#x5BF9;&#x8C61;
+     *
+     * @type {Blob}
+     */
+    this.blob = file instanceof window.Blob ? file : new window.Blob(isArray(file) ? file : [file], { type: this.type })
+
+    /**
+     * &#x6587;&#x4EF6;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x6839;&#x636E;&#x6587;&#x4EF6;&#x540D;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x6587;&#x4EF6;&#x7C7B;&#x578B;&#x4E0E;&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#x6765;&#x786E;&#x5B9A;&#xFF1B;
+     * &#x5982;&#x679C;&#x6E90;&#x6587;&#x4EF6;&#x4E3A;&#x5B57;&#x7B26;&#x4E32;&#x5219;&#x76F4;&#x63A5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#x5904;&#x7406;
+     *
+     * @type {String}
+     */
+    this.hash = sha256(isString(file) ? file : file.name + file.size + file.type + file.lastModified).toString()
+
+    /**
+     * &#x6587;&#x4EF6;&#x72B6;&#x6001;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x4FE1;&#x606F;
+     *
+     * @type {Array&lt;Object&gt;}
+     */
+    this.state = []
+
+    /**
+     * &#x5B58;&#x50A8;&#x5BF9;&#x8C61;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x672C;&#x5730;&#x5B58;&#x50A8;
+     *
+     * @type {Storage}
+     */
+    this.storage = new Storage()
+
+    /**
+     * &#x67E5;&#x627E;&#x5E76;&#x8BFB;&#x53D6;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x7684;&#x4E0A;&#x4F20;&#x6570;&#x636E;&#xFF0C;&#x82E5;&#x6CA1;&#x6709;&#x5219;&#x4E0D;&#x4F1A;&#x505A;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;
+     */
+    this.settings.cache === true &amp;&amp; this.loadState()
+  }
+
+  /**
+   * &#x6587;&#x4EF6;&#x5207;&#x7247;&#xFF0C;&#x5C06;&#x6587;&#x4EF6;&#x5207;&#x5272;&#x6210; Blob &#x6587;&#x4EF6;&#x6BB5;&#xFF0C;&#x5F00;&#x59CB;&#x4F4D;&#x7F6E;&#x4E0E;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x4E0D;&#x80FD;&#x5C0F;&#x4E8E; 0 &#x5E76;&#x4E0D;&#x80FD;&#x5927;&#x4E8E;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;
+   * &#x5F00;&#x59CB;&#x4F4D;&#x7F6E;&#x4E0D;&#x80FD;&#x5927;&#x4E8E;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+   *
+   * @param {Integer} beginPos &#x5F00;&#x59CB;&#x4F4D;&#x7F6E;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; 0&#xFF0C;&#x4F4D;&#x7F6E;&#x5FC5;&#x987B;&#x5927;&#x4E8E; 0, &#x4E14;&#x4E0D;&#x80FD;&#x5927;&#x4E8E;&#x6216;&#x7B49;&#x4E8E;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+   * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#xFF0C;&#x5FC5;&#x987B;&#x5927;&#x4E8E;&#x5F00;&#x59CB;&#x4F4D;&#x7F6E;
+   * @param {String} [type=this.type] &#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x6587;&#x4EF6;&#x7684;&#x7C7B;&#x578B;
+   * @return {Blob} &#x5206;&#x7247;&#x6587;&#x4EF6;
+   */
+  slice (beginPos = 0, endPos, type = this.type) {
+    if (!(isInteger(beginPos) &amp;&amp; isInteger(endPos))) {
+      throw new TypeError(&apos;One of begin pos and end pos is not a integer&apos;)
+    }
+
+    if (!(beginPos &lt; endPos)) {
+      throw new Error(&apos;End pos must over begin pos&apos;)
+    }
+
+    return this.blob.slice(beginPos, endPos, type)
+  }
+
+  /**
+   * &#x4FDD;&#x5B58;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+   *
+   * @param {Integer} beginPos &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;
+   * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+   * @param {Object} state &#x72B6;&#x6001;&#xFF0C;&#x4FDD;&#x5B58;&#x7684;&#x72B6;&#x6001;
+   * @param {Boolean} [cache=this.settings.cache] &#x662F;&#x5426;&#x7F13;&#x5B58;
+   */
+  setState (beginPos, endPos, state = {}, cache = this.settings.cache) {
+    if (!(isInteger(beginPos) &amp;&amp; isInteger(endPos))) {
+      throw new TypeError(&apos;One of begin pos and end pos is not a integer&apos;)
+    }
+
+    if (!(beginPos &lt; endPos)) {
+      throw new Error(&apos;End pos must over begin pos&apos;)
+    }
+
+    let data = assign({ beginPos, endPos }, state)
+    this.state.push(data)
+
+    cache === true &amp;&amp; this.saveState()
+  }
+
+  /**
+   * &#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x4FE1;&#x606F;
+   *
+   * @param {Integer} beginPos &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;
+   * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+   * @return {Object} &#x4FE1;&#x606F;&#x6570;&#x636E;
+   */
+  getState (beginPos, endPos) {
+    if (!(isInteger(beginPos) &amp;&amp; isInteger(endPos))) {
+      throw new TypeError(&apos;One of begin pos and end pos is not a integer&apos;)
+    }
+
+    if (!(beginPos &lt; endPos)) {
+      throw new Error(&apos;End pos must over begin pos&apos;)
+    }
+
+    return find(this.state, { beginPos, endPos })
+  }
+
+  /**
+   * &#x68C0;&#x6D4B;&#x5206;&#x5757;&#x6216;&#x8005;&#x5206;&#x7247;&#x662F;&#x5426;&#x88AB;&#x4E0A;&#x4F20;
+   *
+   * @param {Integer} beginPos &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;
+   * @param {Integer} endPos &#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+   * @return {Boolean} &#x8FD4;&#x56DE;&#x662F;&#x5426;&#x4E0A;&#x4F20;&#x6210;&#x529F;
+   */
+  isUploaded (beginPos, endPos) {
+    let item = this.getState(beginPos, endPos) || {}
+    return item.status === &apos;uploaded&apos;
+  }
+
+  /**
+   * &#x5BFC;&#x5165;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+   *
+   * @param {Object|Json} source &#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#x6570;&#x636E;
+   * @param {Function} [callback] &#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x6210;&#x529F;&#x5BFC;&#x5165;&#x5C06;&#x4E0D;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF0C;&#x5931;&#x8D25;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5C06;&#x8FD4;&#x56DE;&#x9519;&#x8BEF;&#x4FE1;&#x606F;
+   */
+  import (source, callback) {
+    if (isString(source)) {
+      let data = JSON.parse(source)
+      return this.import(data, callback)
+    }
+
+    if (callback &amp;&amp; !isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not a function&apos;)
+    }
+
+    if (!isPlainObject(source)) {
+      callback &amp;&amp; callback(new Error(&apos;Source is not a plain object&apos;))
+      return
+    }
+
+    if (this.hash !== source.hash) {
+      callback &amp;&amp; callback(new Error(&apos;Source is invalid&apos;))
+      return
+    }
+
+    if (source.expired &lt; Date.now()) {
+      callback &amp;&amp; callback(new Error(&apos;Source is out of date&apos;))
+      return
+    }
+
+    if (!isArray(source.state)) {
+      callback &amp;&amp; callback(new TypeError(&apos;Source is invalid&apos;))
+      return
+    }
+
+    let state = []
+    for (let i = 0, datas = source.state, len = datas.length; i &lt; len; i++) {
+      state.push(datas[i])
+    }
+
+    this.state.splice(0)
+    this.state = this.state.concat(state)
+
+    callback &amp;&amp; callback(null)
+  }
+
+  /**
+   * &#x5BFC;&#x51FA;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+   *
+   * @param {Integer} [type=this.constructor.stateFormatter.OBJECT] &#x683C;&#x5F0F;&#x7C7B;&#x578B;&#xFF0C;&#x5177;&#x4F53;&#x503C;&#x53C2;&#x8003; File.stateFormatter
+   * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5BFC;&#x51FA;&#x6210;&#x529F;&#x5C06;&#x8FD4;&#x56DE;&#x6570;&#x636E;
+   */
+  export (type = this.constructor.stateFormatter.OBJECT, callback) {
+    if (!isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not provided or not be a function&apos;)
+    }
+
+    if (!this.constructor.stateFormatter.isValidKey(type)) {
+      callback(new TypeError(&apos;Type is invalid, it must equal one of File.stateFormatter&apos;))
+      return
+    }
+
+    if (type === this.constructor.stateFormatter.JSON) {
+      return this.export(this.constructor.stateFormatter.OBJECT, function (error, data) {
+        if (error) {
+          callback(error)
+          return
+        }
+
+        let source
+
+        try {
+          source = JSON.stringify(data)
+        } catch (error) {
+          callback(error)
+          return
+        }
+
+        callback(null, source)
+      })
+    }
+
+    callback(null, {
+      hash: this.hash,
+      state: this.state,
+      expired: Date.now() + this.settings.expired
+    })
+  }
+
+  /**
+   * &#x4ECE;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#x5E76;&#x5BFC;&#x5165;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+   *
+   * @param {String} [hashCode=this.hash] &#x6587;&#x4EF6;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;
+   * @param {Function} [callback] &#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x9519;&#x8BEF;&#x4F1A;&#x629B;&#x51FA;&#x9519;&#x8BEF;&#x5F02;&#x5E38;
+   */
+  loadState (hashCode = this.hash, callback) {
+    if (arguments.length &lt; 2 &amp;&amp; isFunction(hashCode)) {
+      return this.loadState(this.hash, hashCode)
+    }
+
+    if (callback &amp;&amp; !isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not a function&apos;)
+    }
+
+    let source = this.storage.get(hashCode)
+    this.import(source, callback)
+  }
+
+  /**
+   * &#x5BFC;&#x51FA;&#x5E76;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#x5230;&#x672C;&#x5730;&#x7F13;&#x5B58;&#x4E2D;
+   *
+   * @param {String} [hashCode=this.hash] &#x6587;&#x4EF6;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;
+   * @param {Function} [callback] &#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x9519;&#x8BEF;&#x4F1A;&#x629B;&#x51FA;&#x9519;&#x8BEF;&#x5F02;&#x5E38;
+   */
+  saveState (hashCode = this.hash, callback) {
+    if (arguments.length &lt; 2 &amp;&amp; isFunction(hashCode)) {
+      return this.saveState(this.hash, hashCode)
+    }
+
+    if (callback &amp;&amp; !isFunction(callback)) {
+      throw new TypeError(&apos;Callback is not a function&apos;)
+    }
+
+    this.export(this.constructor.stateFormatter.JSON, (error, source) =&gt; {
+      if (error) {
+        callback &amp;&amp; callback(error)
+        return
+      }
+
+      this.storage.set(hashCode, source)
+      callback &amp;&amp; callback(null)
+    })
+  }
+
+  /**
+   * &#x5220;&#x9664;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x4FE1;&#x606F;&#x7684;&#x672C;&#x5730;&#x7F13;&#x5B58;
+   *
+   * @param {String} [hashCode=this.hash] &#x6587;&#x4EF6;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;
+   */
+  cleanCache (hashCode = this.hash) {
+    this.storage.del(hashCode)
+  }
+
+  /**
+   * &#x9500;&#x6BC1;&#x5BF9;&#x8C61;
+   */
+  destory () {
+    this.cleanCache()
+
+    forEach(this, function (value, key) {
+      this[key] = isFunction(value) ? Function.prototype : undefined
+    })
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

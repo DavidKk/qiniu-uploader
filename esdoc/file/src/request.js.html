@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/request.js | qiniup</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Qiniu Uploader"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="qiniup"><meta property="twitter:description" content="Qiniu Uploader"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/enum.js~Enum.html">Enum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/event.js~QiniupEvent.html">QiniupEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/file.js~File.html">File</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/storage.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/tunnel.js~Tunnel.html">Tunnel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/uploader.js~Uploader.html">Uploader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-configure">configure</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-request">request</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-upload">upload</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNumeric">isNumeric</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sizeStringify">sizeStringify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BASE64_REGEXP">BASE64_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-G">G</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M">M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTPS_URL">QINIU_UPLOAD_HTTPS_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QINIU_UPLOAD_HTTP_URL">QINIU_UPLOAD_HTTP_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REMOTE_FILE_URL_REGEXP">REMOTE_FILE_URL_REGEXP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STORAGE_PREFIX">STORAGE_PREFIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SUPPORTED">SUPPORTED</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Request">Request</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/request.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import defaultsDeep from &apos;lodash/defaultsDeep&apos;
+import isFunction from &apos;lodash/isFunction&apos;
+import isPlainObject from &apos;lodash/isPlainObject&apos;
+import isEmpty from &apos;lodash/isEmpty&apos;
+import forEach from &apos;lodash/forEach&apos;
+import assign from &apos;lodash/assign&apos;
+import URI from &apos;urijs&apos;
+import { G, M, K } from &apos;./config&apos;
+
+/**
+ * @typedef {Object} Request
+ * @property {XMLHttpRequest} xhr AJAX &#x5BF9;&#x8C61;
+ * @property {Function} cancel &#x53D6;&#x6D88;&#x51FD;&#x6570;
+ */
+
+let settings = {}
+
+/**
+ * &#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;
+ *
+ * @param {Object} [options={}] &#x914D;&#x7F6E;
+ */
+export function configure (options = {}) {
+  settings = defaultsDeep({}, options, settings)
+}
+
+/**
+ * &#x4E0A;&#x4F20;&#xFF0C;&#x6267;&#x884C; POST &#x8BF7;&#x6C42; XMLHttpRequest
+ *
+ * @param {String} url &#x8BF7;&#x6C42;&#x5730;&#x5740;
+ * @param {Object} data &#x63D0;&#x4EA4;&#x6570;&#x636E;
+ * @param {Object} [options] &#x914D;&#x7F6E;
+ * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+ * @return {Request} &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x5BF9;&#x8C61;
+ */
+export function upload (url, data, options, callback) {
+  return request(&apos;POST&apos;, url, data, options, callback)
+}
+
+/**
+ * &#x6267;&#x884C; GET &#x8BF7;&#x6C42; XMLHttpRequest
+ *
+ * @param {String} url &#x8BF7;&#x6C42;&#x5730;&#x5740;
+ * @param {Object} data &#x63D0;&#x4EA4;&#x6570;&#x636E;
+ * @param {Object} [options] &#x914D;&#x7F6E;
+ * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+ * @return {Request} &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x5BF9;&#x8C61;
+ */
+export function post (url, data, options, callback) {
+  return request(&apos;POST&apos;, url, data, options, callback)
+}
+
+/**
+ * &#x8BF7;&#x6C42; XMLHttpRequest
+ *
+ * @param {string} [method=&apos;POST&apos;] &#x63D0;&#x4EA4;&#x65B9;&#x6CD5;
+ * @param {String} url &#x8BF7;&#x6C42;&#x5730;&#x5740;
+ * @param {Object} data &#x63D0;&#x4EA4;&#x6570;&#x636E;&#xFF0C;&#x82E5;&#x8BF7;&#x6C42;&#x65B9;&#x6CD5;&#x4E3A; GET&#xFF0C;&#x5219;&#x6570;&#x636E;&#x5C06;&#x8F6C;&#x6362;&#x6210;&#x8BF7;&#x6C42;&#x5730;&#x5740;&#x7684; query
+ * @param {Object} [options={}] &#x8BF7;&#x6C42;&#x914D;&#x7F6E;
+ * @param {Function} callback &#x56DE;&#x8C03;&#x51FD;&#x6570;
+ * @return {Request} &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x5BF9;&#x8C61;
+ */
+export function request (method = &apos;POST&apos;, url, data, options = {}, callback) {
+  if (arguments.length &lt; 3) {
+    return request(&apos;POST&apos;, method, {}, {}, url)
+  }
+
+  if (arguments.length &lt; 4) {
+    return request(method, url, {}, {}, data)
+  }
+
+  if (arguments.length &lt; 5) {
+    return request(method, url, data, {}, options)
+  }
+
+  if (!isFunction(callback)) {
+    throw new TypeError(&apos;Callback is not provided or not be a function&apos;)
+  }
+
+  method = method.toUpperCase()
+  options = defaultsDeep(options, settings)
+
+  let xhr = new window.XMLHttpRequest()
+
+  let xhrComplete = function () {
+    xhr.onerror = null
+    xhr.onreadystatechange = null
+    xhr = undefined
+  }
+
+  xhr.onerror = (error) =&gt; {
+    if (xhr.aborted === true) {
+      return
+    }
+
+    xhr.errorFlag = true
+    callback(error)
+    xhrComplete()
+  }
+
+  xhr.onreadystatechange = () =&gt; {
+    if (xhr.errorFlag === true || xhr.aborted === true) {
+      return
+    }
+
+    if (xhr.readyState === 4) {
+      let parsedData
+
+      if (!xhr.responseText) {
+        callback(new Error(&apos;Response text is empty&apos;))
+        xhrComplete()
+        return
+      }
+
+      try {
+        parsedData = JSON.parse(xhr.responseText)
+      } catch (error) {
+        callback(new Error(`Reponse data is invalid JSON\n${xhr.responseText}`))
+        xhrComplete()
+        return
+      }
+
+      xhr.status === 200
+        ? callback(null, parsedData)
+        : callback(new Error(parsedData))
+
+      xhrComplete()
+    }
+  }
+
+  if (isFunction(options.progress)) {
+    let startDatetime = Date.now()
+
+    xhr.upload.addEventListener(&apos;progress&apos;, (event) =&gt; {
+      if (event.lengthComputable) {
+        let nowDatetime = Date.now()
+        let spendTime = nowDatetime - startDatetime
+        let size = event.loaded
+        let time = spendTime / 1000
+        let speed = size / time || 0
+        let description = `${speed.toFixed(2)}Byte/s`
+
+        if (speed &gt; G) {
+          description = `${(speed / G).toFixed(2)}Gb/s`
+        } else if (speed &gt; M) {
+          description = `${(speed / M).toFixed(2)}Mb/s`
+        } else if (speed &gt; K) {
+          description = `${(speed / K).toFixed(2)}Kb/s`
+        }
+
+        event.during = time
+        event.speed = speed
+        event.speedDescription = description
+
+        options.progress.call(xhr, event)
+      }
+    }, false)
+  }
+
+  let isGetMethod = method === &apos;GET&apos; &amp;&amp; isPlainObject(data)
+  if (isGetMethod) {
+    if (isEmpty(data)) {
+      xhr.open(method, url, true)
+    } else {
+      let uri = new URI(url)
+      let params = URI.parseParameters(uri.query())
+
+      params = assign(params, data)
+      uri.query(params)
+
+      xhr.open(method, uri.href(), true)
+    }
+  } else {
+    xhr.open(method, url, true)
+  }
+
+  /**
+   * &#x5FC5;&#x987B;&#x5728; xhr.open &#x540E;&#x624D;&#x80FD;&#x914D;&#x7F6E;
+   */
+  xhr.withCredentials = !!options.withCredentials
+  forEach(options.headers, (header, name) =&gt; xhr.setRequestHeader(name, header))
+
+  if (isGetMethod) {
+    xhr.send(null)
+  } else {
+    if (isPlainObject(data)) {
+      let formData = new window.FormData()
+      forEach(data, (value, key) =&gt; formData.append(key, value))
+      xhr.send(formData)
+    } else {
+      xhr.send(data || null)
+    }
+  }
+
+  let cancel = function () {
+    if (xhr) {
+      xhr.readyState !== 4 &amp;&amp; xhr.abort()
+      xhr.aborted = true
+
+      callback(new Error(&apos;Request is canceled&apos;))
+    }
+  }
+
+  return { cancel, xhr }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
